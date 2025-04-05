@@ -31,11 +31,11 @@ export default [
                         },
                         {
                             sourceTag: "public",
-                            onlyDependOnLibsWithTags: ["public", "shared"], // Пример ограничения для публичных API
+                            onlyDependOnLibsWithTags: ["public", "shared"],
                         },
                         {
                             sourceTag: "private",
-                            onlyDependOnLibsWithTags: ["private"], // Пример для закрытых частей
+                            onlyDependOnLibsWithTags: ["private"], 
                         }
                     ],
                 }
@@ -62,9 +62,5 @@ export default [
     },
     {
         files: ["**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx"],
-        rules: {
-            "@jest/consistent-test-it": "error",
-            "@jest/prefer-expect-assertions": "warn",
-        }
     }
 ];
