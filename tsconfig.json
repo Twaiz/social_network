@@ -2,5 +2,12 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./apps/backend/auth-e2e"
+    },
+    {
+      "path": "./apps/backend/auth"
+    }
+  ]
 }
