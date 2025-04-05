@@ -6,15 +6,15 @@ export default [
     ...nx.configs["flat/javascript"],
     {
         ignores: [
-            "**/dist"
-        ]
+            "**/dist",
+        ],
     },
     {
         files: [
             "**/*.ts",
             "**/*.tsx",
             "**/*.js",
-            "**/*.jsx"
+            "**/*.jsx",
         ],
         rules: {
             "@nx/enforce-module-boundaries": [
@@ -27,11 +27,17 @@ export default [
                     depConstraints: [
                         {
                             sourceTag: "*",
-                            onlyDependOnLibsWithTags: [
-                                "*"
-                            ]
+                            onlyDependOnLibsWithTags: ["*"],
+                        },
+                        {
+                            sourceTag: "public",
+                            onlyDependOnLibsWithTags: ["public", "shared"], // Пример ограничения для публичных API
+                        },
+                        {
+                            sourceTag: "private",
+                            onlyDependOnLibsWithTags: ["private"], // Пример для закрытых частей
                         }
-                    ]
+                    ],
                 }
             ]
         }
@@ -45,9 +51,20 @@ export default [
             "**/*.js",
             "**/*.jsx",
             "**/*.cjs",
-            "**/*.mjs"
+            "**/*.mjs",
         ],
-        // Override or add rules here
-        rules: {}
+        rules: {
+            "@typescript-eslint/explicit-module-boundary-types": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
+            "react/jsx-uses-react": "off",
+            "react/react-in-jsx-scope": "off",
+        },
+    },
+    {
+        files: ["**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx"],
+        rules: {
+            "@jest/consistent-test-it": "error",
+            "@jest/prefer-expect-assertions": "warn",
+        }
     }
 ];
