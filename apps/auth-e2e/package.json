@@ -1,0 +1,26 @@
+{
+  "name": "@social-network/auth-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "auth-e2e",
+    "implicitDependencies": [
+      "auth"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "apps/auth-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "auth:build"
+        ]
+      }
+    }
+  }
+}
