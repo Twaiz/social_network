@@ -46,6 +46,7 @@
   },
   "workspaces": [
     "apps/*",
-    "apps/backend/*"
+    "apps/backend/*",
+    "e2e/backend/*"
   ]
 }

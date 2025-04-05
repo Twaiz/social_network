@@ -55,11 +55,7 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      },
-      "exclude": [
-        "apps/auth-e2e/**/*",
-        "apps/backend/auth-e2e/**/*"
-      ]
+      }
     }
   ],
   "targetDefaults": {

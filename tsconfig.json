@@ -4,7 +4,7 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/backend/auth-e2e"
+      "path": "./e2e/backend/auth-e2e"
     },
     {
       "path": "./apps/backend/auth"

@@ -13,7 +13,7 @@
           "{projectRoot}/test-output/jest/coverage"
         ],
         "options": {
-          "jestConfig": "apps/backend/auth-e2e/jest.config.ts",
+          "jestConfig": "e2e/backend/auth-e2e/jest.config.ts",
           "passWithNoTests": true
         },
         "dependsOn": [
