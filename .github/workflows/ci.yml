@@ -33,6 +33,17 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - uses: nrwl/nx-set-shas@v4
 
+      - name: Start the server
+        run: |
+          nohup nx serve auth --configuration=development &
+
+      - name: Wait for the server to be available
+        run: |
+          until curl --silent --head --fail http://localhost:3000/api; do
+            echo "Waiting for server to be available..."
+            sleep 5
+          done
+
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
