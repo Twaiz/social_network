@@ -16,6 +16,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "customConditions": ["development"]
   }
 }
