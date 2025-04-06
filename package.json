@@ -86,6 +86,7 @@
   "workspaces": [
     "apps/*",
     "apps/backend/*",
-    "e2e/backend/*"
+    "e2e/backend/*",
+    "libs/*"
   ]
 }
