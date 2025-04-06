@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run serve-auth &
+
+sleep 10
+
+npx nx affected -t lint test build
