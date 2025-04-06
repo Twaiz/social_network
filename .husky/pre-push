@@ -1,9 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# проверка команды "npm run serve-auth"
 npm run serve-auth &
 
-sleep 5 
+sleep 10
 
 npx nx affected -t lint test build
