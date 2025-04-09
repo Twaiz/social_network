@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// biome-ignore lint/style/useImportType: <explanation>
-import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { getMongoConfig } from '@backend-configs';
+import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
 
 @Module({
   imports: [
@@ -13,14 +13,13 @@ import { getMongoConfig } from '@backend-configs';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const mongoConfig: MongooseModuleOptions =
-          await getMongoConfig(configService);
+        const mongoConfig = await getMongoConfig(configService);
 
         if (!mongoConfig) {
-          throw new Error('❌ Произошла ошибка при подключение к БД!');
+          throw new Error(DB_CONNECTION_FAILED);
         }
 
-        console.log('🚀 Проект успешно подключился к БД!');
+        Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB');
         return mongoConfig;
       },
     }),
