@@ -1,7 +1,15 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
-const { join } = require('path');
+const { join, resolve } = require('node:path');
 
 module.exports = {
+  resolve: {
+    alias: {
+      '@backend-configs': resolve(
+        __dirname,
+        '../../../libs/backend-configs/src',
+      ),
+    },
+  },
   output: {
     path: join(__dirname, 'dist'),
   },

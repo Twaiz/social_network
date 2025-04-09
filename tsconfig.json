@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/backend/auth"
+    },
+    {
+      "path": "./libs/backend-configs"
     }
   ]
 }
