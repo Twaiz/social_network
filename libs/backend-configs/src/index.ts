@@ -1,1 +1,1 @@
-export * from './lib/backend-configs.module';
+export { getMongoConfig } from './lib/mongo.config';
