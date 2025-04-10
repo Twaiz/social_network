@@ -29,7 +29,11 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": ["libs/backend-configs/*", "libs/jwt-utils/*"]
+      "exclude": [
+        "libs/backend-configs/*",
+        "libs/jwt-utils/*",
+        "libs/interfaces/*"
+      ]
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -55,7 +59,11 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": ["libs/backend-configs/*", "libs/jwt-utils/*"],
+      "include": [
+        "libs/backend-configs/*",
+        "libs/jwt-utils/*",
+        "libs/interfaces/*"
+      ],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
