@@ -11,6 +11,9 @@
     },
     {
       "path": "./libs/backend-configs"
+    },
+    {
+      "path": "./libs/jwt-utils"
     }
   ]
 }

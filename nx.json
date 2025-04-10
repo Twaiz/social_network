@@ -29,7 +29,7 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": ["libs/backend-configs/*"]
+      "exclude": ["libs/backend-configs/*", "libs/jwt-utils/*"]
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -55,7 +55,7 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": ["libs/backend-configs/*"],
+      "include": ["libs/backend-configs/*", "libs/jwt-utils/*"],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
