@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { getMongoConfig } from '@backend-configs';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
+import { UserSchema } from './user.model';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
         return mongoConfig;
       },
     }),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   providers: [AuthService],
   controllers: [AuthController],
