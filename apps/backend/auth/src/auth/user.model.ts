@@ -77,6 +77,3 @@ export const UserSchema = new Schema<IUser>(
 UserSchema.virtual('fullName').get(function (this: IUser) {
   return `${this.firstName} ${this.secondName}`;
 });
-
-UserSchema.index({ email: 1 });
-UserSchema.index({ login: 1 });
