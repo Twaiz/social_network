@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../roles"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]
