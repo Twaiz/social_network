@@ -32,7 +32,8 @@
       "exclude": [
         "libs/backend-configs/*",
         "libs/jwt-utils/*",
-        "libs/interfaces/*"
+        "libs/interfaces/*",
+        "libs/roles/*"
       ]
     },
     {
@@ -62,7 +63,8 @@
       "include": [
         "libs/backend-configs/*",
         "libs/jwt-utils/*",
-        "libs/interfaces/*"
+        "libs/interfaces/*",
+        "libs/roles/*"
       ],
       "options": {
         "typecheck": {
