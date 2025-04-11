@@ -1,14 +1,13 @@
-// biome-ignore lint/style/useImportType: <explanation>
-import { Schema, HydratedDocument } from 'mongoose';
+import { Schema } from 'mongoose';
 import { isEmail } from 'validator';
 import { EMAIL_VALIDATION_ERROR } from './auth.constants';
 
-export enum EUserRole {
+enum EUserRole {
   User = 'User',
   Admin = 'Admin',
 }
 
-export interface IUser {
+interface IUser {
   email: string;
   login: string;
   passwordHash: string;
@@ -17,8 +16,6 @@ export interface IUser {
   secondName: string;
   isProfileComplete: boolean;
 }
-
-export type IUserModel = HydratedDocument<IUser>;
 
 export const UserSchema = new Schema<IUser>(
   {
