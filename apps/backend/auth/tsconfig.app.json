@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@backend-configs": ["./libs/backend-configs/src"]
+      "@backend-configs": ["./libs/backend/backend-configs/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -16,7 +16,7 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../../libs/backend-configs/tsconfig.lib.json"
+      "path": "../../../libs/backend/backend-configs/tsconfig.lib.json"
     }
   ]
 }

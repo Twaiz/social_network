@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@backend-configs": ["./libs/backend-configs/src"],
+      "@backend-configs": ["./libs/backend/backend-configs/src"],
       "@interfaces": ["./libs/interfaces/src"],
       "@roles": ["./libs/roles/src"]
     },
