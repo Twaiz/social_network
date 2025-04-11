@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@interfaces": ["./libs/interfaces/src"]
+      "@interfaces": ["./libs/backend/interfaces/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -19,7 +19,7 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../interfaces/tsconfig.lib.json"
+      "path": "../backend/interfaces/tsconfig.lib.json"
     }
   ]
 }

@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@backend-configs": ["./libs/backend/backend-configs/src"],
-      "@interfaces": ["./libs/interfaces/src"],
+      "@interfaces": ["./libs/backend/interfaces/src"],
       "@roles": ["./libs/backend/roles/src"]
     },
     "composite": true,

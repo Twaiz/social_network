@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
       "@roles": ["./libs/backend/roles/src"]
@@ -19,7 +19,7 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../backend/roles/tsconfig.lib.json"
+      "path": "../roles/tsconfig.lib.json"
     }
   ]
 }

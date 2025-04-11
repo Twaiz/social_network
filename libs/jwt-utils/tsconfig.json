@@ -4,7 +4,7 @@
   "include": [],
   "references": [
     {
-      "path": "../interfaces"
+      "path": "../backend/interfaces"
     },
     {
       "path": "./tsconfig.lib.json"

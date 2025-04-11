@@ -16,7 +16,7 @@
       "path": "./libs/jwt-utils"
     },
     {
-      "path": "./libs/interfaces"
+      "path": "./libs/backend/interfaces"
     },
     {
       "path": "./libs/backend/roles"

@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "../backend/roles"
+      "path": "../roles"
     },
     {
       "path": "./tsconfig.lib.json"
