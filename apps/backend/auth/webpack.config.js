@@ -8,6 +8,7 @@ module.exports = {
         __dirname,
         '../../../libs/backend/backend-configs/src',
       ),
+      '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
     },
   },
   output: {

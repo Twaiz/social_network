@@ -7,6 +7,9 @@
       "path": "../../../libs/backend/backend-configs"
     },
     {
+      "path": "../../../libs/backend/interfaces"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
