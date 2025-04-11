@@ -19,7 +19,7 @@
       "path": "./libs/interfaces"
     },
     {
-      "path": "./libs/roles"
+      "path": "./libs/backend/roles"
     }
   ]
 }

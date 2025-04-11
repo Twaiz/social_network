@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@roles": ["./libs/roles/src"]
+      "@roles": ["./libs/backend/roles/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -19,7 +19,7 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../roles/tsconfig.lib.json"
+      "path": "../backend/roles/tsconfig.lib.json"
     }
   ]
 }
