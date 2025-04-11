@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "../backend/interfaces"
+      "path": "../interfaces"
     },
     {
       "path": "./tsconfig.lib.json"
