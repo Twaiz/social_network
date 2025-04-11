@@ -6,8 +6,9 @@ module.exports = {
     alias: {
       '@backend-configs': resolve(
         __dirname,
-        '../../../libs/backend-configs/src',
+        '../../../libs/backend/backend-configs/src',
       ),
+      '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
     },
   },
   output: {

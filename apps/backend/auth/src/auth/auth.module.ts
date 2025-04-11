@@ -1,10 +1,13 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { getMongoConfig } from '@backend-configs';
+import { getJwtConfig, getMongoConfig } from '@backend-configs';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
+import { UserSchema } from './user.model';
 
 @Module({
   imports: [
@@ -23,8 +26,15 @@ import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
         return mongoConfig;
       },
     }),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getJwtConfig,
+    }),
+    PassportModule,
   ],
-  providers: [AuthService],
   controllers: [AuthController],
+  providers: [AuthService],
 })
 export class AuthModule {}
