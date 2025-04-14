@@ -29,6 +29,14 @@ export class AuthService {
     return newUser.save();
   }
 
+  async findUserByEmail(email: string): Promise<IUser | null> {
+    return this.userModel.findOne({ email });
+  }
+
+  async findUserByLogin(login: string): Promise<IUser | null> {
+    return this.userModel.findOne({ login });
+  }
+
   getMessage(): { message: string } {
     return {
       message: 'Hello API',
