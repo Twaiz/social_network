@@ -7,16 +7,13 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-// biome-ignore lint/style/useImportType: <explanation>
 import { AuthService } from './auth.service';
-// biome-ignore lint/style/useImportType: <explanation>
 import { AuthDto } from './dto/auth.dto';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
 } from './auth.constants';
-// biome-ignore lint/style/useImportType: <explanation>
 import { IUser } from '@interfaces';
 
 @Controller('auth')

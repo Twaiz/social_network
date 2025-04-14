@@ -1,4 +1,3 @@
-// biome-ignore lint/style/useImportType: <explanation>
 import { EUserRole } from '@roles';
 
 export interface IUser {

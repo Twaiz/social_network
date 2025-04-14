@@ -1,6 +1,4 @@
-// biome-ignore lint/style/useImportType: <explanation>
 import { ConfigService } from '@nestjs/config';
-// biome-ignore lint/style/useImportType: <explanation>
 import { MongooseModuleOptions } from '@nestjs/mongoose';
 
 export const getMongoConfig = async (

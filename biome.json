@@ -10,6 +10,9 @@
       "correctness": {
         "noUnusedVariables": "warn"
       },
+      "style": {
+        "useImportType": "off"
+      },
       "suspicious": { "noExplicitAny": "warn" },
       "a11y": { "useKeyWithClickEvents": "off" }
     }

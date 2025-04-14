@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-// biome-ignore lint/style/useImportType: <explanation>
 import { ConfigService } from '@nestjs/config';
-// biome-ignore lint/style/useImportType: <explanation>
 import { IUser } from '@interfaces';
 
 @Injectable()

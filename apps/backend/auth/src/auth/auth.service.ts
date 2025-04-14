@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { genSaltSync, hashSync } from 'bcryptjs';
-// biome-ignore lint/style/useImportType: <explanation>
 import { Model } from 'mongoose';
-// biome-ignore lint/style/useImportType: <explanation>
 import { IUser } from '@interfaces';
-// biome-ignore lint/style/useImportType: <explanation>x
 import { AuthDto } from './dto/auth.dto';
 import { InjectModel } from '@nestjs/mongoose';
 
