@@ -20,6 +20,9 @@
     },
     {
       "path": "./libs/backend/roles"
+    },
+    {
+      "path": "./libs/backend/types"
     }
   ]
 }

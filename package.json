@@ -89,6 +89,7 @@
     "apps/*",
     "apps/backend/*",
     "e2e/backend/*",
-    "libs/*"
+    "libs/*",
+    "libs/backend/types"
   ]
 }

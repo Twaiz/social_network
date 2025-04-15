@@ -33,7 +33,8 @@
         "libs/backend/backend-configs/*",
         "libs/backend/jwt-utils/*",
         "libs/backend/interfaces/*",
-        "libs/backend/roles/*"
+        "libs/backend/roles/*",
+        "libs/backend/types/*"
       ]
     },
     {
@@ -64,7 +65,8 @@
         "libs/backend/backend-configs/*",
         "libs/backend/jwt-utils/*",
         "libs/backend/interfaces/*",
-        "libs/backend/roles/*"
+        "libs/backend/roles/*",
+        "libs/backend/types/*"
       ],
       "options": {
         "typecheck": {
