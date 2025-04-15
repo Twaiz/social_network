@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { getJwtConfig, getMongoConfig } from '@backend-configs';
+import { JwtStrategy } from '@jwt-utils';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
 import { UserSchema } from './user.model';
 
@@ -35,6 +36,6 @@ import { UserSchema } from './user.model';
     PassportModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
