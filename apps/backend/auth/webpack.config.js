@@ -10,6 +10,7 @@ module.exports = {
       ),
       '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
       '@jwt-utils': resolve(__dirname, '../../../libs/backend/jwt-utils/src'),
+      '@roles': resolve(__dirname, '../../../libs/backend/roles/src'),
     },
   },
   output: {

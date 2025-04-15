@@ -4,7 +4,8 @@
     "paths": {
       "@backend-configs": ["./libs/backend/backend-configs/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"],
+      "@roles": ["./libs/backend/roles/src"]
     },
     "outDir": "dist",
     "types": ["node"],

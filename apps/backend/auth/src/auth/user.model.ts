@@ -2,21 +2,8 @@ import { Schema } from 'mongoose';
 import { isEmail } from 'validator';
 
 import { EMAIL_VALIDATION_ERROR } from './auth.constants';
-
-enum EUserRole {
-  User = 'User',
-  Admin = 'Admin',
-}
-
-interface IUser {
-  email: string;
-  login: string;
-  passwordHash: string;
-  role: EUserRole;
-  firstName: string;
-  secondName: string;
-  isProfileComplete: boolean;
-}
+import { IUser } from '@interfaces';
+import { EUserRole } from '@roles';
 
 export const UserSchema = new Schema<IUser>(
   {

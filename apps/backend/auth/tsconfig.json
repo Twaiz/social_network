@@ -13,6 +13,9 @@
       "path": "../../../libs/backend/jwt-utils"
     },
     {
+      "path": "../../../libs/backend/roles"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
