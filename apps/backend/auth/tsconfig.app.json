@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@backend-configs": ["./libs/backend/backend-configs/src"],
-      "@interfaces": ["./libs/backend/interfaces/src"]
+      "@interfaces": ["./libs/backend/interfaces/src"],
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -21,6 +22,9 @@
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
     }
   ]
 }

@@ -10,6 +10,9 @@
       "path": "../../../libs/backend/interfaces"
     },
     {
+      "path": "../../../libs/backend/jwt-utils"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]

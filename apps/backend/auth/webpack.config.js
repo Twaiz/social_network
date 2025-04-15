@@ -9,6 +9,7 @@ module.exports = {
         '../../../libs/backend/backend-configs/src',
       ),
       '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
+      '@jwt-utils': resolve(__dirname, '../../../libs/backend/jwt-utils/src'),
     },
   },
   output: {
