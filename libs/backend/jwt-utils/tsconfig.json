@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../interfaces"
+    },
+    {
+      "path": "../types"
+    },
+    {
+      "path": "../backend-configs"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

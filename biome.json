@@ -10,6 +10,9 @@
       "correctness": {
         "noUnusedVariables": "warn"
       },
+      "style": {
+        "useImportType": "off"
+      },
       "suspicious": { "noExplicitAny": "warn" },
       "a11y": { "useKeyWithClickEvents": "off" }
     }
@@ -22,6 +25,9 @@
     "lineWidth": 80
   },
   "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
     "formatter": {
       "arrowParentheses": "always",
       "jsxQuoteStyle": "double",

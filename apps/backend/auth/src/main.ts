@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+
 import { AuthModule } from './auth/auth.module';
 import {
   SERVER_CONNECTION_FAILED,

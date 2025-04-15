@@ -1,10 +1,15 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { getMongoConfig } from '@backend-configs';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
+import { UserSchema } from './user.model';
+import { JwtStrategy } from '@jwt-utils';
+import { getJwtConfig, getMongoConfig } from '@backend-configs';
 
 @Module({
   imports: [
@@ -16,15 +21,23 @@ import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
         const mongoConfig = await getMongoConfig(configService);
 
         if (!mongoConfig) {
-          throw new Error(DB_CONNECTION_FAILED);
+          Logger.error(DB_CONNECTION_FAILED, 'MongoDB');
+          process.exit(1);
         }
 
         Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB');
         return mongoConfig;
       },
     }),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getJwtConfig,
+    }),
+    PassportModule,
   ],
-  providers: [AuthService],
   controllers: [AuthController],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
