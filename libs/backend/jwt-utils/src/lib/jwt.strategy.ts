@@ -12,8 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const secret: EnvString = configService.get('JWT_SECRET');
     if (!secret) {
       Logger.error(JWT_SECRET_ERROR, 'JwtService');
-      process.exit(1); // Сделать такое везде при критических ошибках. То есть,
-      // ошибки окружения (сервера)
+      process.exit(1);
     }
 
     super({

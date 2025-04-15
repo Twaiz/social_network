@@ -22,6 +22,7 @@ import { getJwtConfig, getMongoConfig } from '@backend-configs';
 
         if (!mongoConfig) {
           Logger.error(DB_CONNECTION_FAILED, 'MongoDB');
+          process.exit(1);
         }
 
         Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB');

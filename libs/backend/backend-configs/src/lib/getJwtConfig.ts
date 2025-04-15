@@ -13,9 +13,11 @@ export const getJwtConfig = (
 
   if (!secret) {
     Logger.error(JWT_SECRET_ERROR, 'JwtService');
+    process.exit(1);
   }
   if (!jwtExpires) {
     Logger.error(JWT_EXPIRES_IN_ERROR, 'JwtService');
+    process.exit(1);
   }
 
   return {
