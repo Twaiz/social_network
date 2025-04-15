@@ -21,7 +21,7 @@ import { getJwtConfig, getMongoConfig } from '@backend-configs';
         const mongoConfig = await getMongoConfig(configService);
 
         if (!mongoConfig) {
-          throw new Error(DB_CONNECTION_FAILED);
+          Logger.error(DB_CONNECTION_FAILED, 'MongoDB');
         }
 
         Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB');
