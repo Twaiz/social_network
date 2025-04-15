@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@types": ["./libs/backend/types/src"]
+      "@types": ["./libs/backend/types/src"],
+      "@backend-configs": ["./libs/backend/backend-configs/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -24,6 +25,9 @@
     },
     {
       "path": "../types/tsconfig.lib.json"
+    },
+    {
+      "path": "../backend-configs/tsconfig.lib.json"
     }
   ]
 }
