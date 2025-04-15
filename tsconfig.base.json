@@ -4,7 +4,8 @@
     "paths": {
       "@backend-configs": ["./libs/backend/backend-configs/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@roles": ["./libs/backend/roles/src"]
+      "@roles": ["./libs/backend/roles/src"],
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
     },
     "composite": true,
     "declarationMap": true,
