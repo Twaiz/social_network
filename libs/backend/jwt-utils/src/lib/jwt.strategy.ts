@@ -4,11 +4,12 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 import { IUser } from '@interfaces';
+import { EnvString } from '@types';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(configService: ConfigService) {
-    const secretKey: string | undefined = configService.get('JWT_SECRET');
+    const secretKey: EnvString = configService.get('JWT_SECRET');
     if (!secretKey) {
       throw new Error('Не найдено секретного кода JWT');
     }
