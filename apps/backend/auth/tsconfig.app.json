@@ -19,13 +19,16 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
+      "path": "../../../libs/backend/roles/tsconfig.lib.json"
+    },
+    {
       "path": "../../../libs/backend/backend-configs/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
+      "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
+      "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
     }
   ]
 }
