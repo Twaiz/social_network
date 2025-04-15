@@ -3,12 +3,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { getJwtConfig, getMongoConfig } from '@backend-configs';
-import { JwtStrategy } from '@jwt-utils';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
 import { UserSchema } from './user.model';
+import { JwtStrategy } from '@jwt-utils';
+import { getJwtConfig, getMongoConfig } from '@backend-configs';
 
 @Module({
   imports: [

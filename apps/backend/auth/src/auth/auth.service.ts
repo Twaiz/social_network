@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { genSaltSync, hashSync } from 'bcryptjs';
-import { Model } from 'mongoose';
-import { IUser } from '@interfaces';
-import { AuthDto } from './dto/auth.dto';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { genSaltSync, hashSync } from 'bcryptjs';
+
+import { AuthDto } from './dto/auth.dto';
+import { IUser } from '@interfaces';
 
 @Injectable()
 export class AuthService {

@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
+
 import { JWT_EXPIRES_IN_ERROR, JWT_SECRET_ERROR } from './config.constants';
 
 export const getJwtConfig = (
