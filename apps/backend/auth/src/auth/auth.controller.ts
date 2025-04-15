@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto/auth.dto';
+import { UserCredentialsDto } from './dto/user-credentials.dto';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
@@ -23,8 +23,10 @@ export class AuthController {
 
   @Post('register')
   @UsePipes(new ValidationPipe())
-  async register(@Body() userCredentials: AuthDto): Promise<IUser> {
-    const { email, login } = userCredentials;
+  async register(
+    @Body() userCredentialsDto: UserCredentialsDto,
+  ): Promise<IUser> {
+    const { email, login } = userCredentialsDto;
 
     const userByEmail = await this.authService.findUserByEmail(email);
     const userByLogin = await this.authService.findUserByLogin(login);
@@ -46,7 +48,7 @@ export class AuthController {
       throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_LOGIN);
     }
 
-    return await this.authService.createUser(userCredentials);
+    return await this.authService.createUser(userCredentialsDto);
   }
 
   @Get()

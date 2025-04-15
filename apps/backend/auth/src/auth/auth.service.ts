@@ -3,15 +3,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { genSaltSync, hashSync } from 'bcryptjs';
 
-import { AuthDto } from './dto/auth.dto';
+import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { IUser } from '@interfaces';
 
 @Injectable()
 export class AuthService {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
 
-  async createUser(dto: AuthDto): Promise<IUser> {
-    const { email, login, password, firstName, secondName } = dto;
+  async createUser(userCredentialsDto: UserCredentialsDto): Promise<IUser> {
+    const { email, login, password, firstName, secondName } =
+      userCredentialsDto;
 
     const salt = genSaltSync(10);
     const passwordHash = hashSync(password, salt);
