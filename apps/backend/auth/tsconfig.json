@@ -16,6 +16,9 @@
       "path": "../../../libs/backend/roles"
     },
     {
+      "path": "../../../libs/backend/types"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
