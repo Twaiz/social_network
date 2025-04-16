@@ -1,6 +1,7 @@
 import { EUserRole } from '@roles';
 
 export interface IUser {
+  _id: string;
   email: string;
   login: string;
   passwordHash: string;
