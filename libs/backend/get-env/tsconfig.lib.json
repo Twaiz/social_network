@@ -1,7 +1,10 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "@backend-configs": ["./libs/backend/backend-configs/src"],
+      "@types": ["./libs/backend/types/src"]
+    },
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
@@ -15,5 +18,12 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../backend-configs/tsconfig.lib.json"
+    },
+    {
+      "path": "../types/tsconfig.lib.json"
+    }
+  ]
 }

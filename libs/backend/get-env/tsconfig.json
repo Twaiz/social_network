@@ -4,6 +4,12 @@
   "include": [],
   "references": [
     {
+      "path": "../backend-configs"
+    },
+    {
+      "path": "../types"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]
