@@ -1,14 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import { genSaltSync, hashSync } from 'bcryptjs';
 
 import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { IUser } from '@interfaces';
+import { EnvString } from '@types';
+import { JWT_EXPIRES_IN_ERROR, JWT_SECRET_ERROR } from '@backend-configs';
+
+interface IJwtPayload {
+  _id: string;
+  email: string;
+  login: string;
+  role: string;
+}
+
+interface IJwtTokenCredentials {
+  user: IUser;
+  secret: EnvString;
+  expiresIn: EnvString;
+}
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async createUser(userCredentialsDto: UserCredentialsDto): Promise<IUser> {
     const { email, login, password, firstName, secondName } =
@@ -26,6 +45,34 @@ export class AuthService {
     });
 
     return newUser.save();
+  }
+
+  async gwtJwtToken(
+    jwtCredentials: IJwtTokenCredentials,
+  ): Promise<{ token: string }> {
+    const { user, secret, expiresIn } = jwtCredentials;
+
+    if (!secret || !expiresIn) {
+      Logger.error(
+        !secret ? JWT_SECRET_ERROR : JWT_EXPIRES_IN_ERROR,
+        'JwtService',
+      );
+      process.exit(1);
+    }
+
+    const payload: IJwtPayload = {
+      _id: user._id,
+      email: user.email,
+      login: user.login,
+      role: user.role,
+    };
+
+    const token = await this.jwtService.signAsync(payload, {
+      secret,
+      expiresIn,
+    });
+
+    return { token };
   }
 
   async findUserByEmail(email: string): Promise<IUser | null> {
