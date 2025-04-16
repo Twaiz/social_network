@@ -19,6 +19,9 @@
       "path": "../../../libs/backend/types"
     },
     {
+      "path": "../../../libs/backend/get-env"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
