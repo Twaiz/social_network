@@ -23,6 +23,9 @@
     },
     {
       "path": "./libs/backend/types"
+    },
+    {
+      "path": "./libs/backend/get-env"
     }
   ]
 }
