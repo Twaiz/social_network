@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+
+import { GetEnvService } from './get-env.service';
 
 @Module({
-  controllers: [],
-  providers: [],
-  exports: [],
+  imports: [ConfigModule],
+  providers: [GetEnvService],
+  exports: [GetEnvService],
 })
-export class SocialNetworkGetEnvModule {}
+export class GetEnvModule {}
