@@ -11,12 +11,11 @@ export const getJwtConfig = (
   const secret: EnvString = configService.get('JWT_SECRET');
   const jwtExpires: EnvString = configService.get('JWT_EXPIRES_IN');
 
-  if (!secret) {
-    Logger.error(JWT_SECRET_ERROR, 'JwtService');
-    process.exit(1);
-  }
-  if (!jwtExpires) {
-    Logger.error(JWT_EXPIRES_IN_ERROR, 'JwtService');
+  if (!secret || !jwtExpires) {
+    Logger.error(
+      !secret ? JWT_SECRET_ERROR : JWT_EXPIRES_IN_ERROR,
+      'JwtService',
+    );
     process.exit(1);
   }
 
