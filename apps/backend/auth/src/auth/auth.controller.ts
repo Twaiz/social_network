@@ -40,12 +40,12 @@ export class AuthController {
       );
     }
 
-    if (emailExists) {
-      throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_EMAIL);
-    }
-
-    if (loginExists) {
-      throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_LOGIN);
+    if (emailExists || loginExists) {
+      throw new BadRequestException(
+        emailExists
+          ? USER_ALREADY_REGISTERED_WITH_EMAIL
+          : USER_ALREADY_REGISTERED_WITH_LOGIN,
+      );
     }
 
     return await this.authService.createUser(userCredentialsDto);
