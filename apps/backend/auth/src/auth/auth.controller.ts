@@ -26,7 +26,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   async register(
     @Body() userCredentialsDto: UserCredentialsDto,
-  ): Promise<IUser> {
+  ): Promise<{ user: IUser; token: string }> {
     const { email, login } = userCredentialsDto;
 
     const userByEmail = await this.authService.findUserByEmail(email);

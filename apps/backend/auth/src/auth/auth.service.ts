@@ -8,6 +8,7 @@ import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { IUser } from '@interfaces';
 import { EnvString } from '@types';
 import { JWT_EXPIRES_IN_ERROR, JWT_SECRET_ERROR } from '@backend-configs';
+import { ConfigService } from '@nestjs/config';
 
 interface IJwtPayload {
   _id: string;
@@ -19,7 +20,7 @@ interface IJwtPayload {
 interface IJwtTokenCredentials {
   user: IUser;
   secret: EnvString;
-  expiresIn: EnvString;
+  jwtExpires: EnvString;
 }
 
 @Injectable()
@@ -27,12 +28,19 @@ export class AuthService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<IUser>,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   //* Create User (Register) *//
-  async createUser(userCredentialsDto: UserCredentialsDto): Promise<IUser> {
+  async createUser(userCredentialsDto: UserCredentialsDto): Promise<{
+    user: IUser;
+    token: string;
+  }> {
     const { email, login, password, firstName, secondName } =
       userCredentialsDto;
+
+    const secret: EnvString = this.configService.get('JWT_SECRET');
+    const jwtExpires: EnvString = this.configService.get('JWT_EXPIRES_IN');
 
     const salt = genSaltSync(10);
     const passwordHash = hashSync(password, salt);
@@ -45,16 +53,25 @@ export class AuthService {
       secondName,
     });
 
-    return newUser.save();
+    const savedUser = await newUser.save();
+
+    const token = await this.getJwtToken({
+      user: savedUser,
+      secret: secret,
+      jwtExpires,
+    });
+
+    return {
+      user: savedUser,
+      token,
+    };
   }
 
   //* Get Jwt Token *//
-  async gwtJwtToken(
-    jwtCredentials: IJwtTokenCredentials,
-  ): Promise<{ token: string }> {
-    const { user, secret, expiresIn } = jwtCredentials;
+  async getJwtToken(jwtCredentials: IJwtTokenCredentials): Promise<string> {
+    const { user, secret, jwtExpires } = jwtCredentials;
 
-    if (!secret || !expiresIn) {
+    if (!secret || !jwtExpires) {
       Logger.error(
         !secret ? JWT_SECRET_ERROR : JWT_EXPIRES_IN_ERROR,
         'JwtService',
@@ -71,10 +88,10 @@ export class AuthService {
 
     const token = await this.jwtService.signAsync(payload, {
       secret,
-      expiresIn,
+      expiresIn: jwtExpires,
     });
 
-    return { token };
+    return token;
   }
 
   //* Find User By Email *//
