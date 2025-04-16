@@ -6,7 +6,8 @@
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
       "@roles": ["./libs/backend/roles/src"],
-      "@types": ["./libs/backend/types/src"]
+      "@types": ["./libs/backend/types/src"],
+      "@get-env": ["./libs/backend/get-env/src"]
     },
     "composite": true,
     "declarationMap": true,
