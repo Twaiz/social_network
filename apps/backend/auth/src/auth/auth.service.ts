@@ -29,6 +29,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  //* Create User (Register) *//
   async createUser(userCredentialsDto: UserCredentialsDto): Promise<IUser> {
     const { email, login, password, firstName, secondName } =
       userCredentialsDto;
@@ -47,6 +48,7 @@ export class AuthService {
     return newUser.save();
   }
 
+  //* Get Jwt Token *//
   async gwtJwtToken(
     jwtCredentials: IJwtTokenCredentials,
   ): Promise<{ token: string }> {
@@ -75,14 +77,17 @@ export class AuthService {
     return { token };
   }
 
+  //* Find User By Email *//
   async findUserByEmail(email: string): Promise<IUser | null> {
     return this.userModel.findOne({ email });
   }
 
+  //* Find User By Login *//
   async findUserByLogin(login: string): Promise<IUser | null> {
     return this.userModel.findOne({ login });
   }
 
+  //* Get Message (For e2e Test) *//
   getMessage(): { message: string } {
     return {
       message: 'Hello API',

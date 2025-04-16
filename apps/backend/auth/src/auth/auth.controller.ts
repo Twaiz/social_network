@@ -21,6 +21,7 @@ import { IUser } from '@interfaces';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  //* Register *//
   @Post('register')
   @UsePipes(new ValidationPipe())
   async register(
@@ -51,6 +52,9 @@ export class AuthController {
     return await this.authService.createUser(userCredentialsDto);
   }
 
+  //* Login *//
+
+  //* Get Message (For e2e Test) *//
   @Get()
   getMessage(): { message: string } {
     return this.authService.getMessage();
