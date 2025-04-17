@@ -4,13 +4,10 @@
   "include": [],
   "references": [
     {
+      "path": "../get-env"
+    },
+    {
       "path": "../interfaces"
-    },
-    {
-      "path": "../types"
-    },
-    {
-      "path": "../backend-configs"
     },
     {
       "path": "./tsconfig.lib.json"

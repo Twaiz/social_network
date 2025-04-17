@@ -21,11 +21,12 @@ import { IUser } from '@interfaces';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  //* Register *//
   @Post('register')
   @UsePipes(new ValidationPipe())
   async register(
     @Body() userCredentialsDto: UserCredentialsDto,
-  ): Promise<IUser> {
+  ): Promise<{ user: IUser; token: string }> {
     const { email, login } = userCredentialsDto;
 
     const userByEmail = await this.authService.findUserByEmail(email);
@@ -40,17 +41,20 @@ export class AuthController {
       );
     }
 
-    if (emailExists) {
-      throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_EMAIL);
-    }
-
-    if (loginExists) {
-      throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_LOGIN);
+    if (emailExists || loginExists) {
+      throw new BadRequestException(
+        emailExists
+          ? USER_ALREADY_REGISTERED_WITH_EMAIL
+          : USER_ALREADY_REGISTERED_WITH_LOGIN,
+      );
     }
 
     return await this.authService.createUser(userCredentialsDto);
   }
 
+  //* Login *//
+
+  //* Get Message (For e2e Test) *//
   @Get()
   getMessage(): { message: string } {
     return this.authService.getMessage();

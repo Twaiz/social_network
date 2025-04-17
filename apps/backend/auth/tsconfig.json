@@ -15,6 +15,10 @@
     {
       "path": "../../../libs/backend/roles"
     },
+
+    {
+      "path": "../../../libs/backend/get-env"
+    },
     {
       "path": "./tsconfig.app.json"
     }

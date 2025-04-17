@@ -1,29 +1,18 @@
-import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
-import { JWT_EXPIRES_IN_ERROR, JWT_SECRET_ERROR } from './config.constants';
-import { EnvString } from '@types';
+import { GetEnv } from '@get-env';
 
 export const getJwtConfig = (
   configService: ConfigService,
 ): JwtModuleOptions => {
-  const secret: EnvString = configService.get('JWT_SECRET');
-  const jwtExpires: EnvString = configService.get('JWT_EXPIRES_IN');
-
-  if (!secret) {
-    Logger.error(JWT_SECRET_ERROR, 'JwtService');
-    process.exit(1);
-  }
-  if (!jwtExpires) {
-    Logger.error(JWT_EXPIRES_IN_ERROR, 'JwtService');
-    process.exit(1);
-  }
+  const jwtSecret = GetEnv.getJwtSecret(configService);
+  const jwtExpiresIn = GetEnv.getJwtExpiresIn(configService);
 
   return {
-    secret,
+    secret: jwtSecret,
     signOptions: {
-      expiresIn: jwtExpires,
+      expiresIn: jwtExpiresIn,
     },
   };
 };
