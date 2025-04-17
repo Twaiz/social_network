@@ -16,10 +16,10 @@ interface IJwtPayload {
   role: string;
 }
 
-interface IJwtTokenCredentials {
+interface JwtCreationParams {
   user: IUser;
-  secret: string;
-  jwtExpires: string;
+  jwtSecret: string;
+  jwtExpiresIn: string;
 }
 
 @Injectable()
@@ -38,8 +38,8 @@ export class AuthService {
     const { email, login, password, firstName, secondName } =
       userCredentialsDto;
 
-    const secret = GetEnv.getJwtSecret(this.configService);
-    const jwtExpires = GetEnv.getJwtExpiresIn(this.configService);
+    const jwtSecret = GetEnv.getJwtSecret(this.configService);
+    const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
 
     const salt = genSaltSync(10);
     const passwordHash = hashSync(password, salt);
@@ -56,8 +56,8 @@ export class AuthService {
 
     const token = await this.getJwtToken({
       user: savedUser,
-      secret: secret,
-      jwtExpires,
+      jwtSecret: jwtSecret,
+      jwtExpiresIn,
     });
 
     return {
@@ -67,8 +67,8 @@ export class AuthService {
   }
 
   //* Get Jwt Token *//
-  async getJwtToken(jwtCredentials: IJwtTokenCredentials): Promise<string> {
-    const { user, secret, jwtExpires } = jwtCredentials;
+  async getJwtToken(jwtCreationParams: JwtCreationParams): Promise<string> {
+    const { user, jwtSecret, jwtExpiresIn } = jwtCreationParams;
 
     const payload: IJwtPayload = {
       _id: user._id,
@@ -78,8 +78,8 @@ export class AuthService {
     };
 
     const token = await this.jwtService.signAsync(payload, {
-      secret,
-      expiresIn: jwtExpires,
+      secret: jwtSecret,
+      expiresIn: jwtExpiresIn,
     });
 
     return token;

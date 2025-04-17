@@ -8,11 +8,11 @@ import { GetEnv } from '@get-env';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(configService: ConfigService) {
-    const secret = GetEnv.getJwtSecret(configService);
+    const jwtSecret = GetEnv.getJwtSecret(configService);
 
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: secret,
+      secretOrKey: jwtSecret,
       ignoreExpiration: false,
     });
   }

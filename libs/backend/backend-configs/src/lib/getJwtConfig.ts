@@ -6,13 +6,13 @@ import { GetEnv } from '@get-env';
 export const getJwtConfig = (
   configService: ConfigService,
 ): JwtModuleOptions => {
-  const secret = GetEnv.getJwtSecret(configService);
-  const jwtExpires = GetEnv.getJwtExpiresIn(configService);
+  const jwtSecret = GetEnv.getJwtSecret(configService);
+  const jwtExpiresIn = GetEnv.getJwtExpiresIn(configService);
 
   return {
-    secret,
+    secret: jwtSecret,
     signOptions: {
-      expiresIn: jwtExpires,
+      expiresIn: jwtExpiresIn,
     },
   };
 };

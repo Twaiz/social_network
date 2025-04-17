@@ -12,12 +12,12 @@ const CONSTANTS = {
 
 export const GetEnv = {
   getJwtSecret(configService: ConfigService): string {
-    const secret: EnvString = configService.get('JWT_SECRET');
-    if (!secret) {
+    const jwtSecret: EnvString = configService.get('JWT_SECRET');
+    if (!jwtSecret) {
       Logger.error(CONSTANTS.JWT_SECRET_ERROR, 'GetEnv');
       process.exit(1);
     }
-    return secret;
+    return jwtSecret;
   },
 
   getJwtExpiresIn(configService: ConfigService): string {
