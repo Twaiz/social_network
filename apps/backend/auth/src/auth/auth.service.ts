@@ -1,4 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
@@ -7,8 +8,7 @@ import { genSaltSync, hashSync } from 'bcryptjs';
 import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { IUser } from '@interfaces';
 import { EnvString } from '@types';
-import { JWT_EXPIRES_IN_ERROR, JWT_SECRET_ERROR } from '@backend-configs';
-import { ConfigService } from '@nestjs/config';
+import { GetEnv } from '@get-env';
 
 interface IJwtPayload {
   _id: string;
@@ -39,8 +39,8 @@ export class AuthService {
     const { email, login, password, firstName, secondName } =
       userCredentialsDto;
 
-    const secret: EnvString = this.configService.get('JWT_SECRET');
-    const jwtExpires: EnvString = this.configService.get('JWT_EXPIRES_IN');
+    const secret = GetEnv.getJwtSecret(this.configService);
+    const jwtExpires = GetEnv.getJwtExpiresIn(this.configService);
 
     const salt = genSaltSync(10);
     const passwordHash = hashSync(password, salt);
@@ -70,14 +70,6 @@ export class AuthService {
   //* Get Jwt Token *//
   async getJwtToken(jwtCredentials: IJwtTokenCredentials): Promise<string> {
     const { user, secret, jwtExpires } = jwtCredentials;
-
-    if (!secret || !jwtExpires) {
-      Logger.error(
-        !secret ? JWT_SECRET_ERROR : JWT_EXPIRES_IN_ERROR,
-        'JwtService',
-      );
-      process.exit(1);
-    }
 
     const payload: IJwtPayload = {
       _id: user._id,
