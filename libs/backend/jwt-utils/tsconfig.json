@@ -13,6 +13,9 @@
       "path": "../backend-configs"
     },
     {
+      "path": "../get-env"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]

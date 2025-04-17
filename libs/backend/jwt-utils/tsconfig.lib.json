@@ -4,7 +4,8 @@
     "paths": {
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@types": ["./libs/backend/types/src"],
-      "@backend-configs": ["./libs/backend/backend-configs/src"]
+      "@backend-configs": ["./libs/backend/backend-configs/src"],
+      "@get-env": ["./libs/backend/get-env/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -25,6 +26,9 @@
     },
     {
       "path": "../types/tsconfig.lib.json"
+    },
+    {
+      "path": "../get-env/tsconfig.lib.json"
     },
     {
       "path": "../backend-configs/tsconfig.lib.json"
