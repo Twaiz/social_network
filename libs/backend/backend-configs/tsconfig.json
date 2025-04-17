@@ -7,6 +7,9 @@
       "path": "../types"
     },
     {
+      "path": "../get-env"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]
