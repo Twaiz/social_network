@@ -21,13 +21,10 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../interfaces/tsconfig.lib.json"
-    },
-    {
       "path": "../get-env/tsconfig.lib.json"
     },
     {
-      "path": "../backend-configs/tsconfig.lib.json"
+      "path": "../interfaces/tsconfig.lib.json"
     }
   ]
 }
