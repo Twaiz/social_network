@@ -7,7 +7,6 @@ import { genSaltSync, hashSync } from 'bcryptjs';
 
 import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { IUser } from '@interfaces';
-import { EnvString } from '@types';
 import { GetEnv } from '@get-env';
 
 interface IJwtPayload {
@@ -19,8 +18,8 @@ interface IJwtPayload {
 
 interface IJwtTokenCredentials {
   user: IUser;
-  secret: EnvString;
-  jwtExpires: EnvString;
+  secret: string;
+  jwtExpires: string;
 }
 
 @Injectable()
