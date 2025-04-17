@@ -2,8 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@backend-configs": ["./libs/backend/backend-configs/src"],
-      "@types": ["./libs/backend/types/src"]
+      "@backend-configs": ["./libs/backend/backend-configs/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -21,9 +20,6 @@
   "references": [
     {
       "path": "../backend-configs/tsconfig.lib.json"
-    },
-    {
-      "path": "../types/tsconfig.lib.json"
     }
   ]
 }

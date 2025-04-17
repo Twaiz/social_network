@@ -7,9 +7,6 @@
       "path": "../interfaces"
     },
     {
-      "path": "../types"
-    },
-    {
       "path": "../backend-configs"
     },
     {

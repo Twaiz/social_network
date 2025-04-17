@@ -2,7 +2,6 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@types": ["./libs/backend/types/src"],
       "@get-env": ["./libs/backend/get-env/src"]
     },
     "composite": true,
@@ -20,9 +19,6 @@
   },
   "include": ["src/**/*.ts"],
   "references": [
-    {
-      "path": "../types/tsconfig.lib.json"
-    },
     {
       "path": "../get-env/tsconfig.lib.json"
     }

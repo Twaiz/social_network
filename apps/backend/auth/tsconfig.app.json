@@ -6,7 +6,6 @@
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
       "@roles": ["./libs/backend/roles/src"],
-      "@types": ["./libs/backend/types/src"],
       "@get-env": ["./libs/backend/get-env/src"]
     },
     "outDir": "dist",
@@ -31,9 +30,6 @@
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/types/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/get-env/tsconfig.lib.json"

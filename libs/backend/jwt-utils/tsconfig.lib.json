@@ -3,7 +3,6 @@
   "compilerOptions": {
     "paths": {
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@types": ["./libs/backend/types/src"],
       "@backend-configs": ["./libs/backend/backend-configs/src"],
       "@get-env": ["./libs/backend/get-env/src"]
     },
@@ -23,9 +22,6 @@
   "references": [
     {
       "path": "../interfaces/tsconfig.lib.json"
-    },
-    {
-      "path": "../types/tsconfig.lib.json"
     },
     {
       "path": "../get-env/tsconfig.lib.json"
