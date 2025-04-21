@@ -14,6 +14,7 @@ import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
+  BOTH_EMAIL_AND_LOGIN_ERROR,
 } from './auth.constants';
 import { IUser } from '@interfaces';
 import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
@@ -58,7 +59,14 @@ export class AuthController {
   async login(
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
   ): Promise<{ token: string }> {
+    const { email, login } = userLoginCredentialsDto;
+
+    if (email && login) {
+      throw new BadRequestException(BOTH_EMAIL_AND_LOGIN_ERROR);
+    }
+
     const token = await this.authService.login(userLoginCredentialsDto);
+
     return { token };
   }
 
