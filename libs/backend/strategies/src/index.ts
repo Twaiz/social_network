@@ -1,1 +1,1 @@
-export * from './lib/strategies.module';
+export { EitherEmailOrLogin } from './lib/either-email-or-login.validator';
