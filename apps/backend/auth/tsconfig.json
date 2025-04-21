@@ -15,7 +15,9 @@
     {
       "path": "../../../libs/backend/roles"
     },
-
+    {
+      "path": "../../../libs/backend/strategies"
+    },
     {
       "path": "../../../libs/backend/get-env"
     },
