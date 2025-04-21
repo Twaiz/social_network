@@ -91,6 +91,7 @@
     "e2e/backend/*",
     "libs/*",
     "libs/backend/types",
-    "libs/backend/get-env"
+    "libs/backend/get-env",
+    "libs/backend/strategies"
   ]
 }

@@ -9,11 +9,14 @@ import {
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { UserCredentialsDto } from './dto/user-credentials.dto';
+import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
+import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
+  BOTH_EMAIL_AND_LOGIN_ERROR,
+  USER_NOT_FOUND,
 } from './auth.constants';
 import { IUser } from '@interfaces';
 
@@ -25,9 +28,9 @@ export class AuthController {
   @Post('register')
   @UsePipes(new ValidationPipe())
   async register(
-    @Body() userCredentialsDto: UserCredentialsDto,
+    @Body() userRegisterCredentialsDto: UserRegisterCredentialsDto,
   ): Promise<{ user: IUser; token: string }> {
-    const { email, login } = userCredentialsDto;
+    const { email, login } = userRegisterCredentialsDto;
 
     const userByEmail = await this.authService.findUserByEmail(email);
     const userByLogin = await this.authService.findUserByLogin(login);
@@ -49,10 +52,39 @@ export class AuthController {
       );
     }
 
-    return await this.authService.createUser(userCredentialsDto);
+    return await this.authService.createUser(userRegisterCredentialsDto);
   }
 
   //* Login *//
+  @Post('login')
+  async login(
+    @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
+  ): Promise<{ token: string }> {
+    const { email, login, password } = userLoginCredentialsDto;
+
+    let user: IUser | null = null;
+
+    if (email && login) {
+      throw new BadRequestException(BOTH_EMAIL_AND_LOGIN_ERROR);
+    }
+
+    if (email) {
+      user = await this.authService.findUserByEmail(email);
+    } else if (login) {
+      user = await this.authService.findUserByLogin(login);
+    }
+
+    if (!user) {
+      throw new BadRequestException(USER_NOT_FOUND);
+    }
+
+    const token = await this.authService.login({
+      user,
+      password,
+    });
+
+    return { token };
+  }
 
   //* Get Message (For e2e Test) *//
   @Get()

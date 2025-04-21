@@ -35,7 +35,8 @@
         "libs/backend/interfaces/*",
         "libs/backend/roles/*",
         "libs/backend/types/*",
-        "libs/backend/get-env/*"
+        "libs/backend/get-env/*",
+        "libs/backend/strategies/*"
       ]
     },
     {
@@ -68,7 +69,8 @@
         "libs/backend/interfaces/*",
         "libs/backend/roles/*",
         "libs/backend/types/*",
-        "libs/backend/get-env/*"
+        "libs/backend/get-env/*",
+        "libs/backend/strategies/*"
       ],
       "options": {
         "typecheck": {

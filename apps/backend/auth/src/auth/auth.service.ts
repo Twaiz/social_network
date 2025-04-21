@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
-import { genSaltSync, hashSync } from 'bcryptjs';
+import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 
-import { UserCredentialsDto } from './dto/user-credentials.dto';
+import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
+import { LoginDto } from './dto/login.dto';
 import { IUser } from '@interfaces';
 import { GetEnv } from '@get-env';
+import { USER_INVALID_PASSWORD } from './auth.constants';
 
 interface IJwtPayload {
   _id: string;
@@ -31,12 +33,14 @@ export class AuthService {
   ) {}
 
   //* Create User (Register) *//
-  async createUser(userCredentialsDto: UserCredentialsDto): Promise<{
+  async createUser(
+    userRegisterCredentialsDto: UserRegisterCredentialsDto,
+  ): Promise<{
     user: IUser;
     token: string;
   }> {
     const { email, login, password, firstName, secondName } =
-      userCredentialsDto;
+      userRegisterCredentialsDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
@@ -52,18 +56,39 @@ export class AuthService {
       secondName,
     });
 
-    const savedUser = await newUser.save();
+    const user = await newUser.save();
 
     const token = await this.getJwtToken({
-      user: savedUser,
-      jwtSecret: jwtSecret,
+      user,
+      jwtSecret,
       jwtExpiresIn,
     });
 
     return {
-      user: savedUser,
+      user,
       token,
     };
+  }
+
+  //* Login *//
+  async login(loginDto: LoginDto): Promise<string> {
+    const { user, password } = loginDto;
+
+    const jwtSecret = GetEnv.getJwtSecret(this.configService);
+    const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
+
+    const isPasswordValid = compareSync(password, user.passwordHash);
+    if (!isPasswordValid) {
+      throw new BadRequestException(USER_INVALID_PASSWORD);
+    }
+
+    const token = await this.getJwtToken({
+      user,
+      jwtSecret,
+      jwtExpiresIn,
+    });
+
+    return token;
   }
 
   //* Get Jwt Token *//
