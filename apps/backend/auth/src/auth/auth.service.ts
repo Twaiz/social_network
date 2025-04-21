@@ -56,16 +56,16 @@ export class AuthService {
       secondName,
     });
 
-    const savedUser = await newUser.save();
+    const user = await newUser.save();
 
     const token = await this.getJwtToken({
-      user: savedUser,
-      jwtSecret: jwtSecret,
+      user,
+      jwtSecret,
       jwtExpiresIn,
     });
 
     return {
-      user: savedUser,
+      user,
       token,
     };
   }
