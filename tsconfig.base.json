@@ -6,8 +6,7 @@
       "@get-env": ["./libs/backend/get-env/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@roles": ["./libs/backend/roles/src"],
-      "@strategies": ["./libs/backend/strategies/src"]
+      "@roles": ["./libs/backend/roles/src"]
     },
     "composite": true,
     "declarationMap": true,

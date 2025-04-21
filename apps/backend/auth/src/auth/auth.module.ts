@@ -10,7 +10,6 @@ import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
 import { UserSchema } from './user.model';
 import { JwtStrategy } from '@jwt-utils';
 import { getJwtConfig, getMongoConfig } from '@backend-configs';
-import { EitherEmailOrLogin } from '@strategies';
 
 @Module({
   imports: [
@@ -39,6 +38,6 @@ import { EitherEmailOrLogin } from '@strategies';
     PassportModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, EitherEmailOrLogin],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}

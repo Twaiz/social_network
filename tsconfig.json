@@ -23,9 +23,6 @@
     },
     {
       "path": "./libs/backend/get-env"
-    },
-    {
-      "path": "./libs/backend/strategies"
     }
   ]
 }
