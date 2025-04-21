@@ -6,10 +6,10 @@ import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 
 import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
+import { LoginDto } from './dto/login.dto';
 import { IUser } from '@interfaces';
 import { GetEnv } from '@get-env';
-import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
-import { USER_INVALID_PASSWORD, USER_NOT_FOUND } from './auth.constants';
+import { USER_INVALID_PASSWORD } from './auth.constants';
 
 interface IJwtPayload {
   _id: string;
@@ -71,25 +71,11 @@ export class AuthService {
   }
 
   //* Login *//
-  async login(
-    userLoginCredentialsDto: UserLoginCredentialsDto,
-  ): Promise<string> {
-    const { email, login, password } = userLoginCredentialsDto;
+  async login(loginDto: LoginDto): Promise<string> {
+    const { user, password } = loginDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
-
-    let user: IUser | null = null;
-
-    if (email) {
-      user = await this.findUserByEmail(email);
-    } else if (login) {
-      user = await this.findUserByLogin(login);
-    }
-
-    if (!user) {
-      throw new BadRequestException(USER_NOT_FOUND);
-    }
 
     const isPasswordValid = compareSync(password, user.passwordHash);
     if (!isPasswordValid) {
