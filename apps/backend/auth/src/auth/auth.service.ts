@@ -96,8 +96,6 @@ export class AuthService {
       throw new BadRequestException(USER_INVALID_PASSWORD);
     }
 
-    console.log(email, login);
-
     const token = await this.getJwtToken({
       user,
       jwtSecret,
