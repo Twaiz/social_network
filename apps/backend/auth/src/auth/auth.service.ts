@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
-import { genSaltSync, hashSync } from 'bcryptjs';
+import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 
-import { UserCredentialsDto } from './dto/user-credentials.dto';
+import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
 import { IUser } from '@interfaces';
 import { GetEnv } from '@get-env';
+import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
+import { USER_INVALID_PASSWORD, USER_NOT_FOUND } from './auth.constants';
 
 interface IJwtPayload {
   _id: string;
@@ -31,12 +33,14 @@ export class AuthService {
   ) {}
 
   //* Create User (Register) *//
-  async createUser(userCredentialsDto: UserCredentialsDto): Promise<{
+  async createUser(
+    userRegisterCredentialsDto: UserRegisterCredentialsDto,
+  ): Promise<{
     user: IUser;
     token: string;
   }> {
     const { email, login, password, firstName, secondName } =
-      userCredentialsDto;
+      userRegisterCredentialsDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
@@ -64,6 +68,41 @@ export class AuthService {
       user: savedUser,
       token,
     };
+  }
+
+  //* Login *//
+  async login(
+    userLoginCredentialsDto: UserLoginCredentialsDto,
+  ): Promise<string> {
+    const { email, login, password } = userLoginCredentialsDto;
+
+    const jwtSecret = GetEnv.getJwtSecret(this.configService);
+    const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
+
+    let user: IUser | null = null;
+
+    if (email) {
+      user = await this.findUserByEmail(email);
+    } else if (login) {
+      user = await this.findUserByLogin(login);
+    }
+
+    if (!user) {
+      throw new BadRequestException(USER_NOT_FOUND);
+    }
+
+    const isPasswordValid = compareSync(password, user.passwordHash);
+    if (!isPasswordValid) {
+      throw new BadRequestException(USER_INVALID_PASSWORD);
+    }
+
+    const token = await this.getJwtToken({
+      user,
+      jwtSecret,
+      jwtExpiresIn,
+    });
+
+    return token;
   }
 
   //* Get Jwt Token *//
