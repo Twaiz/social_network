@@ -1,1 +1,1 @@
-export * from './lib/guards.module';
+export { RolesGuard } from './lib/roles/roles.guard';
