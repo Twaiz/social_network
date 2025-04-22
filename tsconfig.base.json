@@ -7,7 +7,8 @@
       "@get-env": ["./libs/backend/get-env/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@decorators": ["./libs/backend/decorators/src"]
+      "@decorators": ["./libs/backend/decorators/src"],
+      "@roles": ["./libs/backend/guards/src"]
     },
     "composite": true,
     "declarationMap": true,
