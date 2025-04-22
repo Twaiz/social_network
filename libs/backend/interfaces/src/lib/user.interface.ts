@@ -1,4 +1,4 @@
-import { EUserRole } from '@roles';
+import { EUserRole } from '@enums';
 
 export interface IUser {
   _id: string;

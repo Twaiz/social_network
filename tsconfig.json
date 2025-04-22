@@ -10,7 +10,7 @@
       "path": "./apps/backend/auth"
     },
     {
-      "path": "./libs/backend/backend-configs"
+      "path": "./libs/backend/configs"
     },
     {
       "path": "./libs/backend/jwt-utils"
@@ -19,7 +19,7 @@
       "path": "./libs/backend/interfaces"
     },
     {
-      "path": "./libs/backend/roles"
+      "path": "./libs/backend/enums"
     },
     {
       "path": "./libs/backend/get-env"

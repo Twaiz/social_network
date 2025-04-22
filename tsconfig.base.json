@@ -2,11 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@backend-configs": ["./libs/backend/backend-configs/src"],
+      "@configs": ["./libs/backend/configs/src"],
+      "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@roles": ["./libs/backend/roles/src"]
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
     },
     "composite": true,
     "declarationMap": true,

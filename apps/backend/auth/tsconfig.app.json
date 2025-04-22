@@ -2,10 +2,10 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@backend-configs": ["./libs/backend/backend-configs/src"],
+      "@configs": ["./libs/backend/configs/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@roles": ["./libs/backend/roles/src"],
+      "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"]
     },
     "outDir": "dist",
@@ -20,19 +20,16 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../../libs/backend/roles/tsconfig.lib.json"
+      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/backend-configs/tsconfig.lib.json"
+      "path": "../../../libs/backend/configs/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
     }
   ]
 }
