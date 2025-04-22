@@ -29,6 +29,9 @@
     },
     {
       "path": "./libs/backend/guards"
+    },
+    {
+      "path": "./apps/backend/two-fa"
     }
   ]
 }
