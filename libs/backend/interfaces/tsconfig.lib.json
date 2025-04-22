@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@roles": ["./libs/backend/roles/src"]
+      "@enums": ["./libs/backend/enums/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -17,9 +17,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": [
-    {
-      "path": "../roles/tsconfig.lib.json"
-    }
-  ]
+  "references": []
 }

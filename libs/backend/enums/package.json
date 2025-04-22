@@ -1,5 +1,5 @@
 {
-  "name": "@social-network/roles",
+  "name": "@social-network/enums",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",

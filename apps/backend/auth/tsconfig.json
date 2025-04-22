@@ -4,10 +4,10 @@
   "include": [],
   "references": [
     {
-      "path": "../../../libs/backend/roles"
+      "path": "../../../libs/backend/get-env"
     },
     {
-      "path": "../../../libs/backend/get-env"
+      "path": "../../../libs/backend/configs"
     },
     {
       "path": "../../../libs/backend/jwt-utils"

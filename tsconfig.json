@@ -19,7 +19,7 @@
       "path": "./libs/backend/interfaces"
     },
     {
-      "path": "./libs/backend/roles"
+      "path": "./libs/backend/enums"
     },
     {
       "path": "./libs/backend/get-env"

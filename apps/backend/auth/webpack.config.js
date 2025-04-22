@@ -7,7 +7,7 @@ module.exports = {
       '@configs': resolve(__dirname, '../../../libs/backend/configs/src'),
       '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
       '@jwt-utils': resolve(__dirname, '../../../libs/backend/jwt-utils/src'),
-      '@roles': resolve(__dirname, '../../../libs/backend/roles/src'),
+      '@enums': resolve(__dirname, '../../../libs/backend/enums/src'),
       '@get-env': resolve(__dirname, '../../../libs/backend/get-env/src'),
     },
   },
