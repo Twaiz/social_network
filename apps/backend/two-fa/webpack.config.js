@@ -1,15 +1,20 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
-const { join } = require('path');
+const { join, resolve } = require('node:path');
 
 module.exports = {
+  resolve: {
+    alias: {
+      '@bootstrap': resolve(__dirname, '../../../libs/backend/bootstrap/src'),
+    },
+  },
   output: {
     path: join(__dirname, 'dist'),
   },
   plugins: [
     new NxAppWebpackPlugin({
+      main: './src/main.ts',
       target: 'node',
       compiler: 'tsc',
-      main: './src/main.ts',
       tsConfig: './tsconfig.app.json',
       assets: ['./src/assets'],
       optimization: false,

@@ -28,7 +28,8 @@
         ],
         "options": {
           "buildTarget": "@social-network/two-fa:build",
-          "runBuildTargetDependencies": false
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
@@ -37,11 +38,6 @@
           "production": {
             "buildTarget": "@social-network/two-fa:build:production"
           }
-        }
-      },
-      "test": {
-        "options": {
-          "passWithNoTests": true
         }
       }
     }

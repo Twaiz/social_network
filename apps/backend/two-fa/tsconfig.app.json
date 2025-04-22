@@ -1,6 +1,9 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
+    "paths": {
+      "@bootstrap": ["./libs/backend/bootstrap/src"]
+    },
     "outDir": "dist",
     "types": ["node"],
     "rootDir": "src",
@@ -19,5 +22,10 @@
     "eslint.config.js",
     "eslint.config.cjs",
     "eslint.config.mjs"
+  ],
+  "references": [
+    {
+      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
+    }
   ]
 }
