@@ -6,7 +6,8 @@
       "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"],
+      "@decorators": ["./libs/backend/decorators/src"]
     },
     "composite": true,
     "declarationMap": true,
