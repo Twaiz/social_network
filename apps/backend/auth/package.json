@@ -28,7 +28,8 @@
         ],
         "options": {
           "buildTarget": "@social-network/auth:build",
-          "runBuildTargetDependencies": false
+          "runBuildTargetDependencies": false,
+          "inspect": false
         },
         "configurations": {
           "development": {
