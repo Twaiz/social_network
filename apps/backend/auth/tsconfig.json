@@ -16,7 +16,7 @@
       "path": "../../../libs/backend/interfaces"
     },
     {
-      "path": "../../../libs/backend/guards"
+      "path": "../../../libs/backend/decorators"
     },
     {
       "path": "./tsconfig.app.json"
