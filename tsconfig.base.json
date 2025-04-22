@@ -3,10 +3,12 @@
     "baseUrl": ".",
     "paths": {
       "@configs": ["./libs/backend/configs/src"],
+      "@decorators": ["./libs/backend/decorators/src"],
       "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"],
+      "@guards": ["./libs/backend/guards/src"]
     },
     "composite": true,
     "declarationMap": true,

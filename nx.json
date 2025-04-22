@@ -36,7 +36,9 @@
         "libs/backend/enums/*",
         "libs/backend/types/*",
         "libs/backend/get-env/*",
-        "libs/backend/strategies/*"
+        "libs/backend/strategies/*",
+        "libs/backend/decorators/*",
+        "libs/backend/guards/*"
       ]
     },
     {
@@ -70,7 +72,9 @@
         "libs/backend/enums/*",
         "libs/backend/types/*",
         "libs/backend/get-env/*",
-        "libs/backend/strategies/*"
+        "libs/backend/strategies/*",
+        "libs/backend/decorators/*",
+        "libs/backend/guards/*"
       ],
       "options": {
         "typecheck": {

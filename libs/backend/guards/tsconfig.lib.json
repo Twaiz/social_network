@@ -2,7 +2,8 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@enums": ["./libs/backend/enums/src"]
+      "@enums": ["./libs/backend/enums/src"],
+      "@decorators": ["./libs/backend/decorators/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -20,6 +21,9 @@
   "references": [
     {
       "path": "../enums/tsconfig.lib.json"
+    },
+    {
+      "path": "../decorators/tsconfig.lib.json"
     }
   ]
 }
