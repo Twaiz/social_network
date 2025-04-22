@@ -30,6 +30,9 @@
       "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
     },
     {
+      "path": "../../../libs/backend/enums/tsconfig.lib.json"
+    },
+    {
       "path": "../../../libs/backend/decorators/tsconfig.lib.json"
     },
     {

@@ -13,10 +13,13 @@
       "path": "../../../libs/backend/jwt-utils"
     },
     {
-      "path": "../../../libs/backend/interfaces"
+      "path": "../../../libs/backend/enums"
     },
     {
       "path": "../../../libs/backend/decorators"
+    },
+    {
+      "path": "../../../libs/backend/interfaces"
     },
     {
       "path": "./tsconfig.app.json"

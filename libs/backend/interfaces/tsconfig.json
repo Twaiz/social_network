@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../enums"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]
