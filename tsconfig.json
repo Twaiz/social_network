@@ -32,6 +32,9 @@
     },
     {
       "path": "./apps/backend/two-fa"
+    },
+    {
+      "path": "./libs/backend/bootstrap"
     }
   ]
 }
