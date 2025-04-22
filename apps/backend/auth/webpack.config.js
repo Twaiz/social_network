@@ -9,6 +9,7 @@ module.exports = {
       '@jwt-utils': resolve(__dirname, '../../../libs/backend/jwt-utils/src'),
       '@enums': resolve(__dirname, '../../../libs/backend/enums/src'),
       '@get-env': resolve(__dirname, '../../../libs/backend/get-env/src'),
+      '@guards': resolve(__dirname, '../../../libs/backend/guards/src'),
     },
   },
   output: {
