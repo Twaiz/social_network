@@ -25,6 +25,7 @@
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.13",
+    "@nrwl/nx-cloud": "^19.1.0",
     "@types/validator": "^13.12.3",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",

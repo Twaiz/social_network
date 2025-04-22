@@ -33,7 +33,7 @@
         "libs/backend/configs/*",
         "libs/backend/jwt-utils/*",
         "libs/backend/interfaces/*",
-        "libs/backend/roles/*",
+        "libs/backend/enums/*",
         "libs/backend/types/*",
         "libs/backend/get-env/*",
         "libs/backend/strategies/*"
@@ -67,7 +67,7 @@
         "libs/backend/configs/*",
         "libs/backend/jwt-utils/*",
         "libs/backend/interfaces/*",
-        "libs/backend/roles/*",
+        "libs/backend/enums/*",
         "libs/backend/types/*",
         "libs/backend/get-env/*",
         "libs/backend/strategies/*"
@@ -82,6 +82,14 @@
   "targetDefaults": {
     "test": {
       "dependsOn": ["^build"]
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx-cloud",
+      "options": {
+        "accessToken": "MzdkZDA3MmItNDIxOS00YjQ3LWEwYWYtZmM4YzhjY2FkNmZmfHJlYWQtd3JpdGU="
+      }
     }
   }
 }
