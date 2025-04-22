@@ -10,7 +10,7 @@
       "path": "./apps/backend/auth"
     },
     {
-      "path": "./libs/backend/backend-configs"
+      "path": "./libs/backend/configs"
     },
     {
       "path": "./libs/backend/jwt-utils"

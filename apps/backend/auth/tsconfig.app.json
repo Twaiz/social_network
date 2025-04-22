@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@backend-configs": ["./libs/backend/backend-configs/src"],
+      "@configs": ["./libs/backend/configs/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
       "@roles": ["./libs/backend/roles/src"],
@@ -23,16 +23,13 @@
       "path": "../../../libs/backend/roles/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/backend-configs/tsconfig.lib.json"
+      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
     }
   ]
 }

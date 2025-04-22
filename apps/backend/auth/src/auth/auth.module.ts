@@ -9,7 +9,7 @@ import { AuthController } from './auth.controller';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
 import { UserSchema } from './user.model';
 import { JwtStrategy } from '@jwt-utils';
-import { getJwtConfig, getMongoConfig } from '@backend-configs';
+import { getJwtConfig, getMongoConfig } from '@configs';
 
 @Module({
   imports: [

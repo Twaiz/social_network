@@ -30,7 +30,7 @@
         }
       },
       "exclude": [
-        "libs/backend/backend-configs/*",
+        "libs/backend/configs/*",
         "libs/backend/jwt-utils/*",
         "libs/backend/interfaces/*",
         "libs/backend/roles/*",
@@ -64,7 +64,7 @@
     {
       "plugin": "@nx/js/typescript",
       "include": [
-        "libs/backend/backend-configs/*",
+        "libs/backend/configs/*",
         "libs/backend/jwt-utils/*",
         "libs/backend/interfaces/*",
         "libs/backend/roles/*",

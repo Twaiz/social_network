@@ -4,10 +4,7 @@ const { join, resolve } = require('node:path');
 module.exports = {
   resolve: {
     alias: {
-      '@backend-configs': resolve(
-        __dirname,
-        '../../../libs/backend/backend-configs/src',
-      ),
+      '@configs': resolve(__dirname, '../../../libs/backend/configs/src'),
       '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
       '@jwt-utils': resolve(__dirname, '../../../libs/backend/jwt-utils/src'),
       '@roles': resolve(__dirname, '../../../libs/backend/roles/src'),

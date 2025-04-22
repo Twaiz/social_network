@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@backend-configs": ["./libs/backend/backend-configs/src"],
+      "@configs": ["./libs/backend/configs/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
