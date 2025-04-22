@@ -8,6 +8,9 @@
     },
     {
       "path": "../enums"
+    },
+    {
+      "path": "../decorators"
     }
   ]
 }
