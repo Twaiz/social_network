@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -19,6 +20,9 @@ import {
   USER_NOT_FOUND,
 } from './auth.constants';
 import { IUser } from '@interfaces';
+import { Roles } from '@decorators';
+import { EUserRole } from '@enums';
+import { JwtAuthGuard, RolesGuard } from '@guards';
 
 @Controller('auth')
 export class AuthController {
@@ -84,6 +88,26 @@ export class AuthController {
     });
 
     return { token };
+  }
+
+  //* Test Route For Testing Roles Guard (Admin) *//
+  @Get('for-admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(EUserRole.Admin)
+  getAdminMessage(): { message: string } {
+    return {
+      message: 'Тест роута для Админа',
+    };
+  }
+
+  //* Test Route For Testing Roles Guard (Moderator) *//
+  @Get('for-moderator')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(EUserRole.Moderator)
+  getModeratorMessage(): { message: string } {
+    return {
+      message: 'Тест роута для Модератора',
+    };
   }
 
   //* Get Message (For e2e Test) *//
