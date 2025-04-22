@@ -26,6 +26,9 @@
     },
     {
       "path": "./libs/backend/decorators"
+    },
+    {
+      "path": "./libs/backend/guards"
     }
   ]
 }
