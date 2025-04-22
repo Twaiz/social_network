@@ -8,7 +8,8 @@
       "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@decorators": ["./libs/backend/decorators/src"],
-      "@guards": ["./libs/backend/guards/src"]
+      "@guards": ["./libs/backend/guards/src"],
+      "@bootstrap": ["./libs/backend/bootstrap/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -29,6 +30,9 @@
     },
     {
       "path": "../../../libs/backend/guards/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"

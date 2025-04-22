@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../../libs/backend/bootstrap"
+    },
+    {
       "path": "../../../libs/backend/get-env"
     },
     {
@@ -13,6 +16,9 @@
       "path": "../../../libs/backend/jwt-utils"
     },
     {
+      "path": "../../../libs/backend/guards"
+    },
+    {
       "path": "../../../libs/backend/enums"
     },
     {
@@ -20,9 +26,6 @@
     },
     {
       "path": "../../../libs/backend/interfaces"
-    },
-    {
-      "path": "../../../libs/backend/guards"
     },
     {
       "path": "./tsconfig.app.json"

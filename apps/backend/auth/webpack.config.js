@@ -11,6 +11,7 @@ module.exports = {
       '@get-env': resolve(__dirname, '../../../libs/backend/get-env/src'),
       '@decorators': resolve(__dirname, '../../../libs/backend/decorators/src'),
       '@guards': resolve(__dirname, '../../../libs/backend/guards/src'),
+      '@bootstrap': resolve(__dirname, '../../../libs/backend/bootstrap/src'),
     },
   },
   output: {
