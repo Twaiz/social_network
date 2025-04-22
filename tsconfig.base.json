@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@bootstrap": ["./libs/backend/bootstrap/src"],
       "@configs": ["./libs/backend/configs/src"],
       "@decorators": ["./libs/backend/decorators/src"],
       "@enums": ["./libs/backend/enums/src"],
