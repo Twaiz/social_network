@@ -1,20 +1,20 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-type EnvString = string | undefined;
+import {
+  JWT_EXPIRES_IN_ERROR,
+  JWT_SECRET_ERROR,
+  MONGODB_LOGIN_ERROR,
+  MONGODB_PASSWORD_ERROR,
+} from './get-env.constants';
 
-const CONSTANTS = {
-  JWT_SECRET_ERROR: '❌ Не найден JWT_SECRET!',
-  JWT_EXPIRES_IN_ERROR: '❌ Не найден JWT_EXPIRES_IN!',
-  MONGODB_PASSWORD_ERROR: '❌ Не найден MONGODB_PASSWORD!',
-  MONGODB_LOGIN_ERROR: '❌ Не найден MONGODB_LOGIN!',
-};
+type EnvString = string | undefined;
 
 export const GetEnv = {
   getJwtSecret(configService: ConfigService): string {
     const jwtSecret: EnvString = configService.get('JWT_SECRET');
     if (!jwtSecret) {
-      Logger.error(CONSTANTS.JWT_SECRET_ERROR, 'GetEnv');
+      Logger.error(JWT_SECRET_ERROR, 'GetEnv');
       process.exit(1);
     }
     return jwtSecret;
@@ -23,7 +23,7 @@ export const GetEnv = {
   getJwtExpiresIn(configService: ConfigService): string {
     const expiresIn: EnvString = configService.get('JWT_EXPIRES_IN');
     if (!expiresIn) {
-      Logger.error(CONSTANTS.JWT_EXPIRES_IN_ERROR, 'GetEnv');
+      Logger.error(JWT_EXPIRES_IN_ERROR, 'GetEnv');
       process.exit(1);
     }
     return expiresIn;
@@ -32,7 +32,7 @@ export const GetEnv = {
   getMongodbPassword(configService: ConfigService): string {
     const mongodbPassword: EnvString = configService.get('MONGODB_PASSWORD');
     if (!mongodbPassword) {
-      Logger.error(CONSTANTS.MONGODB_PASSWORD_ERROR, 'GetEnv');
+      Logger.error(MONGODB_PASSWORD_ERROR, 'GetEnv');
       process.exit(1);
     }
     return mongodbPassword;
@@ -41,7 +41,7 @@ export const GetEnv = {
   getMongodbLogin(configService: ConfigService): string {
     const mongodbLogin: EnvString = configService.get('MONGODB_LOGIN');
     if (!mongodbLogin) {
-      Logger.error(CONSTANTS.MONGODB_LOGIN_ERROR, 'GetEnv');
+      Logger.error(MONGODB_LOGIN_ERROR, 'GetEnv');
       process.exit(1);
     }
     return mongodbLogin;
