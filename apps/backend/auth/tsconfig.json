@@ -22,6 +22,9 @@
       "path": "../../../libs/backend/interfaces"
     },
     {
+      "path": "../../../libs/backend/guards"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]

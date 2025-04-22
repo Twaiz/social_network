@@ -7,7 +7,8 @@
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
       "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
-      "@decorators": ["./libs/backend/decorators/src"]
+      "@decorators": ["./libs/backend/decorators/src"],
+      "@guards": ["./libs/backend/guards/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -25,6 +26,9 @@
     },
     {
       "path": "../../../libs/backend/configs/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/guards/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
