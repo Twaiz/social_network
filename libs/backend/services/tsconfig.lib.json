@@ -1,7 +1,11 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "@get-env": ["./libs/backend/get-env/src"],
+      "@interfaces": ["./libs/backend/interfaces/src"],
+      "@dtos": ["./libs/backend/dtos/src"]
+    },
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
@@ -15,5 +19,15 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../get-env/tsconfig.lib.json"
+    },
+    {
+      "path": "../interfaces/tsconfig.lib.json"
+    },
+    {
+      "path": "../dtos/tsconfig.lib.json"
+    }
+  ]
 }

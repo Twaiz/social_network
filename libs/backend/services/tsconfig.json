@@ -4,6 +4,15 @@
   "include": [],
   "references": [
     {
+      "path": "../get-env"
+    },
+    {
+      "path": "../interfaces"
+    },
+    {
+      "path": "../dtos"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]
