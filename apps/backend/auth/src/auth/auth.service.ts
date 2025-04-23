@@ -110,6 +110,22 @@ export class AuthService {
     return token;
   }
 
+  //* Update 2FA Secret Code *//
+  async updateTwoFactorSecret(
+    userId: string,
+    secret: string,
+  ): Promise<IUser | null> {
+    return this.userModel.findByIdAndUpdate(
+      userId,
+      {
+        twoFactorSecret: secret,
+      },
+      {
+        new: true,
+      },
+    );
+  }
+
   //* Find User By Email *//
   async findUserByEmail(email: string): Promise<IUser | null> {
     return this.userModel.findOne({ email });
