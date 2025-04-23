@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@bootstrap": ["./libs/backend/bootstrap/src"],
-      "@interfaces": ["./libs/backend/interfaces/src"]
+      "@interfaces": ["./libs/backend/interfaces/src"],
+      "@guards": ["./libs/backend/guards/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -30,6 +31,9 @@
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/guards/tsconfig.lib.json"
     }
   ]
 }

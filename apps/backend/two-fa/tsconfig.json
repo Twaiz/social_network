@@ -11,6 +11,9 @@
     },
     {
       "path": "../../../libs/backend/interfaces"
+    },
+    {
+      "path": "../../../libs/backend/guards"
     }
   ]
 }
