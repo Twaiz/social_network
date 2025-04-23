@@ -99,6 +99,7 @@
     "libs/backend/strategies",
     "libs/backend/decorators",
     "libs/backend/guards",
-    "libs/backend/bootstrap"
+    "libs/backend/bootstrap",
+    "libs/backend/services"
   ]
 }

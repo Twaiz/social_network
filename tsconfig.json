@@ -35,6 +35,9 @@
     },
     {
       "path": "./libs/backend/bootstrap"
+    },
+    {
+      "path": "./libs/backend/services"
     }
   ]
 }
