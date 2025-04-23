@@ -5,6 +5,12 @@
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../enums"
+    },
+    {
+      "path": "../interfaces"
     }
   ]
 }
