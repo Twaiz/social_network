@@ -1,4 +1,4 @@
 import { bootstrap } from '@bootstrap';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from '@modules';
 
 bootstrap(AuthModule);

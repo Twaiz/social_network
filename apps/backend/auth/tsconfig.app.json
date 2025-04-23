@@ -11,7 +11,8 @@
       "@guards": ["./libs/backend/guards/src"],
       "@bootstrap": ["./libs/backend/bootstrap/src"],
       "@services": ["./libs/backend/services/src"],
-      "@dtos": ["./libs/backend/dtos/src"]
+      "@dtos": ["./libs/backend/dtos/src"],
+      "@modules": ["./libs/backend/modules/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -30,6 +31,9 @@
   "references": [
     {
       "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/modules/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/configs/tsconfig.lib.json"
