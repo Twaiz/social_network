@@ -13,6 +13,9 @@
       "path": "../../../libs/backend/interfaces"
     },
     {
+      "path": "../../../libs/backend/services"
+    },
+    {
       "path": "../../../libs/backend/guards"
     }
   ]

@@ -7,6 +7,7 @@ module.exports = {
       '@bootstrap': resolve(__dirname, '../../../libs/backend/bootstrap/src'),
       '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
       '@guards': resolve(__dirname, '../../../libs/backend/guards/src'),
+      '@services': resolve(__dirname, '../../../libs/backend/services/src'),
     },
   },
   output: {
