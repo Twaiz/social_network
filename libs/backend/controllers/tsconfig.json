@@ -5,6 +5,24 @@
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../interfaces"
+    },
+    {
+      "path": "../decorators"
+    },
+    {
+      "path": "../enums"
+    },
+    {
+      "path": "../guards"
+    },
+    {
+      "path": "../services"
+    },
+    {
+      "path": "../dtos"
     }
   ]
 }

@@ -1,7 +1,14 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "@interfaces": ["./libs/backend/interfaces/src"],
+      "@decorators": ["./libs/backend/decorators/src"],
+      "@enums": ["./libs/backend/enums/src"],
+      "@guards": ["./libs/backend/guards/src"],
+      "@services": ["./libs/backend/services/src"],
+      "@dtos": ["./libs/backend/dtos/src"]
+    },
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
@@ -15,5 +22,24 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../interfaces/tsconfig.lib.json"
+    },
+    {
+      "path": "../decorators/tsconfig.lib.json"
+    },
+    {
+      "path": "../enums/tsconfig.lib.json"
+    },
+    {
+      "path": "../guards/tsconfig.lib.json"
+    },
+    {
+      "path": "../services/tsconfig.lib.json"
+    },
+    {
+      "path": "../dtos/tsconfig.lib.json"
+    }
+  ]
 }
