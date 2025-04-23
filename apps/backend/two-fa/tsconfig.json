@@ -4,22 +4,13 @@
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "../../../libs/backend/modules"
     },
     {
       "path": "../../../libs/backend/bootstrap"
     },
     {
-      "path": "../../../libs/backend/interfaces"
-    },
-    {
-      "path": "../../../libs/backend/services"
-    },
-    {
-      "path": "../../../libs/backend/guards"
-    },
-    {
-      "path": "../../../libs/backend/modules"
+      "path": "./tsconfig.app.json"
     }
   ]
 }

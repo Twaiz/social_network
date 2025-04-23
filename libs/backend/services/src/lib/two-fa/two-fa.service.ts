@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
@@ -8,7 +13,10 @@ import { INVALID_2FA_CODE } from './two-fa.constants';
 
 @Injectable()
 export class TwoFaService {
-  constructor(private readonly userService: AuthService) {}
+  constructor(
+    @Inject(forwardRef(() => AuthService))
+    private readonly userService: AuthService,
+  ) {}
 
   async generateTwoFactorSecret(user: IUser): Promise<{
     secret: string;

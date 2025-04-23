@@ -29,19 +29,10 @@
   ],
   "references": [
     {
-      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
-    },
-    {
       "path": "../../../libs/backend/modules/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/guards/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/services/tsconfig.lib.json"
+      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
     }
   ]
 }

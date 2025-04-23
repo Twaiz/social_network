@@ -1,10 +1,11 @@
-import { Logger, Module } from '@nestjs/common';
+import { forwardRef, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
+import { TwoFaModule } from '../two-fa/two-fa.module';
 
 import { AuthController } from '@controllers';
 import { UserSchema } from '@models';
@@ -14,6 +15,7 @@ import { getJwtConfig, getMongoConfig } from '@configs';
 
 @Module({
   imports: [
+    forwardRef(() => TwoFaModule),
     ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
