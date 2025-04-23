@@ -102,6 +102,7 @@
     "libs/backend/bootstrap",
     "libs/backend/services",
     "libs/backend/dtos",
-    "libs/backend/modules"
+    "libs/backend/modules",
+    "libs/backend/controllers"
   ]
 }
