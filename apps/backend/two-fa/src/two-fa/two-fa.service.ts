@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
@@ -26,6 +26,31 @@ export class TwoFaService {
       secret,
       otpauthUrl,
       qrCodeDataUrl,
+    };
+  }
+
+  async enableTwoFactor(
+    user: IUser,
+    code: string,
+  ): Promise<{
+    status: string;
+    code: number;
+    message: string;
+  }> {
+    const isTwoFactorCodeValid = authenticator.verify({
+      token: code,
+      secret: user.twoFactorSecret,
+    });
+    if (!isTwoFactorCodeValid) {
+      throw new BadRequestException('❌ Неверный код 2FA');
+    }
+
+    await this.userService.updateTwoFactorEnable(user._id);
+
+    return {
+      status: 'success',
+      code: 200,
+      message: '✅ 2FA Успешно вклюёчена',
     };
   }
 }
