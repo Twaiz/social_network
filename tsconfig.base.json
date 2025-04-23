@@ -13,7 +13,8 @@
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
       "@services": ["./libs/backend/services/src"],
       "@controllers": ["./libs/backend/controllers/src"],
-      "@models": ["./libs/backend/models/src"]
+      "@models": ["./libs/backend/models/src"],
+      "@modules": ["./libs/backend/modules/src"]
     },
     "composite": true,
     "declarationMap": true,
