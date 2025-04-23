@@ -1,8 +1,9 @@
 import { Controller, Logger, Post, Req, UseGuards } from '@nestjs/common';
-import type { Request } from 'express';
 
 import { TwoFaService } from './two-fa.service';
+
 import { JwtAuthGuard } from '@guards';
+import type { IExpressRequest } from '@interfaces';
 
 @Controller('two-fa')
 export class TwoFaController {
@@ -10,7 +11,7 @@ export class TwoFaController {
 
   @Post('generate')
   @UseGuards(JwtAuthGuard)
-  async generate(@Req() req: Request): Promise<{
+  async generate(@Req() req: IExpressRequest): Promise<{
     secret: string;
     otpauthUrl: string;
     qrCodeDataUrl: string;
