@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 import { isEmail } from 'validator';
 
 import { EMAIL_VALIDATION_ERROR } from './auth.constants';
+
 import { IUser } from '@interfaces';
 import { EUserRole } from '@enums';
 
