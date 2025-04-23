@@ -1,1 +1,1 @@
-export * from './lib/controllers.module';
+export { AuthController } from './lib/auth/auth.controller';
