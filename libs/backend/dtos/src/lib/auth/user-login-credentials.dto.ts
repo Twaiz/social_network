@@ -15,4 +15,8 @@ export class UserLoginCredentialsDto {
   @IsString()
   @IsNotEmpty()
   password!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  twoFactorCode?: string;
 }

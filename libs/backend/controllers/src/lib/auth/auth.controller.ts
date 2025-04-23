@@ -9,9 +9,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import { AuthService } from './auth.service';
-import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
-import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
@@ -19,10 +16,13 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   USER_NOT_FOUND,
 } from './auth.constants';
+
 import { IUser } from '@interfaces';
 import { Roles } from '@decorators';
 import { EUserRole } from '@enums';
 import { JwtAuthGuard, RolesGuard } from '@guards';
+import { AuthService } from '@services';
+import { UserRegisterCredentialsDto, UserLoginCredentialsDto } from '@dtos';
 
 @Controller('auth')
 export class AuthController {
@@ -64,7 +64,7 @@ export class AuthController {
   async login(
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
   ): Promise<{ token: string }> {
-    const { email, login, password } = userLoginCredentialsDto;
+    const { email, login, password, twoFactorCode } = userLoginCredentialsDto;
 
     let user: IUser | null = null;
 
@@ -85,6 +85,7 @@ export class AuthController {
     const token = await this.authService.login({
       user,
       password,
+      twoFactorCode,
     });
 
     return { token };

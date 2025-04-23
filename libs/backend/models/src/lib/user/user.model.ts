@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
 import { isEmail } from 'validator';
 
-import { EMAIL_VALIDATION_ERROR } from './auth.constants';
+import { EMAIL_VALIDATION_ERROR } from './user.constants';
+
 import { IUser } from '@interfaces';
 import { EUserRole } from '@enums';
 
@@ -50,6 +51,14 @@ export const UserSchema = new Schema<IUser>(
       type: Boolean,
       required: true,
       default: false,
+    },
+    isTwoFactorEnabled: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    twoFactorSecret: {
+      type: String,
     },
   },
   {

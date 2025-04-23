@@ -1,0 +1,35 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@get-env": ["./libs/backend/get-env/src"],
+      "@interfaces": ["./libs/backend/interfaces/src"],
+      "@dtos": ["./libs/backend/dtos/src"]
+    },
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "emitDeclarationOnly": true,
+    "types": ["node"],
+    "target": "es2021",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../get-env/tsconfig.lib.json"
+    },
+    {
+      "path": "../interfaces/tsconfig.lib.json"
+    },
+    {
+      "path": "../dtos/tsconfig.lib.json"
+    }
+  ]
+}

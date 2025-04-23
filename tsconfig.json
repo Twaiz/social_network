@@ -29,6 +29,27 @@
     },
     {
       "path": "./libs/backend/guards"
+    },
+    {
+      "path": "./apps/backend/two-fa"
+    },
+    {
+      "path": "./libs/backend/bootstrap"
+    },
+    {
+      "path": "./libs/backend/services"
+    },
+    {
+      "path": "./libs/backend/dtos"
+    },
+    {
+      "path": "./libs/backend/modules"
+    },
+    {
+      "path": "./libs/backend/controllers"
+    },
+    {
+      "path": "./libs/backend/models"
     }
   ]
 }

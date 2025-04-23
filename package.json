@@ -36,8 +36,10 @@
     "graphql": "^16.10.0",
     "graphql-ws": "^6.0.4",
     "mongoose": "^8.13.2",
+    "otplib": "^12.0.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "qrcode": "^1.5.4",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "subscriptions-transport-ws": "^0.11.0",
@@ -69,6 +71,7 @@
     "@types/mongoose": "^5.11.96",
     "@types/node": "~22.14.0",
     "@types/passport-jwt": "^4.0.1",
+    "@types/qrcode": "^1.5.5",
     "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-jest": "^28.11.0",
@@ -95,6 +98,12 @@
     "libs/backend/get-env",
     "libs/backend/strategies",
     "libs/backend/decorators",
-    "libs/backend/guards"
+    "libs/backend/guards",
+    "libs/backend/bootstrap",
+    "libs/backend/services",
+    "libs/backend/dtos",
+    "libs/backend/modules",
+    "libs/backend/controllers",
+    "libs/backend/models"
   ]
 }

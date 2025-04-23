@@ -2,13 +2,19 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@bootstrap": ["./libs/backend/bootstrap/src"],
       "@configs": ["./libs/backend/configs/src"],
+      "@controllers": ["./libs/backend/controllers/src"],
       "@decorators": ["./libs/backend/decorators/src"],
+      "@dtos": ["./libs/backend/dtos/src"],
       "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
+      "@guards": ["./libs/backend/guards/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@guards": ["./libs/backend/guards/src"]
+      "@models": ["./libs/backend/models/src"],
+      "@modules": ["./libs/backend/modules/src"],
+      "@services": ["./libs/backend/services/src"]
     },
     "composite": true,
     "declarationMap": true,

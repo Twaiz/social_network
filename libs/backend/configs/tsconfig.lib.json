@@ -4,7 +4,6 @@
     "paths": {
       "@get-env": ["./libs/backend/get-env/src"]
     },
-    "composite": true,
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
