@@ -9,7 +9,9 @@
       "@get-env": ["./libs/backend/get-env/src"],
       "@decorators": ["./libs/backend/decorators/src"],
       "@guards": ["./libs/backend/guards/src"],
-      "@bootstrap": ["./libs/backend/bootstrap/src"]
+      "@bootstrap": ["./libs/backend/bootstrap/src"],
+      "@services": ["./libs/backend/services/src"],
+      "@dtos": ["./libs/backend/dtos/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -19,7 +21,11 @@
     "emitDecoratorMetadata": true,
     "target": "es2021"
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../../../libs/backend/dtos/src/lib/auth/user-register-credentials.dto.ts",
+    "../../../libs/backend/dtos/src/lib/auth/login.dto.ts"
+  ],
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
@@ -42,6 +48,12 @@
     },
     {
       "path": "../../../libs/backend/decorators/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/services/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/dtos/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"

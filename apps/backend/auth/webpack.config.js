@@ -12,6 +12,8 @@ module.exports = {
       '@decorators': resolve(__dirname, '../../../libs/backend/decorators/src'),
       '@guards': resolve(__dirname, '../../../libs/backend/guards/src'),
       '@bootstrap': resolve(__dirname, '../../../libs/backend/bootstrap/src'),
+      '@services': resolve(__dirname, '../../../libs/backend/services/src'),
+      '@dtos': resolve(__dirname, '../../../libs/backend/dtos/src'),
     },
   },
   output: {

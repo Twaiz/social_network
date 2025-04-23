@@ -28,6 +28,12 @@
       "path": "../../../libs/backend/interfaces"
     },
     {
+      "path": "../../../libs/backend/services"
+    },
+    {
+      "path": "../../../libs/backend/dtos"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
