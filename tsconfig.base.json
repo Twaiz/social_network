@@ -10,7 +10,8 @@
       "@guards": ["./libs/backend/guards/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@dtos": ["./libs/backend/dtos/src"]
+      "@dtos": ["./libs/backend/dtos/src"],
+      "@services": ["./libs/backend/services/src"]
     },
     "composite": true,
     "declarationMap": true,
