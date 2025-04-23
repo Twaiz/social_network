@@ -9,8 +9,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import { AuthService } from './auth.service';
-import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
 import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
@@ -19,10 +17,13 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   USER_NOT_FOUND,
 } from './auth.constants';
+
 import { IUser } from '@interfaces';
 import { Roles } from '@decorators';
 import { EUserRole } from '@enums';
 import { JwtAuthGuard, RolesGuard } from '@guards';
+import { AuthService } from '@services';
+import { UserRegisterCredentialsDto } from '@dtos';
 
 @Controller('auth')
 export class AuthController {
