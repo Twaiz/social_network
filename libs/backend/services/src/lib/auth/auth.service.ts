@@ -5,9 +5,10 @@ import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 
-import { LoginDto, UserRegisterCredentialsDto } from '@dtos';
-import { USER_INVALID_PASSWORD } from './auth.constants';
+import { NOT_FOUND_2FA_CODE, USER_INVALID_PASSWORD } from './auth.constants';
+import { TwoFaService } from '../two-fa/two-fa.service';
 
+import { LoginDto, UserRegisterCredentialsDto } from '@dtos';
 import { IUser } from '@interfaces';
 import { GetEnv } from '@get-env';
 
@@ -30,6 +31,7 @@ export class AuthService {
     @InjectModel('User') private readonly userModel: Model<IUser>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly twoFaService: TwoFaService,
   ) {}
 
   //* Create User (Register) *//
@@ -72,7 +74,7 @@ export class AuthService {
 
   //* Login *//
   async login(loginDto: LoginDto): Promise<string> {
-    const { user, password } = loginDto;
+    const { user, password, twoFactorCode } = loginDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
@@ -80,6 +82,14 @@ export class AuthService {
     const isPasswordValid = compareSync(password, user.passwordHash);
     if (!isPasswordValid) {
       throw new BadRequestException(USER_INVALID_PASSWORD);
+    }
+
+    if (user.isTwoFactorEnabled) {
+      if (!twoFactorCode) {
+        throw new BadRequestException(NOT_FOUND_2FA_CODE);
+      }
+
+      await this.twoFaService.verifyTwoFactorCode(user, twoFactorCode);
     }
 
     const token = await this.getJwtToken({
