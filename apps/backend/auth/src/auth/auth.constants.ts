@@ -1,8 +1,6 @@
 export const DB_CONNECTION_SUCCESS = '🚀 Проект успешно подключился к БД!';
 export const DB_CONNECTION_FAILED = '❌ Произошла ошибка при подключение к БД!';
 
-export const EMAIL_VALIDATION_ERROR = '❌ Некорректный формат email-адреса';
-
 export const USER_NOT_FOUND = '❌ Такого пользователя не найдено';
 export const USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN =
   '❌ Пользователь с таким email и login уже зарегистрирован.';
