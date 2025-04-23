@@ -5,6 +5,21 @@
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../models"
+    },
+    {
+      "path": "../controllers"
+    },
+    {
+      "path": "../services"
+    },
+    {
+      "path": "../jwt-utils"
+    },
+    {
+      "path": "../configs"
     }
   ]
 }
