@@ -5,11 +5,11 @@ import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 
-import { UserRegisterCredentialsDto } from './dto/user-register-credentials.dto';
-import { LoginDto } from './dto/login.dto';
+import { LoginDto, UserRegisterCredentialsDto } from '@dtos';
+import { USER_INVALID_PASSWORD } from './auth.constants';
+
 import { IUser } from '@interfaces';
 import { GetEnv } from '@get-env';
-import { USER_INVALID_PASSWORD } from './auth.constants';
 
 interface IJwtPayload {
   _id: string;
