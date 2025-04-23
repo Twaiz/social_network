@@ -47,6 +47,9 @@
     },
     {
       "path": "./libs/backend/controllers"
+    },
+    {
+      "path": "./libs/backend/models"
     }
   ]
 }
