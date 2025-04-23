@@ -5,6 +5,7 @@ module.exports = {
   resolve: {
     alias: {
       '@bootstrap': resolve(__dirname, '../../../libs/backend/bootstrap/src'),
+      '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
     },
   },
   output: {

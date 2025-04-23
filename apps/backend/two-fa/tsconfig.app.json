@@ -2,7 +2,8 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@bootstrap": ["./libs/backend/bootstrap/src"]
+      "@bootstrap": ["./libs/backend/bootstrap/src"],
+      "@interfaces": ["./libs/backend/interfaces/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -26,6 +27,9 @@
   "references": [
     {
       "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
     }
   ]
 }
