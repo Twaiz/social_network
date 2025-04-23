@@ -3,7 +3,8 @@ import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
 import { IUser } from '@interfaces';
-import { AuthService } from '@services';
+import { AuthService } from '../auth/auth.service';
+import { INVALID_2FA_CODE } from './two-fa.constants';
 
 @Injectable()
 export class TwoFaService {
@@ -37,13 +38,7 @@ export class TwoFaService {
     code: number;
     message: string;
   }> {
-    const isTwoFactorCodeValid = authenticator.verify({
-      token: code,
-      secret: user.twoFactorSecret,
-    });
-    if (!isTwoFactorCodeValid) {
-      throw new BadRequestException('❌ Неверный код 2FA');
-    }
+    this.verifyTwoFactorCode(user, code);
 
     await this.userService.updateTwoFactorEnable(user._id);
 
@@ -52,5 +47,16 @@ export class TwoFaService {
       code: 200,
       message: '✅ 2FA Успешно вклюёчена',
     };
+  }
+
+  async verifyTwoFactorCode(user: IUser, code: string): Promise<void> {
+    const isTwoFactorCodeValid = authenticator.verify({
+      token: code,
+      secret: user.twoFactorSecret,
+    });
+
+    if (!isTwoFactorCodeValid) {
+      throw new BadRequestException(INVALID_2FA_CODE);
+    }
   }
 }
