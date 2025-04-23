@@ -51,6 +51,14 @@ export const UserSchema = new Schema<IUser>(
       required: true,
       default: false,
     },
+    isTwoFactorEnabled: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    twoFactorSecret: {
+      type: String,
+    },
   },
   {
     timestamps: true,

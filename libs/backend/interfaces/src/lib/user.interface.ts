@@ -9,4 +9,6 @@ export interface IUser {
   firstName: string;
   secondName: string;
   isProfileComplete: boolean;
+  isTwoFactorEnabled: boolean;
+  twoFactorSecret: string;
 }
