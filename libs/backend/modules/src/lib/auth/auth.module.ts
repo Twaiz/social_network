@@ -5,9 +5,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
-import { AuthController } from './auth.controller';
-import { UserSchema } from './user.model';
 
+import { AuthController } from '@controllers';
+import { UserSchema } from '@models';
 import { AuthService } from '@services';
 import { JwtStrategy } from '@jwt-utils';
 import { getJwtConfig, getMongoConfig } from '@configs';
