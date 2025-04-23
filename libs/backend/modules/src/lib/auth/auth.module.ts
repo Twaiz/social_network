@@ -40,5 +40,6 @@ import { getJwtConfig, getMongoConfig } from '@configs';
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}

@@ -23,19 +23,19 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../controllers/tsconfig.lib.json"
-    },
-    {
-      "path": "../models/tsconfig.lib.json"
-    },
-    {
-      "path": "../services/tsconfig.lib.json"
+      "path": "../configs/tsconfig.lib.json"
     },
     {
       "path": "../jwt-utils/tsconfig.lib.json"
     },
     {
-      "path": "../configs/tsconfig.lib.json"
+      "path": "../services/tsconfig.lib.json"
+    },
+    {
+      "path": "../models/tsconfig.lib.json"
+    },
+    {
+      "path": "../controllers/tsconfig.lib.json"
     }
   ]
 }

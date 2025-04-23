@@ -15,6 +15,11 @@ module.exports = {
       '@services': resolve(__dirname, '../../../libs/backend/services/src'),
       '@dtos': resolve(__dirname, '../../../libs/backend/dtos/src'),
       '@modules': resolve(__dirname, '../../../libs/backend/modules/src'),
+      '@controllers': resolve(
+        __dirname,
+        '../../../libs/backend/controllers/src',
+      ),
+      '@models': resolve(__dirname, '../../../libs/backend/models/src'),
     },
   },
   output: {
