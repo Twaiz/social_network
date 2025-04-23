@@ -9,7 +9,8 @@
       "@get-env": ["./libs/backend/get-env/src"],
       "@guards": ["./libs/backend/guards/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
-      "@jwt-utils": ["./libs/backend/jwt-utils/src"]
+      "@jwt-utils": ["./libs/backend/jwt-utils/src"],
+      "@dtos": ["./libs/backend/dtos/src"]
     },
     "composite": true,
     "declarationMap": true,
