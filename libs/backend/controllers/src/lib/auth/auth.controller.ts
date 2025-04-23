@@ -64,7 +64,7 @@ export class AuthController {
   async login(
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
   ): Promise<{ token: string }> {
-    const { email, login, password } = userLoginCredentialsDto;
+    const { email, login, password, twoFactorCode } = userLoginCredentialsDto;
 
     let user: IUser | null = null;
 
@@ -85,6 +85,7 @@ export class AuthController {
     const token = await this.authService.login({
       user,
       password,
+      twoFactorCode,
     });
 
     return { token };
