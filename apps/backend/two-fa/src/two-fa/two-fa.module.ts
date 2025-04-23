@@ -3,11 +3,11 @@ import { Module } from '@nestjs/common';
 import { TwoFaController } from './two-fa.controller';
 import { TwoFaService } from './two-fa.service';
 
-import { AuthService } from '@services';
+import { AuthModule } from '@modules';
 
 @Module({
+  imports: [AuthModule],
   controllers: [TwoFaController],
   providers: [TwoFaService],
-  imports: [AuthService],
 })
 export class TwoFaModule {}
