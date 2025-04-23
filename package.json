@@ -101,6 +101,7 @@
     "libs/backend/guards",
     "libs/backend/bootstrap",
     "libs/backend/services",
-    "libs/backend/dtos"
+    "libs/backend/dtos",
+    "libs/backend/modules"
   ]
 }
