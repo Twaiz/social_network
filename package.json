@@ -100,6 +100,7 @@
     "libs/backend/decorators",
     "libs/backend/guards",
     "libs/backend/bootstrap",
-    "libs/backend/services"
+    "libs/backend/services",
+    "libs/backend/dtos"
   ]
 }
