@@ -8,6 +8,8 @@ module.exports = {
       '@interfaces': resolve(__dirname, '../../../libs/backend/interfaces/src'),
       '@guards': resolve(__dirname, '../../../libs/backend/guards/src'),
       '@services': resolve(__dirname, '../../../libs/backend/services/src'),
+      '@get-env': resolve(__dirname, '../../../libs/backend/get-env/src'),
+      '@decorators': resolve(__dirname, '../../../libs/backend/decorators/src'),
     },
   },
   output: {

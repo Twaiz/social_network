@@ -5,9 +5,6 @@ import {
   SERVER_CONNECTION_SUCCESS,
 } from './bootstrap.constants';
 
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import '../../../../../apps/backend/types/express';
-
 type IEntryNestModule =
   | Type
   | DynamicModule
