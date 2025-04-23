@@ -10,6 +10,7 @@ module.exports = {
       '@services': resolve(__dirname, '../../../libs/backend/services/src'),
       '@get-env': resolve(__dirname, '../../../libs/backend/get-env/src'),
       '@decorators': resolve(__dirname, '../../../libs/backend/decorators/src'),
+      '@modules': resolve(__dirname, '../../../libs/backend/modules/src'),
     },
   },
   output: {

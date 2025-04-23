@@ -5,7 +5,8 @@
       "@bootstrap": ["./libs/backend/bootstrap/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@guards": ["./libs/backend/guards/src"],
-      "@services": ["./libs/backend/services/src"]
+      "@services": ["./libs/backend/services/src"],
+      "@modules": ["./libs/backend/modules/src"]
     },
     "outDir": "dist",
     "types": ["node"],
@@ -29,6 +30,9 @@
   "references": [
     {
       "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/modules/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"
