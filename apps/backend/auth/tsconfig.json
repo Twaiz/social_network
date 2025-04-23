@@ -7,13 +7,16 @@
       "path": "../../../libs/backend/bootstrap"
     },
     {
-      "path": "../../../libs/backend/get-env"
-    },
-    {
       "path": "../../../libs/backend/configs"
     },
     {
       "path": "../../../libs/backend/jwt-utils"
+    },
+    {
+      "path": "../../../libs/backend/dtos"
+    },
+    {
+      "path": "../../../libs/backend/services"
     },
     {
       "path": "../../../libs/backend/guards"
@@ -26,12 +29,6 @@
     },
     {
       "path": "../../../libs/backend/interfaces"
-    },
-    {
-      "path": "../../../libs/backend/services"
-    },
-    {
-      "path": "../../../libs/backend/dtos"
     },
     {
       "path": "./tsconfig.app.json"

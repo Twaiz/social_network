@@ -29,31 +29,28 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
+      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/configs/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/guards/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
-    },
-    {
       "path": "../../../libs/backend/jwt-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/dtos/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/services/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/guards/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/enums/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/decorators/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/services/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/dtos/tsconfig.lib.json"
     },
     {
       "path": "../../../libs/backend/interfaces/tsconfig.lib.json"

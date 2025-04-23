@@ -5,12 +5,12 @@
       "@bootstrap": ["./libs/backend/bootstrap/src"],
       "@configs": ["./libs/backend/configs/src"],
       "@decorators": ["./libs/backend/decorators/src"],
+      "@dtos": ["./libs/backend/dtos/src"],
       "@enums": ["./libs/backend/enums/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@guards": ["./libs/backend/guards/src"],
       "@interfaces": ["./libs/backend/interfaces/src"],
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@dtos": ["./libs/backend/dtos/src"],
       "@services": ["./libs/backend/services/src"]
     },
     "composite": true,

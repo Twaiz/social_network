@@ -4,10 +4,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
 import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './auth.constants';
+import { AuthController } from './auth.controller';
 import { UserSchema } from './user.model';
+
+import { AuthService } from '@services';
 import { JwtStrategy } from '@jwt-utils';
 import { getJwtConfig, getMongoConfig } from '@configs';
 
