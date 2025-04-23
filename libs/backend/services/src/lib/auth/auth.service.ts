@@ -126,6 +126,19 @@ export class AuthService {
     );
   }
 
+  //* Update 2FA Enable *//
+  async updateTwoFactorEnable(userId: string): Promise<IUser | null> {
+    return this.userModel.findByIdAndUpdate(
+      userId,
+      {
+        isTwoFactorEnabled: true,
+      },
+      {
+        new: true,
+      },
+    );
+  }
+
   //* Find User By Email *//
   async findUserByEmail(email: string): Promise<IUser | null> {
     return this.userModel.findOne({ email });
