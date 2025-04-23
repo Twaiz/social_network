@@ -9,7 +9,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 
-import { UserLoginCredentialsDto } from './dto/user-login-credentials.dto';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
@@ -23,7 +22,7 @@ import { Roles } from '@decorators';
 import { EUserRole } from '@enums';
 import { JwtAuthGuard, RolesGuard } from '@guards';
 import { AuthService } from '@services';
-import { UserRegisterCredentialsDto } from '@dtos';
+import { UserRegisterCredentialsDto, UserLoginCredentialsDto } from '@dtos';
 
 @Controller('auth')
 export class AuthController {
