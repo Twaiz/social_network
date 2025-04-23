@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { TwoFaController } from './two-fa.controller';
-import { TwoFaService } from './two-fa.service';
+import { TwoFaController } from '@controllers';
+import { TwoFaService } from '@services';
 
-import { AuthModule } from '@modules';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [AuthModule],
