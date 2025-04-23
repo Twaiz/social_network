@@ -3,11 +3,6 @@ export const DB_CONNECTION_FAILED = '❌ Произошла ошибка при 
 
 export const EMAIL_VALIDATION_ERROR = '❌ Некорректный формат email-адреса';
 
-export const LOGIN_MIN_LENGTH_ERROR =
-  '❌ Логин должен содержать минимум 4 символа.';
-export const LOGIN_MAX_LENGTH_ERROR =
-  '❌ Логин не должен превышать 16 символов.';
-
 export const USER_NOT_FOUND = '❌ Такого пользователя не найдено';
 export const USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN =
   '❌ Пользователь с таким email и login уже зарегистрирован.';
