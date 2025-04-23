@@ -1,4 +1,4 @@
 import { bootstrap } from '@bootstrap';
-import { TwoFaModule } from './two-fa/two-fa.module';
+import { TwoFaModule } from '@modules';
 
 bootstrap(TwoFaModule);
