@@ -8,6 +8,9 @@
     },
     {
       "path": "../shared"
+    },
+    {
+      "path": "../get-env"
     }
   ]
 }
