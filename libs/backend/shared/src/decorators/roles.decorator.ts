@@ -1,6 +1,6 @@
 import { CustomDecorator, SetMetadata } from '@nestjs/common';
 
-import { ROLES_KEY } from './roles.constants';
+import { ROLES_KEY } from '../guards/roles/roles.constants';
 import { EUserRole } from '@enums';
 
 export const Roles = (...roles: EUserRole[]): CustomDecorator<string> =>
