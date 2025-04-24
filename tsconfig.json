@@ -59,6 +59,9 @@
     },
     {
       "path": "./libs/backend/shared"
+    },
+    {
+      "path": "./libs/backend/configs"
     }
   ]
 }

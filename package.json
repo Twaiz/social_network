@@ -107,6 +107,7 @@
     "libs/backend/models",
     "libs/backend/auth-lib",
     "libs/backend/two-fa-lib",
-    "libs/backend/shared"
+    "libs/backend/shared",
+    "libs/backend/configs"
   ]
 }
