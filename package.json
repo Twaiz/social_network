@@ -104,6 +104,7 @@
     "libs/backend/dtos",
     "libs/backend/modules",
     "libs/backend/controllers",
-    "libs/backend/models"
+    "libs/backend/models",
+    "libs/backend/auth-lib"
   ]
 }

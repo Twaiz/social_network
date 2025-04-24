@@ -50,6 +50,9 @@
     },
     {
       "path": "./libs/backend/models"
+    },
+    {
+      "path": "./libs/backend/auth-lib"
     }
   ]
 }
