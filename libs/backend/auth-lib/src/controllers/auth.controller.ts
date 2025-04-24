@@ -15,15 +15,13 @@ import {
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
   USER_NOT_FOUND,
-} from './auth.constants';
+} from '../auth.constants';
 
-import { IUser } from '@interfaces';
-import { Roles } from '@decorators';
-import { EUserRole } from '@enums';
-import { JwtAuthGuard, RolesGuard } from '@guards';
-import { AuthService } from '@services';
-import { UserRegisterCredentialsDto, UserLoginCredentialsDto } from '@dtos';
+import { AuthService } from '../services/auth.service';
+import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
+import { UserLoginCredentialsDto } from '../dtos/user-login-credentials.dto';
 
+import { IUser, Roles, EUserRole, JwtAuthGuard, RolesGuard } from '@shared';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
