@@ -1,22 +1,21 @@
 import {
   BadRequestException,
-  forwardRef,
-  Inject,
   Injectable,
+  Logger,
+  NotFoundException,
 } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
+import { INVALID_2FA_CODE, USER_NOT_FOUND } from './two-fa.constants';
+
 import { IUser } from '@interfaces';
-import { AuthService } from '../auth/auth.service';
-import { INVALID_2FA_CODE } from './two-fa.constants';
 
 @Injectable()
 export class TwoFaService {
-  constructor(
-    @Inject(forwardRef(() => AuthService))
-    private readonly userService: AuthService,
-  ) {}
+  constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
 
   async generateTwoFactorSecret(user: IUser): Promise<{
     secret: string;
@@ -29,7 +28,20 @@ export class TwoFaService {
     const otpauthUrl = authenticator.keyuri(user.email, serviceName, secret);
     const qrCodeDataUrl = await qrcode.toDataURL(otpauthUrl);
 
-    await this.userService.updateTwoFactorSecret(user._id, secret);
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      user._id,
+      {
+        twoFactorSecret: secret,
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!updatedUser) {
+      Logger.warn(USER_NOT_FOUND);
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
 
     return {
       secret,
@@ -48,7 +60,20 @@ export class TwoFaService {
   }> {
     this.verifyTwoFactorCode(user, code);
 
-    await this.userService.updateTwoFactorEnable(user._id);
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      user._id,
+      {
+        isTwoFactorEnabled: true,
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!updatedUser) {
+      Logger.warn(USER_NOT_FOUND);
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
 
     return {
       status: 'success',
