@@ -1,12 +1,22 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 import { TwoFaController } from '@controllers';
 import { TwoFaService } from '@services';
-
-import { AuthModule } from '../auth/auth.module';
+import { connectToMongoDB } from '@configs';
+import { UserSchema } from '@models';
 
 @Module({
-  imports: [forwardRef(() => AuthModule)],
+  imports: [
+    ConfigModule.forRoot(),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: connectToMongoDB,
+    }),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+  ],
   controllers: [TwoFaController],
   providers: [TwoFaService],
   exports: [TwoFaService],
