@@ -3,7 +3,9 @@
   "compilerOptions": {
     "paths": {
       "@shared": ["./libs/backend/shared/src"],
-      "@get-env": ["./libs/backend/get-env/src"]
+      "@get-env": ["./libs/backend/get-env/src"],
+      "@models": ["./libs/backend/models/src"],
+      "@configs": ["./libs/backend/configs/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -26,6 +28,12 @@
     },
     {
       "path": "../get-env/tsconfig.lib.json"
+    },
+    {
+      "path": "../models/tsconfig.lib.json"
+    },
+    {
+      "path": "../configs/tsconfig.lib.json"
     }
   ]
 }

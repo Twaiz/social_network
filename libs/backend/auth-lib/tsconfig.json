@@ -11,6 +11,12 @@
     },
     {
       "path": "../get-env"
+    },
+    {
+      "path": "../models"
+    },
+    {
+      "path": "../configs"
     }
   ]
 }
