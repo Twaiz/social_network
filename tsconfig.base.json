@@ -14,7 +14,8 @@
       "@jwt-utils": ["./libs/backend/jwt-utils/src"],
       "@models": ["./libs/backend/models/src"],
       "@modules": ["./libs/backend/modules/src"],
-      "@services": ["./libs/backend/services/src"]
+      "@services": ["./libs/backend/services/src"],
+      "@shared": ["./libs/backend/shared/src"]
     },
     "composite": true,
     "declarationMap": true,
