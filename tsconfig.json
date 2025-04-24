@@ -53,6 +53,9 @@
     },
     {
       "path": "./libs/backend/auth-lib"
+    },
+    {
+      "path": "./libs/backend/two-fa-lib"
     }
   ]
 }

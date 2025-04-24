@@ -105,6 +105,7 @@
     "libs/backend/modules",
     "libs/backend/controllers",
     "libs/backend/models",
-    "libs/backend/auth-lib"
+    "libs/backend/auth-lib",
+    "libs/backend/two-fa-lib"
   ]
 }
