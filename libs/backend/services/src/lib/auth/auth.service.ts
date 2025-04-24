@@ -126,36 +126,8 @@ export class AuthService {
     return token;
   }
 
-  //* Update 2FA Secret Code *//
-  async updateTwoFactorSecret(
-    userId: string,
-    secret: string,
-  ): Promise<IUser | null> {
-    return this.userModel.findByIdAndUpdate(
-      userId,
-      {
-        twoFactorSecret: secret,
-      },
-      {
-        new: true,
-      },
-    );
-  }
-
-  //* Update 2FA Enable *//
-  async updateTwoFactorEnable(userId: string): Promise<IUser | null> {
-    return this.userModel.findByIdAndUpdate(
-      userId,
-      {
-        isTwoFactorEnabled: true,
-      },
-      {
-        new: true,
-      },
-    );
-  }
-
   //* Find User By Email *//
+  //TODO - убрать нахер эти 2 метода поиска user-а. Они никаким боком не торкаются модуля Auth. Они должны быть в User
   async findUserByEmail(email: string): Promise<IUser | null> {
     return this.userModel.findOne({ email });
   }
