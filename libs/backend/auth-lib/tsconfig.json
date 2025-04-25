@@ -17,6 +17,9 @@
     },
     {
       "path": "../configs"
+    },
+    {
+      "path": "../two-fa-lib"
     }
   ]
 }

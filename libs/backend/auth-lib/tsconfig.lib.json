@@ -5,7 +5,8 @@
       "@shared": ["./libs/backend/shared/src"],
       "@get-env": ["./libs/backend/get-env/src"],
       "@models": ["./libs/backend/models/src"],
-      "@configs": ["./libs/backend/configs/src"]
+      "@configs": ["./libs/backend/configs/src"],
+      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
     },
     "rootDir": "src",
     "outDir": "dist",
@@ -34,6 +35,9 @@
     },
     {
       "path": "../configs/tsconfig.lib.json"
+    },
+    {
+      "path": "../two-fa-lib/tsconfig.lib.json"
     }
   ]
 }
