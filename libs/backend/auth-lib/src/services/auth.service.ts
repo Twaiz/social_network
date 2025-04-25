@@ -15,6 +15,7 @@ import type { Transporter } from 'nodemailer';
 import { addHours } from 'date-fns';
 
 import {
+  CONFIRM_EMAIL_TOKEN_INVALID,
   NOT_FOUND_2FA_CODE,
   USER_INVALID_PASSWORD,
   USER_NOT_FOUND,
@@ -119,6 +120,23 @@ export class AuthService {
   }
 
   //* Email Confirmation *//
+  async confirmEmail(user: IUser): Promise<void> {
+    const userByConfirmEmail = await this.userModel.findOneAndUpdate(
+      {
+        emailConfirmToken: user.emailConfirmToken,
+        emailExpiresToken: { $gt: new Date() },
+      },
+      {
+        isEmailConfirm: true,
+        emailConfirmToken: undefined,
+        emailExpiresToken: undefined,
+      },
+    );
+
+    if (!userByConfirmEmail) {
+      throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
+    }
+  }
 
   //* Generate Email Token *//
   async generateEmailToken(user: IUser): Promise<void> {
