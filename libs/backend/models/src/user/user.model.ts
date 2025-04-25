@@ -58,6 +58,7 @@ export const UserSchema = new Schema<IUser>(
     },
     twoFactorSecret: {
       type: String,
+      select: false,
     },
   },
   {
@@ -69,4 +70,11 @@ export const UserSchema = new Schema<IUser>(
 
 UserSchema.virtual('fullName').get(function (this: IUser) {
   return `${this.firstName} ${this.secondName}`;
+});
+
+UserSchema.set('toJSON', {
+  transform: (_doc, ret) => {
+    ret.twoFactorSecret = undefined;
+    return ret;
+  },
 });
