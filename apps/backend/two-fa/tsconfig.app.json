@@ -3,12 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@bootstrap": ["./libs/backend/bootstrap/src"],
-      "@interfaces": ["./libs/backend/interfaces/src"],
-      "@guards": ["./libs/backend/guards/src"],
-      "@services": ["./libs/backend/services/src"],
-      "@modules": ["./libs/backend/modules/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"],
-      "@shared": ["./libs/backend/shared/src"]
+      "@shared": ["./libs/backend/shared/src"],
+      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
     },
     "outDir": "dist",
     "types": ["node"],

@@ -2,27 +2,17 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@configs": ["./libs/backend/configs/src"],
-      "@interfaces": ["./libs/backend/interfaces/src"],
-      "@jwt-utils": ["./libs/backend/jwt-utils/src"],
-      "@enums": ["./libs/backend/enums/src"],
-      "@get-env": ["./libs/backend/get-env/src"],
-      "@decorators": ["./libs/backend/decorators/src"],
-      "@guards": ["./libs/backend/guards/src"],
       "@bootstrap": ["./libs/backend/bootstrap/src"],
-      "@services": ["./libs/backend/services/src"],
-      "@dtos": ["./libs/backend/dtos/src"],
-      "@modules": ["./libs/backend/modules/src"],
+      "@configs": ["./libs/backend/configs/src"],
+      "@get-env": ["./libs/backend/get-env/src"],
+      "@shared": ["./libs/backend/shared/src"],
       "@auth-lib": ["./libs/backend/auth-lib/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"],
-      "@shared": ["./libs/backend/shared/src"]
+      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
     },
     "outDir": "dist",
     "types": ["node"],
     "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "target": "es2021"
   },
   "include": ["src/**/*.ts"],

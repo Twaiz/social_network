@@ -2,8 +2,6 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@enums": ["./libs/backend/enums/src"],
-      "@interfaces": ["./libs/backend/interfaces/src"],
       "@shared": ["./libs/backend/shared/src"]
     },
     "rootDir": "src",
