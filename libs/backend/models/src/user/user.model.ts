@@ -66,11 +66,11 @@ export const UserSchema = new Schema<IUser>(
       select: false,
     },
     emailConfirmToken: {
-      type: String,
+      type: String || undefined,
       select: false,
     },
     emailExpiresToken: {
-      type: Date,
+      type: Date || undefined,
     },
   },
   {
