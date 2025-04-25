@@ -21,12 +21,6 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../enums/tsconfig.lib.json"
-    },
-    {
-      "path": "../interfaces/tsconfig.lib.json"
-    },
-    {
       "path": "../shared/tsconfig.lib.json"
     }
   ]

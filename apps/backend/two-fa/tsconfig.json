@@ -4,13 +4,10 @@
   "include": [],
   "references": [
     {
-      "path": "../../../libs/backend/modules"
+      "path": "../../../libs/backend/two-fa-lib"
     },
     {
       "path": "../../../libs/backend/bootstrap"
-    },
-    {
-      "path": "../../../libs/backend/two-fa-lib"
     },
     {
       "path": "./tsconfig.app.json"

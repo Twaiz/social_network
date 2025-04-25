@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@auth-lib": ["./libs/backend/auth-lib/src"],
       "@bootstrap": ["./libs/backend/bootstrap/src"],
       "@configs": ["./libs/backend/configs/src"],
       "@controllers": ["./libs/backend/controllers/src"],
@@ -16,8 +17,7 @@
       "@modules": ["./libs/backend/modules/src"],
       "@services": ["./libs/backend/services/src"],
       "@shared": ["./libs/backend/shared/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"],
-      "@auth-lib": ["./libs/backend/auth-lib/src"]
+      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
     },
     "composite": true,
     "declarationMap": true,

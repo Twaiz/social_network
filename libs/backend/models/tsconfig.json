@@ -4,16 +4,10 @@
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "../enums"
-    },
-    {
-      "path": "../interfaces"
-    },
-    {
       "path": "../shared"
+    },
+    {
+      "path": "./tsconfig.lib.json"
     }
   ]
 }

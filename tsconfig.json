@@ -13,40 +13,13 @@
       "path": "./libs/backend/configs"
     },
     {
-      "path": "./libs/backend/jwt-utils"
-    },
-    {
-      "path": "./libs/backend/interfaces"
-    },
-    {
-      "path": "./libs/backend/enums"
-    },
-    {
       "path": "./libs/backend/get-env"
-    },
-    {
-      "path": "./libs/backend/decorators"
-    },
-    {
-      "path": "./libs/backend/guards"
     },
     {
       "path": "./apps/backend/two-fa"
     },
     {
       "path": "./libs/backend/bootstrap"
-    },
-    {
-      "path": "./libs/backend/services"
-    },
-    {
-      "path": "./libs/backend/dtos"
-    },
-    {
-      "path": "./libs/backend/modules"
-    },
-    {
-      "path": "./libs/backend/controllers"
     },
     {
       "path": "./libs/backend/models"
@@ -59,9 +32,6 @@
     },
     {
       "path": "./libs/backend/shared"
-    },
-    {
-      "path": "./libs/backend/configs"
     }
   ]
 }
