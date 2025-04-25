@@ -1,9 +1,9 @@
-import { Body, Controller, Logger, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 
 import { TwoFaService } from '../services/two-fa.service';
 import { Enable2FADto } from '../dtos/enable-2FA.dto';
 
-import { JwtAuthGuard, type IExpressRequest } from '@shared';
+import { JwtAuthGuard, type AuthenticatedRequest } from '@shared';
 
 @Controller('two-fa')
 export class TwoFaController {
@@ -11,16 +11,12 @@ export class TwoFaController {
 
   @Post('generate')
   @UseGuards(JwtAuthGuard)
-  async generate2FASecret(@Req() req: IExpressRequest): Promise<{
+  async generate2FASecret(@Req() req: AuthenticatedRequest): Promise<{
     secret: string;
     otpauthUrl: string;
     qrCodeDataUrl: string;
   }> {
     const user = req.user;
-    if (!user) {
-      Logger.error('Не найден User в Request');
-      process.exit(1);
-    }
 
     return this.twoFaService.generateTwoFactorSecret(user);
   }
@@ -28,7 +24,7 @@ export class TwoFaController {
   @Post('enable')
   @UseGuards(JwtAuthGuard)
   async enable2FA(
-    @Req() req: IExpressRequest,
+    @Req() req: AuthenticatedRequest,
     @Body() token: Enable2FADto,
   ): Promise<{
     status: string;
@@ -37,13 +33,6 @@ export class TwoFaController {
   }> {
     const { code } = token;
     const user = req.user;
-
-    if (!user) {
-      Logger.error('Не найден User в Request');
-      process.exit(1);
-    }
-
-    console.log(code);
 
     return this.twoFaService.enableTwoFactor(user, code);
   }
