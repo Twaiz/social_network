@@ -16,7 +16,8 @@
       "@modules": ["./libs/backend/modules/src"],
       "@services": ["./libs/backend/services/src"],
       "@shared": ["./libs/backend/shared/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
+      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"],
+      "@auth-lib": ["./libs/backend/auth-lib/src"]
     },
     "composite": true,
     "declarationMap": true,
