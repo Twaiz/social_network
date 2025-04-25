@@ -3,20 +3,29 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
+import { randomBytes } from 'node:crypto';
 import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
+import type { Transporter } from 'nodemailer';
+import { addHours } from 'date-fns';
 
-import { NOT_FOUND_2FA_CODE, USER_INVALID_PASSWORD } from '../auth.constants';
+import {
+  NOT_FOUND_2FA_CODE,
+  USER_INVALID_PASSWORD,
+  USER_NOT_FOUND,
+} from '../auth.constants';
 import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
 import { LoginDto } from '../dtos/login.dto';
 
 import { TwoFaService } from '@two-fa-lib';
 import { IUser } from '@shared';
 import { GetEnv } from '@get-env';
+import { sendEmailConfirmation } from '../utils/sendEmailConfirmation';
 
 interface IJwtPayload {
   _id: string;
@@ -39,6 +48,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     @Inject(forwardRef(() => TwoFaService))
     private readonly twoFaService: TwoFaService,
+    private readonly transporter: Transporter,
   ) {}
 
   //* Create User (Register) *//
@@ -106,6 +116,27 @@ export class AuthService {
     });
 
     return token;
+  }
+
+  //* Email Confirmation *//
+
+  //* Generate Email Token *//
+  async generateEmailToken(user: IUser): Promise<void> {
+    const emailConfirmToken = randomBytes(32).toString('hex');
+    const emailExpiresToken = addHours(new Date(), 24);
+
+    const userByConfirmEmail = await this.userModel.findByIdAndUpdate(
+      user._id,
+      {
+        emailConfirmToken,
+        emailExpiresToken,
+      },
+    );
+    if (!userByConfirmEmail) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
+
+    sendEmailConfirmation(this.transporter, emailConfirmToken, user.email);
   }
 
   //* Get Jwt Token *//
