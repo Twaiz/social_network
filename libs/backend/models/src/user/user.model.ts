@@ -65,6 +65,13 @@ export const UserSchema = new Schema<IUser>(
       type: String,
       select: false,
     },
+    emailConfirmToken: {
+      type: String,
+      select: false,
+    },
+    emailExpiresToken: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

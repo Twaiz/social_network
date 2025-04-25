@@ -12,4 +12,6 @@ export interface IUser {
   isTwoFactorEnabled: boolean;
   isEmailConfirm: boolean;
   twoFactorSecret: string;
+  emailConfirmToken: string;
+  emailExpiresToken: Date;
 }
