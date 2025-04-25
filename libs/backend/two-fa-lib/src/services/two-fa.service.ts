@@ -9,9 +9,9 @@ import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
-import { INVALID_2FA_CODE, USER_NOT_FOUND } from './two-fa.constants';
+import { INVALID_2FA_CODE, USER_NOT_FOUND } from '../two-fa.constants';
 
-import { IUser } from '@interfaces';
+import { IUser } from '@shared';
 
 @Injectable()
 export class TwoFaService {

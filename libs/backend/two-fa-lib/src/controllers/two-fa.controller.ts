@@ -1,10 +1,9 @@
 import { Body, Controller, Logger, Post, Req, UseGuards } from '@nestjs/common';
 
-import { TwoFaService } from '@services';
-import { Enable2FADto } from '@dtos';
+import { TwoFaService } from '../services/two-fa.service';
+import { Enable2FADto } from '../dtos/enable-2FA.dto';
 
-import { JwtAuthGuard } from '@guards';
-import type { IExpressRequest } from '@interfaces';
+import { JwtAuthGuard, type IExpressRequest } from '@shared';
 
 @Controller('two-fa')
 export class TwoFaController {
