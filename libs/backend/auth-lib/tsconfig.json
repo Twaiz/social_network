@@ -1,0 +1,25 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../get-env"
+    },
+    {
+      "path": "../models"
+    },
+    {
+      "path": "../configs"
+    },
+    {
+      "path": "../two-fa-lib"
+    }
+  ]
+}

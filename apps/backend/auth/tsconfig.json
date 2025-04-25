@@ -4,7 +4,7 @@
   "include": [],
   "references": [
     {
-      "path": "../../../libs/backend/modules"
+      "path": "../../../libs/backend/auth-lib"
     },
     {
       "path": "../../../libs/backend/bootstrap"

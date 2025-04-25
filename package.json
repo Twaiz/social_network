@@ -104,6 +104,10 @@
     "libs/backend/dtos",
     "libs/backend/modules",
     "libs/backend/controllers",
-    "libs/backend/models"
+    "libs/backend/models",
+    "libs/backend/auth-lib",
+    "libs/backend/two-fa-lib",
+    "libs/backend/shared",
+    "libs/backend/configs"
   ]
 }

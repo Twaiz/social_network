@@ -1,1 +1,1 @@
-export { bootstrap } from './lib/bootstrap';
+export { bootstrap } from './bootstrap';

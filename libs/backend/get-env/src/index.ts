@@ -1,1 +1,1 @@
-export { GetEnv } from './lib/get-env';
+export { GetEnv } from './get-env';

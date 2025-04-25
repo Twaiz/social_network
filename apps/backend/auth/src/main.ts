@@ -1,4 +1,4 @@
 import { bootstrap } from '@bootstrap';
-import { AuthModule } from '@modules';
+import { AuthModule } from '@auth-lib';
 
 bootstrap(AuthModule);
