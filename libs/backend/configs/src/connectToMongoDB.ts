@@ -1,7 +1,27 @@
+import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModuleOptions } from '@nestjs/mongoose';
 
+import {
+  DB_CONNECTION_FAILED,
+  DB_CONNECTION_SUCCESS,
+} from './configs.constants';
+
 import { GetEnv } from '@get-env';
+
+export const connectToMongoDB = async (
+  configService: ConfigService,
+): Promise<MongooseModuleOptions> => {
+  const mongoConfig = await getMongoConfig(configService);
+
+  if (!mongoConfig) {
+    Logger.error(DB_CONNECTION_FAILED, 'MongoDB');
+    process.exit(1);
+  }
+
+  Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB');
+  return mongoConfig;
+};
 
 export const getMongoConfig = async (
   configService: ConfigService,

@@ -1,2 +1,2 @@
-export * from './lib/connectToMongoDB';
-export * from './lib/getJwtConfig';
+export * from './connectToMongoDB';
+export * from './getJwtConfig';
