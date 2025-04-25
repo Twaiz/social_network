@@ -3,8 +3,7 @@ import { isEmail } from 'validator';
 
 import { EMAIL_VALIDATION_ERROR } from './user.constants';
 
-import { IUser } from '@interfaces';
-import { EUserRole } from '@enums';
+import { IUser, EUserRole } from '@shared';
 
 export const UserSchema = new Schema<IUser>(
   {
