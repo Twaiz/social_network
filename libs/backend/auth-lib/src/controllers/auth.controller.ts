@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Post,
   UseGuards,
   UsePipes,
@@ -77,7 +78,7 @@ export class AuthController {
     }
 
     if (!user) {
-      throw new BadRequestException(USER_NOT_FOUND);
+      throw new NotFoundException(USER_NOT_FOUND);
     }
 
     const token = await this.authService.login({
