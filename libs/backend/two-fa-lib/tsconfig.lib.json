@@ -1,7 +1,11 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "@models": ["./libs/backend/models/src"],
+      "@configs": ["./libs/backend/configs/src"],
+      "@shared": ["./libs/backend/shared/src"]
+    },
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
@@ -21,6 +25,9 @@
     },
     {
       "path": "../configs/tsconfig.lib.json"
+    },
+    {
+      "path": "../shared/tsconfig.lib.json"
     }
   ]
 }
