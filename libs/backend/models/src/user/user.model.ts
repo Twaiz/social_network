@@ -56,6 +56,11 @@ export const UserSchema = new Schema<IUser>(
       required: true,
       default: false,
     },
+    isEmailConfirm: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     twoFactorSecret: {
       type: String,
       select: false,

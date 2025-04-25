@@ -10,5 +10,6 @@ export interface IUser {
   secondName: string;
   isProfileComplete: boolean;
   isTwoFactorEnabled: boolean;
+  isEmailConfirm: boolean;
   twoFactorSecret: string;
 }
