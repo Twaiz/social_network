@@ -1,15 +1,10 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
-import { INVALID_2FA_CODE, USER_NOT_FOUND } from '../two-fa.constants';
+import { INVALID_2FA_CODE } from '../two-fa.constants';
 
 import { IUser } from '@shared';
 
@@ -28,20 +23,9 @@ export class TwoFaService {
     const otpauthUrl = authenticator.keyuri(user.email, serviceName, secret);
     const qrCodeDataUrl = await qrcode.toDataURL(otpauthUrl);
 
-    const updatedUser = await this.userModel.findByIdAndUpdate(
-      user._id,
-      {
-        twoFactorSecret: secret,
-      },
-      {
-        new: true,
-      },
-    );
-
-    if (!updatedUser) {
-      Logger.warn(USER_NOT_FOUND);
-      throw new NotFoundException(USER_NOT_FOUND);
-    }
+    await this.userModel.findByIdAndUpdate(user._id, {
+      twoFactorSecret: secret,
+    });
 
     return {
       secret,
@@ -50,36 +34,12 @@ export class TwoFaService {
     };
   }
 
-  async enableTwoFactor(
-    user: IUser,
-    code: string,
-  ): Promise<{
-    status: string;
-    code: number;
-    message: string;
-  }> {
+  async enableTwoFactor(user: IUser, code: string): Promise<void> {
     this.verifyTwoFactorCode(user, code);
 
-    const updatedUser = await this.userModel.findByIdAndUpdate(
-      user._id,
-      {
-        isTwoFactorEnabled: true,
-      },
-      {
-        new: true,
-      },
-    );
-
-    if (!updatedUser) {
-      Logger.warn(USER_NOT_FOUND);
-      throw new NotFoundException(USER_NOT_FOUND);
-    }
-
-    return {
-      status: 'success',
-      code: 200,
-      message: '✅ 2FA Успешно вклюёчена',
-    };
+    await this.userModel.findByIdAndUpdate(user._id, {
+      isTwoFactorEnabled: true,
+    });
   }
 
   async verifyTwoFactorCode(user: IUser, code: string): Promise<void> {
