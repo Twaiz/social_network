@@ -1,5 +1,13 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 
+import { SUCCESS_2FA_ENABLED } from '../two-fa.constants';
 import { TwoFaService } from '../services/two-fa.service';
 import { Enable2FADto } from '../dtos/enable-2FA.dto';
 
@@ -16,24 +24,20 @@ export class TwoFaController {
     otpauthUrl: string;
     qrCodeDataUrl: string;
   }> {
-    const user = req.user;
-
-    return this.twoFaService.generateTwoFactorSecret(user);
+    return this.twoFaService.generateTwoFactorSecret(req.user);
   }
 
+  @HttpCode(200)
   @Post('enable')
   @UseGuards(JwtAuthGuard)
   async enable2FA(
     @Req() req: AuthenticatedRequest,
-    @Body() token: Enable2FADto,
+    @Body() { code }: Enable2FADto,
   ): Promise<{
-    status: string;
-    code: number;
     message: string;
   }> {
-    const { code } = token;
-    const user = req.user;
+    await this.twoFaService.enableTwoFactor(req.user, code);
 
-    return this.twoFaService.enableTwoFactor(user, code);
+    return { message: SUCCESS_2FA_ENABLED };
   }
 }
