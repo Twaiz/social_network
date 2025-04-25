@@ -20,6 +20,7 @@ module.exports = {
         '../../../libs/backend/controllers/src',
       ),
       '@models': resolve(__dirname, '../../../libs/backend/models/src'),
+      '@auth-lib': resolve(__dirname, '../../../libs/backend/auth-lib/src'),
     },
   },
   output: {
