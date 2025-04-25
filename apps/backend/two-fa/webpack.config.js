@@ -20,6 +20,7 @@ module.exports = {
       '@configs': resolve(__dirname, '../../../libs/backend/configs/src'),
       '@enums': resolve(__dirname, '../../../libs/backend/enums/src'),
       '@dtos': resolve(__dirname, '../../../libs/backend/dtos/src'),
+      '@two-fa-lib': resolve(__dirname, '../../../libs/backend/two-fa-lib/src'),
     },
   },
   output: {

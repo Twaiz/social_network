@@ -10,6 +10,9 @@
       "path": "../../../libs/backend/bootstrap"
     },
     {
+      "path": "../../../libs/backend/two-fa-lib"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
