@@ -1,19 +1,21 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
+import { InjectModel } from '@nestjs/mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { AuthService } from '@auth-lib'; //TODO Ниже описал задачу. Никогда так не тупите...
+import { Model } from 'mongoose';
 
 import { IUser } from '../interfaces/user.interface';
+import { findUserByEmail } from '../utils/handlerController';
+import { USER_NOT_FOUND } from './strategies.constants';
+
 import { GetEnv } from '@get-env';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     configService: ConfigService,
-    private readonly authService: AuthService,
+    @InjectModel('User') private readonly userModel: Model<IUser>,
   ) {
     const jwtSecret = GetEnv.getJwtSecret(configService);
 
@@ -25,9 +27,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: { email: string }): Promise<IUser> {
-    const user = await this.authService.findUserByEmail(payload.email); //TODO Вынести методы поиска и прочего в отдельную либу/проект, чтобы не было циклических ошибок импортов.
+    const user = await findUserByEmail(this.userModel, payload.email);
     if (!user) {
-      Logger.error('❌ Пользователь не найден');
+      Logger.error(USER_NOT_FOUND);
       process.exit(1);
     }
 
