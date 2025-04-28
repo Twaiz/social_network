@@ -11,6 +11,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
@@ -25,6 +27,7 @@ import {
 import { AuthService } from '../services/auth.service';
 import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
 import { UserLoginCredentialsDto } from '../dtos/user-login-credentials.dto';
+import { ConfirmEmail } from '../dtos/confirmEmail.dto';
 
 import {
   IUser,
@@ -33,11 +36,15 @@ import {
   JwtAuthGuard,
   RolesGuard,
   type AuthenticatedRequest,
+  findUserByEmail,
+  findUserByLogin,
 } from '@shared';
-import { ConfirmEmail } from '../dtos/confirmEmail.dto';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+  ) {}
 
   //* Register *//
   @Post('register')
@@ -47,8 +54,8 @@ export class AuthController {
   ): Promise<{ user: IUser; token: string }> {
     const { email, login } = userRegisterCredentialsDto;
 
-    const userByEmail = await this.authService.findUserByEmail(email);
-    const userByLogin = await this.authService.findUserByLogin(login);
+    const userByEmail = await findUserByEmail(this.userModel, email);
+    const userByLogin = await findUserByLogin(this.userModel, login);
 
     const emailExists = !!userByEmail;
     const loginExists = !!userByLogin;
@@ -84,9 +91,9 @@ export class AuthController {
     }
 
     if (email) {
-      user = await this.authService.findUserByEmail(email);
+      user = await findUserByEmail(this.userModel, email);
     } else if (login) {
-      user = await this.authService.findUserByLogin(login);
+      user = await findUserByLogin(this.userModel, login);
     }
 
     if (!user) {
