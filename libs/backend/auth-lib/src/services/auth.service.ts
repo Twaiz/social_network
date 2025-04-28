@@ -11,7 +11,6 @@ import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'node:crypto';
 import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
-import type { Transporter } from 'nodemailer';
 import { addHours } from 'date-fns';
 
 import {
@@ -49,7 +48,6 @@ export class AuthService {
     private readonly configService: ConfigService,
     @Inject(forwardRef(() => TwoFaService))
     private readonly twoFaService: TwoFaService,
-    private readonly transporter: Transporter,
   ) {}
 
   //* Create User (Register) *//
@@ -154,7 +152,7 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    sendEmailConfirmation(this.transporter, emailConfirmToken, user.email);
+    sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
 
   //* Get Jwt Token *//
