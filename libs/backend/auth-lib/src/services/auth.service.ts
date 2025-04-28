@@ -3,6 +3,7 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -119,17 +120,21 @@ export class AuthService {
 
   //* Email Confirmation *//
   async confirmEmail(token: string): Promise<void> {
-    const userByConfirmEmail = await this.userModel.findOneAndUpdate(
-      {
-        emailConfirmToken: token,
-        emailExpiresToken: { $gt: new Date() },
-      },
-      {
-        isEmailConfirm: true,
-        emailConfirmToken: null, //TODO сделать так, чтобы эти поля обновлялись до null или undeifned
-        emailExpiresToken: null, //TODO сделать так, чтобы эти поля обновлялись до null или undeifned
-      },
-    );
+    const userByConfirmEmail = await this.userModel
+      .findOneAndUpdate(
+        {
+          emailConfirmToken: token,
+          emailExpiresToken: { $gt: new Date() },
+        },
+        {
+          isEmailConfirm: true,
+          emailConfirmToken: null, //TODO сделать так, чтобы эти поля обновлялись до null или undeifned
+          emailExpiresToken: null, //TODO сделать так, чтобы эти поля обновлялись до null или undeifned
+        },
+      )
+      .select('+emailConfirmToken');
+
+    Logger.log('userByConfirmEmail', userByConfirmEmail);
 
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
