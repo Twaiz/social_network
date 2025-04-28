@@ -174,17 +174,6 @@ export class AuthService {
     return token;
   }
 
-  //* Find User By Email *//
-  //TODO - убрать нахер эти 2 метода поиска user-а. Они никаким боком не торкаются модуля Auth. Они должны быть в User
-  async findUserByEmail(email: string): Promise<IUser | null> {
-    return this.userModel.findOne({ email });
-  }
-
-  //* Find User By Login *//
-  async findUserByLogin(login: string): Promise<IUser | null> {
-    return this.userModel.findOne({ login });
-  }
-
   //* Get Message (For e2e Test) *//
   getMessage(): { message: string } {
     return {
