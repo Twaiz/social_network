@@ -3,9 +3,10 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
-import { AuthService } from '../services/auth.service';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AuthService } from '@auth-lib'; //TODO Ниже описал задачу. Никогда так не тупите...
 
-import { IUser } from '@shared';
+import { IUser } from '../interfaces/user.interface';
 import { GetEnv } from '@get-env';
 
 @Injectable()
@@ -24,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: { email: string }): Promise<IUser> {
-    const user = await this.authService.findUserByEmail(payload.email);
+    const user = await this.authService.findUserByEmail(payload.email); //TODO Вынести методы поиска и прочего в отдельную либу/проект, чтобы не было циклических ошибок импортов.
     if (!user) {
       Logger.error('❌ Пользователь не найден');
       process.exit(1);
