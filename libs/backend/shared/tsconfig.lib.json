@@ -18,9 +18,6 @@
   "references": [
     {
       "path": "../get-env/tsconfig.lib.json"
-    },
-    {
-      "path": "../auth-lib/tsconfig.lib.json"
     }
   ]
 }

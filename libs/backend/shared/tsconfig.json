@@ -7,9 +7,6 @@
       "path": "../get-env"
     },
     {
-      "path": "../auth-lib"
-    },
-    {
       "path": "./tsconfig.lib.json"
     }
   ]
