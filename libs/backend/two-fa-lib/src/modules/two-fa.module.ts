@@ -6,7 +6,10 @@ import { TwoFaController } from '../controllers/two-fa.controller';
 import { TwoFaService } from '../services/two-fa.service';
 
 import { connectToMongoDB } from '@configs';
-import { UserSchema } from '@models';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { UserSchema } from '@models'; //TODO Убрать нахер это
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { JwtStrategy } from '@shared'; //TODO Убрать нахер это
 
 @Module({
   imports: [
@@ -19,7 +22,7 @@ import { UserSchema } from '@models';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   controllers: [TwoFaController],
-  providers: [TwoFaService],
+  providers: [TwoFaService, JwtStrategy],
   exports: [TwoFaService],
 })
 export class TwoFaModule {}
