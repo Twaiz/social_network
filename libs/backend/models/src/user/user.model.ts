@@ -90,3 +90,10 @@ UserSchema.set('toJSON', {
     return ret;
   },
 });
+
+UserSchema.set('toJSON', {
+  transform: (_doc, ret) => {
+    ret.emailConfirmToken = undefined;
+    return ret;
+  },
+});
