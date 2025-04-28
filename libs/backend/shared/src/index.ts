@@ -5,3 +5,4 @@ export * from './guards/roles.guard';
 export * from './interfaces/authenticated-request.interface';
 export * from './interfaces/user.interface';
 export * from './strategies/jwt.strategy';
+export * from './utils/handlerController';
