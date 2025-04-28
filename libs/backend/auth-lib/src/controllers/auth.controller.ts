@@ -19,6 +19,7 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   USER_NOT_FOUND,
   CONFIRM_EMAIL_TOKEN_GENERATE,
+  CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from '../auth.constants';
 
 import { AuthService } from '../services/auth.service';
@@ -33,6 +34,7 @@ import {
   RolesGuard,
   type AuthenticatedRequest,
 } from '@shared';
+import { ConfirmEmail } from '../dtos/confirmEmail.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -112,6 +114,19 @@ export class AuthController {
     await this.authService.generateEmailToken(user);
 
     return { message: CONFIRM_EMAIL_TOKEN_GENERATE };
+  }
+
+  //* Confirm Email Token *//
+  @HttpCode(200)
+  @Post('confirm-email')
+  async confirmEmail(
+    @Body() emailConfirmToken: ConfirmEmail,
+  ): Promise<{ message: string }> {
+    const { token } = emailConfirmToken;
+
+    await this.authService.confirmEmail(token);
+
+    return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
   }
 
   //* Test Route For Testing Roles Guard (Admin) *//
