@@ -11,10 +11,9 @@ export const sendEmailConfirmation = async (
   const transporter = nodemailer.createTransport({
     host: configService.get<string>('MAIL_HOST'),
     port: configService.get<number>('MAIL_PORT'),
-    secure: configService.get<string>('MAIL_SECURE') === 'TRUE',
     auth: {
-      user: configService.get<string>('MAIL_USER'),
-      pass: configService.get<string>('MAIL_PASS'),
+      user: configService.get<string>('MAIL_USERNAME'),
+      pass: configService.get<string>('MAIL_PASSWORD'),
     },
   });
 
