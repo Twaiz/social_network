@@ -1,11 +1,22 @@
-import { Transporter } from 'nodemailer';
+import { ConfigService } from '@nestjs/config';
+import nodemailer from 'nodemailer';
 
 export const sendEmailConfirmation = async (
-  transporter: Transporter,
+  configService: ConfigService,
   token: string,
   email: string,
 ): Promise<void> => {
   const url = `https://social-network.com/confirm-email?token=${token}`;
+
+  const transporter = nodemailer.createTransport({
+    host: configService.get<string>('MAIL_HOST'),
+    port: configService.get<number>('MAIL_PORT'),
+    secure: configService.get<string>('MAIL_SECURE') === 'TRUE',
+    auth: {
+      user: configService.get<string>('MAIL_USER'),
+      pass: configService.get<string>('MAIL_PASS'),
+    },
+  });
 
   const htmlContent = `
     <p>Привет!</p>
