@@ -21,11 +21,11 @@ import {
 } from '../auth.constants';
 import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
 import { LoginDto } from '../dtos/login.dto';
+import { sendEmailConfirmation } from '../utils/sendEmailConfirmation';
 
 import { TwoFaService } from '@two-fa-lib';
 import { IUser } from '@shared';
 import { GetEnv } from '@get-env';
-import { sendEmailConfirmation } from '../utils/sendEmailConfirmation';
 
 interface IJwtPayload {
   _id: string;
