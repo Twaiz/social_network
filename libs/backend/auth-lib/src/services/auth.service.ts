@@ -126,8 +126,8 @@ export class AuthService {
       },
       {
         isEmailConfirm: true,
-        emailConfirmToken: undefined,
-        emailExpiresToken: undefined,
+        emailConfirmToken: null, //TODO сделать так, чтобы эти поля обновлялись до null или undeifned
+        emailExpiresToken: null, //TODO сделать так, чтобы эти поля обновлялись до null или undeifned
       },
     );
 
