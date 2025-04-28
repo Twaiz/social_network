@@ -3,8 +3,10 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   NotFoundException,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -16,13 +18,21 @@ import {
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
   USER_NOT_FOUND,
+  CONFIRM_EMAIL_TOKEN_GENERATE,
 } from '../auth.constants';
 
 import { AuthService } from '../services/auth.service';
 import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
 import { UserLoginCredentialsDto } from '../dtos/user-login-credentials.dto';
 
-import { IUser, Roles, EUserRole, JwtAuthGuard, RolesGuard } from '@shared';
+import {
+  IUser,
+  Roles,
+  EUserRole,
+  JwtAuthGuard,
+  RolesGuard,
+  type AuthenticatedRequest,
+} from '@shared';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -88,6 +98,20 @@ export class AuthController {
     });
 
     return { token };
+  }
+
+  //* Generate Email Token *//
+  @HttpCode(200)
+  @Post('generate-email-token')
+  @UseGuards(JwtAuthGuard)
+  async generateEmailToken(
+    @Req() req: AuthenticatedRequest,
+  ): Promise<{ message: string }> {
+    const user = req.user;
+
+    await this.authService.generateEmailToken(user);
+
+    return { message: CONFIRM_EMAIL_TOKEN_GENERATE };
   }
 
   //* Test Route For Testing Roles Guard (Admin) *//
