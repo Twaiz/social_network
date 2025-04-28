@@ -118,10 +118,10 @@ export class AuthService {
   }
 
   //* Email Confirmation *//
-  async confirmEmail(user: IUser): Promise<void> {
+  async confirmEmail(token: string): Promise<void> {
     const userByConfirmEmail = await this.userModel.findOneAndUpdate(
       {
-        emailConfirmToken: user.emailConfirmToken,
+        emailConfirmToken: token,
         emailExpiresToken: { $gt: new Date() },
       },
       {
