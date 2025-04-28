@@ -1,6 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
+    //TODO Убрать у всех файлах tsconfig.lib.json в compilerOptions массив paths. Без него и так всё работает :)
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
@@ -14,5 +15,12 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "references": []
+  "references": [
+    {
+      "path": "../get-env/tsconfig.lib.json"
+    },
+    {
+      "path": "../auth-lib/tsconfig.lib.json"
+    }
+  ]
 }

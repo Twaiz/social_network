@@ -4,6 +4,12 @@
   "include": [],
   "references": [
     {
+      "path": "../get-env"
+    },
+    {
+      "path": "../auth-lib"
+    },
+    {
       "path": "./tsconfig.lib.json"
     }
   ]
