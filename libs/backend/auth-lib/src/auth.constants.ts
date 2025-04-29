@@ -1,4 +1,3 @@
-export const USER_NOT_FOUND = '❌ Такого пользователя не найдено';
 export const USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN =
   '❌ Пользователь с таким email и login уже зарегистрирован.';
 export const USER_ALREADY_REGISTERED_WITH_EMAIL =
