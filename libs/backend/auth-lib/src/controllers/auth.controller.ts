@@ -3,29 +3,50 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   NotFoundException,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
-  USER_NOT_FOUND,
+  CONFIRM_EMAIL_TOKEN_GENERATE,
+  CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from '../auth.constants';
 
-import { AuthService } from '../services/auth.service';
-import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
-import { UserLoginCredentialsDto } from '../dtos/user-login-credentials.dto';
+import { AuthService } from '../services';
+import {
+  UserLoginCredentialsDto,
+  ConfirmEmail,
+  UserRegisterCredentialsDto,
+} from '../dtos';
 
-import { IUser, Roles, EUserRole, JwtAuthGuard, RolesGuard } from '@shared';
+import {
+  IUser,
+  Roles,
+  EUserRole,
+  JwtAuthGuard,
+  RolesGuard,
+  type AuthenticatedRequest,
+  findUserByEmail,
+  findUserByLogin,
+  USER_NOT_FOUND,
+} from '@shared';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+  ) {}
 
   //* Register *//
   @Post('register')
@@ -35,8 +56,8 @@ export class AuthController {
   ): Promise<{ user: IUser; token: string }> {
     const { email, login } = userRegisterCredentialsDto;
 
-    const userByEmail = await this.authService.findUserByEmail(email);
-    const userByLogin = await this.authService.findUserByLogin(login);
+    const userByEmail = await findUserByEmail(this.userModel, email);
+    const userByLogin = await findUserByLogin(this.userModel, login);
 
     const emailExists = !!userByEmail;
     const loginExists = !!userByLogin;
@@ -72,9 +93,9 @@ export class AuthController {
     }
 
     if (email) {
-      user = await this.authService.findUserByEmail(email);
+      user = await findUserByEmail(this.userModel, email);
     } else if (login) {
-      user = await this.authService.findUserByLogin(login);
+      user = await findUserByLogin(this.userModel, login);
     }
 
     if (!user) {
@@ -88,6 +109,33 @@ export class AuthController {
     });
 
     return { token };
+  }
+
+  //* Generate Email Token *//
+  @HttpCode(200)
+  @Post('generate-email-token')
+  @UseGuards(JwtAuthGuard)
+  async generateEmailToken(
+    @Req() req: AuthenticatedRequest,
+  ): Promise<{ message: string }> {
+    const user = req.user;
+
+    await this.authService.generateEmailToken(user);
+
+    return { message: CONFIRM_EMAIL_TOKEN_GENERATE };
+  }
+
+  //* Confirm Email Token *//
+  @HttpCode(200)
+  @Post('confirm-email')
+  async confirmEmail(
+    @Body() emailConfirmToken: ConfirmEmail,
+  ): Promise<{ message: string }> {
+    const { token } = emailConfirmToken;
+
+    await this.authService.confirmEmail(token);
+
+    return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
   }
 
   //* Test Route For Testing Roles Guard (Admin) *//

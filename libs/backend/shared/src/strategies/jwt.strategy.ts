@@ -1,18 +1,21 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
+import { InjectModel } from '@nestjs/mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
+import { Model } from 'mongoose';
 
-import { AuthService } from '../services/auth.service';
+import { IUser } from '../interfaces';
+import { findUserByEmail } from '../utils';
+import { USER_NOT_FOUND } from '../constants';
 
-import { IUser } from '@shared';
 import { GetEnv } from '@get-env';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     configService: ConfigService,
-    private readonly authService: AuthService,
+    @InjectModel('User') private readonly userModel: Model<IUser>,
   ) {
     const jwtSecret = GetEnv.getJwtSecret(configService);
 
@@ -24,9 +27,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: { email: string }): Promise<IUser> {
-    const user = await this.authService.findUserByEmail(payload.email);
+    const user = await findUserByEmail(this.userModel, payload.email);
     if (!user) {
-      Logger.error('❌ Пользователь не найден');
+      Logger.error(USER_NOT_FOUND);
       process.exit(1);
     }
 

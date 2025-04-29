@@ -1,4 +1,3 @@
-export const USER_NOT_FOUND = '❌ Такого пользователя не найдено';
 export const USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN =
   '❌ Пользователь с таким email и login уже зарегистрирован.';
 export const USER_ALREADY_REGISTERED_WITH_EMAIL =
@@ -15,3 +14,8 @@ export const LOGIN_MAX_LENGTH_ERROR =
 
 export const USER_INVALID_PASSWORD = '❌ Неверный пароль';
 export const NOT_FOUND_2FA_CODE = '❌ Требуется код 2FA';
+
+export const CONFIRM_EMAIL_TOKEN_INVALID = '❌ Неверный или устаревший токен';
+export const CONFIRM_EMAIL_TOKEN_SUCCESS = '✅ Email подтверждён';
+export const CONFIRM_EMAIL_TOKEN_GENERATE =
+  '🧐 Проверьте почту для подтверждения';

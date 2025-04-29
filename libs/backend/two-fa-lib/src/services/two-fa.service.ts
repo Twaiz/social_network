@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
@@ -6,7 +11,7 @@ import * as qrcode from 'qrcode';
 
 import { INVALID_2FA_CODE } from '../two-fa.constants';
 
-import { IUser } from '@shared';
+import { findUserByEmail, IUser, USER_NOT_FOUND } from '@shared';
 
 @Injectable()
 export class TwoFaService {
@@ -35,9 +40,21 @@ export class TwoFaService {
   }
 
   async enableTwoFactor(user: IUser, code: string): Promise<void> {
-    this.verifyTwoFactorCode(user, code);
+    const userWithTwoFactorSecret = await findUserByEmail(
+      this.userModel,
+      user.email,
+      '+twoFactorSecret',
+    );
+    if (!userWithTwoFactorSecret) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
 
-    await this.userModel.findByIdAndUpdate(user._id, {
+    this.verifyTwoFactorCode(userWithTwoFactorSecret, code);
+
+    Logger.log('user', user);
+    Logger.log('userWithTwoFactorSecret', userWithTwoFactorSecret);
+
+    await this.userModel.findByIdAndUpdate(userWithTwoFactorSecret._id, {
       isTwoFactorEnabled: true,
     });
   }

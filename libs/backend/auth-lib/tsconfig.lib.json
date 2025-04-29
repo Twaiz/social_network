@@ -1,13 +1,6 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "paths": {
-      "@shared": ["./libs/backend/shared/src"],
-      "@get-env": ["./libs/backend/get-env/src"],
-      "@models": ["./libs/backend/models/src"],
-      "@configs": ["./libs/backend/configs/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
-    },
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",

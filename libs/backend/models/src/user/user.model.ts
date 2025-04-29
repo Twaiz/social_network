@@ -4,6 +4,7 @@ import { isEmail } from 'validator';
 import { EMAIL_VALIDATION_ERROR } from './user.constants';
 
 import { IUser, EUserRole } from '@shared';
+import { loginToLowerCase } from './loginToLowerCase';
 
 export const UserSchema = new Schema<IUser>(
   {
@@ -23,6 +24,7 @@ export const UserSchema = new Schema<IUser>(
       required: true,
       unique: true,
       trim: true,
+      lowercase: true,
       minlength: 4,
       maxlength: 16,
     },
@@ -56,9 +58,21 @@ export const UserSchema = new Schema<IUser>(
       required: true,
       default: false,
     },
+    isEmailConfirm: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     twoFactorSecret: {
       type: String,
       select: false,
+    },
+    emailConfirmToken: {
+      type: String || undefined,
+      select: false,
+    },
+    emailExpiresToken: {
+      type: Date || undefined,
     },
   },
   {
@@ -68,6 +82,12 @@ export const UserSchema = new Schema<IUser>(
   },
 );
 
+UserSchema.pre('find', loginToLowerCase);
+UserSchema.pre('findOne', loginToLowerCase);
+UserSchema.pre('findOneAndDelete', loginToLowerCase);
+UserSchema.pre('findOneAndReplace', loginToLowerCase);
+UserSchema.pre('findOneAndUpdate', loginToLowerCase);
+
 UserSchema.virtual('fullName').get(function (this: IUser) {
   return `${this.firstName} ${this.secondName}`;
 });
@@ -75,6 +95,7 @@ UserSchema.virtual('fullName').get(function (this: IUser) {
 UserSchema.set('toJSON', {
   transform: (_doc, ret) => {
     ret.twoFactorSecret = undefined;
+    ret.emailConfirmToken = undefined;
     return ret;
   },
 });

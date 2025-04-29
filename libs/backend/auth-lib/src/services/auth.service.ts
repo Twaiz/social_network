@@ -3,19 +3,27 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
+import { randomBytes } from 'node:crypto';
 import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
+import { addHours } from 'date-fns';
 
-import { NOT_FOUND_2FA_CODE, USER_INVALID_PASSWORD } from '../auth.constants';
-import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
-import { LoginDto } from '../dtos/login.dto';
+import {
+  CONFIRM_EMAIL_TOKEN_INVALID,
+  NOT_FOUND_2FA_CODE,
+  USER_INVALID_PASSWORD,
+} from '../auth.constants';
+import { LoginDto, UserRegisterCredentialsDto } from '../dtos';
+import { sendEmailConfirmation } from '../utils';
 
 import { TwoFaService } from '@two-fa-lib';
-import { IUser } from '@shared';
+import { IUser, USER_NOT_FOUND } from '@shared';
 import { GetEnv } from '@get-env';
 
 interface IJwtPayload {
@@ -108,6 +116,48 @@ export class AuthService {
     return token;
   }
 
+  //* Email Confirmation *//
+  async confirmEmail(token: string): Promise<void> {
+    const userByConfirmEmail = await this.userModel
+      .findOneAndUpdate(
+        {
+          emailConfirmToken: token,
+          emailExpiresToken: { $gt: new Date() },
+        },
+        {
+          isEmailConfirm: true,
+          emailConfirmToken: undefined,
+          emailExpiresToken: undefined,
+        },
+      )
+      .select('+emailConfirmToken');
+
+    Logger.log('userByConfirmEmail', userByConfirmEmail);
+
+    if (!userByConfirmEmail) {
+      throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
+    }
+  }
+
+  //* Generate Email Token *//
+  async generateEmailToken(user: IUser): Promise<void> {
+    const emailConfirmToken = randomBytes(32).toString('hex');
+    const emailExpiresToken = addHours(new Date(), 24);
+
+    const userByConfirmEmail = await this.userModel.findByIdAndUpdate(
+      user._id,
+      {
+        emailConfirmToken,
+        emailExpiresToken,
+      },
+    );
+    if (!userByConfirmEmail) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
+
+    sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
+  }
+
   //* Get Jwt Token *//
   async getJwtToken(jwtCreationParams: JwtCreationParams): Promise<string> {
     const { user, jwtSecret, jwtExpiresIn } = jwtCreationParams;
@@ -125,17 +175,6 @@ export class AuthService {
     });
 
     return token;
-  }
-
-  //* Find User By Email *//
-  //TODO - убрать нахер эти 2 метода поиска user-а. Они никаким боком не торкаются модуля Auth. Они должны быть в User
-  async findUserByEmail(email: string): Promise<IUser | null> {
-    return this.userModel.findOne({ email });
-  }
-
-  //* Find User By Login *//
-  async findUserByLogin(login: string): Promise<IUser | null> {
-    return this.userModel.findOne({ login });
   }
 
   //* Get Message (For e2e Test) *//

@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 
 import { SUCCESS_2FA_ENABLED } from '../two-fa.constants';
-import { TwoFaService } from '../services/two-fa.service';
-import { Enable2FADto } from '../dtos/enable-2FA.dto';
+import { TwoFaService } from '../services';
+import { Enable2FADto } from '../dtos';
 
 import { JwtAuthGuard, type AuthenticatedRequest } from '@shared';
 

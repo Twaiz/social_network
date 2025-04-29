@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "start": "npx nx run-many --target=serve --all",
     "prepare": "husky install",
     "serve-auth": "nx serve auth --port 4200",
     "check-all": "npx nx affected -t lint test build"
@@ -36,6 +37,7 @@
     "graphql": "^16.10.0",
     "graphql-ws": "^6.0.4",
     "mongoose": "^8.13.2",
+    "nodemailer": "^6.10.1",
     "otplib": "^12.0.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
@@ -70,6 +72,7 @@
     "@types/jest": "^29.5.14",
     "@types/mongoose": "^5.11.96",
     "@types/node": "~22.14.0",
+    "@types/nodemailer": "^6.4.17",
     "@types/passport-jwt": "^4.0.1",
     "@types/qrcode": "^1.5.5",
     "eslint": "^9.24.0",

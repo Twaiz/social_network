@@ -1,4 +1,4 @@
-import { EUserRole } from '../enums/user.role';
+import { EUserRole } from '../enums';
 
 export interface IUser {
   _id: string;
@@ -10,5 +10,8 @@ export interface IUser {
   secondName: string;
   isProfileComplete: boolean;
   isTwoFactorEnabled: boolean;
+  isEmailConfirm: boolean;
   twoFactorSecret: string;
+  emailConfirmToken: string | undefined;
+  emailExpiresToken: Date | undefined;
 }
