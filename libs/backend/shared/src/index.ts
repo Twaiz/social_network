@@ -6,3 +6,4 @@ export * from './interfaces/authenticated-request.interface';
 export * from './interfaces/user.interface';
 export * from './strategies/jwt.strategy';
 export * from './utils/handlerController';
+export * from './constants/global.constants';
