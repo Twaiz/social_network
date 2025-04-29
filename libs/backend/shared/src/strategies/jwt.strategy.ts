@@ -5,9 +5,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
-import { IUser } from '../interfaces/user.interface';
-import { findUserByEmail } from '../utils/handlerController';
-import { USER_NOT_FOUND } from '../constants/global.constants';
+import { IUser } from '../interfaces';
+import { findUserByEmail } from '../utils';
+import { USER_NOT_FOUND } from '../constants';
 
 import { GetEnv } from '@get-env';
 

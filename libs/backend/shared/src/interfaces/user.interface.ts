@@ -1,4 +1,4 @@
-import { EUserRole } from '../enums/user.role';
+import { EUserRole } from '../enums';
 
 export interface IUser {
   _id: string;
