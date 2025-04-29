@@ -23,10 +23,12 @@ import {
   CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from '../auth.constants';
 
-import { AuthService } from '../services/auth.service';
-import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
-import { UserLoginCredentialsDto } from '../dtos/user-login-credentials.dto';
-import { ConfirmEmail } from '../dtos/confirmEmail.dto';
+import { AuthService } from '../services';
+import {
+  UserLoginCredentialsDto,
+  ConfirmEmail,
+  UserRegisterCredentialsDto,
+} from '../dtos';
 
 import {
   IUser,

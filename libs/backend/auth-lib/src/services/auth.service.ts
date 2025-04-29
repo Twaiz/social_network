@@ -19,9 +19,8 @@ import {
   NOT_FOUND_2FA_CODE,
   USER_INVALID_PASSWORD,
 } from '../auth.constants';
-import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
-import { LoginDto } from '../dtos/login.dto';
-import { sendEmailConfirmation } from '../utils/sendEmailConfirmation';
+import { LoginDto, UserRegisterCredentialsDto } from '../dtos';
+import { sendEmailConfirmation } from '../utils';
 
 import { TwoFaService } from '@two-fa-lib';
 import { IUser, USER_NOT_FOUND } from '@shared';
