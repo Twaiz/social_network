@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { TwoFaController } from '../controllers/two-fa.controller';
-import { TwoFaService } from '../services/two-fa.service';
+import { TwoFaController } from '../controllers';
+import { TwoFaService } from '../services';
 
 import { connectToMongoDB } from '@configs';
 import { UserSchema } from '@models';
