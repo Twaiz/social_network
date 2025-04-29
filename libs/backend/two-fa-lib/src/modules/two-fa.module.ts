@@ -6,10 +6,8 @@ import { TwoFaController } from '../controllers/two-fa.controller';
 import { TwoFaService } from '../services/two-fa.service';
 
 import { connectToMongoDB } from '@configs';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { UserSchema } from '@models'; //TODO Убрать нахер это
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { JwtStrategy } from '@shared'; //TODO Убрать нахер это
+import { UserSchema } from '@models';
+import { JwtStrategy } from '@shared';
 
 @Module({
   imports: [
