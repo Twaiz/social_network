@@ -19,7 +19,6 @@ import {
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
-  USER_NOT_FOUND,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from '../auth.constants';
@@ -38,6 +37,7 @@ import {
   type AuthenticatedRequest,
   findUserByEmail,
   findUserByLogin,
+  USER_NOT_FOUND,
 } from '@shared';
 @Controller('auth')
 export class AuthController {

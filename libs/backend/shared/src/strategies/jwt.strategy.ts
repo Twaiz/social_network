@@ -7,7 +7,7 @@ import { Model } from 'mongoose';
 
 import { IUser } from '../interfaces/user.interface';
 import { findUserByEmail } from '../utils/handlerController';
-import { USER_NOT_FOUND } from './strategies.constants';
+import { USER_NOT_FOUND } from '../constants/global.constants';
 
 import { GetEnv } from '@get-env';
 

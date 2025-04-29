@@ -18,14 +18,13 @@ import {
   CONFIRM_EMAIL_TOKEN_INVALID,
   NOT_FOUND_2FA_CODE,
   USER_INVALID_PASSWORD,
-  USER_NOT_FOUND,
 } from '../auth.constants';
 import { UserRegisterCredentialsDto } from '../dtos/user-register-credentials.dto';
 import { LoginDto } from '../dtos/login.dto';
 import { sendEmailConfirmation } from '../utils/sendEmailConfirmation';
 
 import { TwoFaService } from '@two-fa-lib';
-import { IUser } from '@shared';
+import { IUser, USER_NOT_FOUND } from '@shared';
 import { GetEnv } from '@get-env';
 
 interface IJwtPayload {

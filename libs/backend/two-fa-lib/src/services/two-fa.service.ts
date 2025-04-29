@@ -11,9 +11,7 @@ import * as qrcode from 'qrcode';
 
 import { INVALID_2FA_CODE } from '../two-fa.constants';
 
-import { findUserByEmail, IUser } from '@shared';
-// import { USER_NOT_FOUND } from 'libs/backend/shared/src/strategies/strategies.constants'; //TODO сделать global constants
-export const USER_NOT_FOUND = '❌ Пользователь не найден';
+import { findUserByEmail, IUser, USER_NOT_FOUND } from '@shared';
 
 @Injectable()
 export class TwoFaService {
