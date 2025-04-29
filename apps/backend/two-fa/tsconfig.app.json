@@ -1,11 +1,6 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "paths": {
-      "@bootstrap": ["./libs/backend/bootstrap/src"],
-      "@shared": ["./libs/backend/shared/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
-    },
     "outDir": "dist",
     "types": ["node"],
     "rootDir": "src",
