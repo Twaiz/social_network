@@ -95,13 +95,6 @@ UserSchema.virtual('fullName').get(function (this: IUser) {
 UserSchema.set('toJSON', {
   transform: (_doc, ret) => {
     ret.twoFactorSecret = undefined;
-    return ret;
-  },
-});
-
-//TODO это можно вынести в первый set-toJson хук
-UserSchema.set('toJSON', {
-  transform: (_doc, ret) => {
     ret.emailConfirmToken = undefined;
     return ret;
   },
