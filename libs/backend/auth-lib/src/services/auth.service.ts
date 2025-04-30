@@ -3,7 +3,6 @@ import {
   forwardRef,
   Inject,
   Injectable,
-  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -131,8 +130,6 @@ export class AuthService {
         },
       )
       .select('+emailConfirmToken');
-
-    Logger.log('userByConfirmEmail', userByConfirmEmail);
 
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
