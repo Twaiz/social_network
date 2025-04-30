@@ -51,7 +51,7 @@ export const GetEnv = {
   },
 
   getServerPort(customPortName: string): string {
-    const portEnvKey = `SERVER_${customPortName}`;
+    const portEnvKey = `${customPortName}_SERVER_PORT`;
     const port = process.env[portEnvKey];
     if (!port) {
       Logger.error(SERVER_PORT_ERROR);
