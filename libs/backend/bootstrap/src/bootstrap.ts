@@ -5,6 +5,8 @@ import {
   SERVER_CONNECTION_SUCCESS,
 } from './bootstrap.constants';
 
+import { GetEnv } from '@get-env';
+
 type IEntryNestModule =
   | Type
   | DynamicModule
@@ -13,10 +15,10 @@ type IEntryNestModule =
 
 export async function bootstrap(
   module: IEntryNestModule,
-  customPort: number,
+  customPort: string,
 ): Promise<void> {
-  const host = process.env.SERVER_HOST || 'localhost';
-  const globalPrefix = process.env.SERVER_GLOBAL_PREFIX || 'api';
+  const { port, host, globalPrefix } =
+    GetEnv.getMongodbConnectionParametrs(customPort);
 
   try {
     const app = await NestFactory.create(module);
@@ -25,7 +27,7 @@ export async function bootstrap(
     await app.listen(customPort);
 
     Logger.log(
-      `${SERVER_CONNECTION_SUCCESS}: http://${host}:${customPort}/${globalPrefix}`,
+      `${SERVER_CONNECTION_SUCCESS}: http://${host}:${port}/${globalPrefix}`,
     );
   } catch (error) {
     if (!(error instanceof Error)) return;
