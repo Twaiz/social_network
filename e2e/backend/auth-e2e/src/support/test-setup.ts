@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+import { GetEnv } from '@get-env';
+
 module.exports = async () => {
   // Configure axios for tests to use.
-  const host = process.env.SERVER_HOST ?? 'localhost';
-  const port = process.env.SERVER_PORT ?? '3000';
-  const globalPrefix = process.env.SERVER_GLOBALPREFIX ?? 'api';
+  const { port, host, globalPrefix } =
+    GetEnv.getMongodbConnectionParametrs('AUTH');
   axios.defaults.baseURL = `http://${host}:${port}/${globalPrefix}`;
 };
