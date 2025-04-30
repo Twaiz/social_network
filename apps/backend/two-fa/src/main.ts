@@ -6,7 +6,7 @@ import { SERVER_PORT_NOT_FOUND } from '@shared';
 
 const port = Number(process.env.TWO_FA_SERVER_PORT);
 if (!port) {
-  Logger.log(SERVER_PORT_NOT_FOUND);
+  Logger.error(SERVER_PORT_NOT_FOUND);
   process.exit(1);
 }
 
