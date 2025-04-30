@@ -50,14 +50,12 @@ export const GetEnv = {
     return mongodbLogin;
   },
 
-  getServerPort(customPortName: string): string {
-    const portEnvKey = `${customPortName}_SERVER_PORT`;
-    const port = process.env[portEnvKey];
-    if (!port) {
+  getServerPort(customPort: string | undefined): string {
+    if (!customPort) {
       Logger.error(SERVER_PORT_ERROR);
       process.exit(1);
     }
-    return port;
+    return customPort;
   },
 
   getServerHost(): string {
@@ -77,12 +75,12 @@ export const GetEnv = {
     return globalPrefix;
   },
 
-  getMongodbConnectionParametrs(customPortName: string): {
+  getMongodbConnectionParametrs(customPort: string): {
     port: string;
     host: string;
     globalPrefix: string;
   } {
-    const port = this.getServerPort(customPortName);
+    const port = this.getServerPort(customPort);
     const host = this.getServerHost();
     const globalPrefix = this.getServerGlobalPrefix();
 
