@@ -23,6 +23,9 @@
       "path": "../../../libs/backend/two-fa-lib/tsconfig.lib.json"
     },
     {
+      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
+    },
+    {
       "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
     }
   ]
