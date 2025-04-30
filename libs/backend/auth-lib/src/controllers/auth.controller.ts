@@ -40,6 +40,7 @@ import {
   findUserByEmail,
   findUserByLogin,
   USER_NOT_FOUND,
+  RegisterResponse,
 } from '@shared';
 @Controller('auth')
 export class AuthController {
@@ -49,11 +50,12 @@ export class AuthController {
   ) {}
 
   //* Register *//
+  @HttpCode(200)
   @Post('register')
   @UsePipes(new ValidationPipe())
   async register(
     @Body() userRegisterCredentialsDto: UserRegisterCredentialsDto,
-  ): Promise<{ user: IUser; token: string }> {
+  ): Promise<RegisterResponse> {
     const { email, login } = userRegisterCredentialsDto;
 
     const userByEmail = await findUserByEmail(this.userModel, email);
