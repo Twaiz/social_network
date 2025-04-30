@@ -50,26 +50,41 @@ export const GetEnv = {
     return mongodbLogin;
   },
 
+  getServerPort(customPortName: string): string {
+    const portEnvKey = `SERVER_${customPortName}`;
+    const port = process.env[portEnvKey];
+    if (!port) {
+      Logger.error(SERVER_PORT_ERROR);
+      process.exit(1);
+    }
+    return port;
+  },
+
+  getServerHost(): string {
+    const host = process.env.SERVER_HOST;
+    if (!host) {
+      Logger.error(SERVER_HOST_ERROR);
+      process.exit(1);
+    }
+    return host;
+  },
+  getServerGlobalPrefix(): string {
+    const globalPrefix = process.env.SERVER_GLOBAL_PREFIX;
+    if (!globalPrefix) {
+      Logger.error(SERVER_GLOBAL_PREFIX_ERROR);
+      process.exit(1);
+    }
+    return globalPrefix;
+  },
+
   getMongodbConnectionParametrs(customPortName: string): {
     port: string;
     host: string;
     globalPrefix: string;
   } {
-    const portEnvKey = `SERVER_${customPortName}`;
-    const port = process.env[portEnvKey];
-    const host = process.env.SERVER_HOST;
-    const globalPrefix = process.env.SERVER_GLOBAL_PREFIX;
-
-    const errors: string[] = [];
-
-    if (!port) errors.push(SERVER_PORT_ERROR);
-    if (!host) errors.push(SERVER_HOST_ERROR);
-    if (!globalPrefix) errors.push(SERVER_GLOBAL_PREFIX_ERROR);
-
-    if (!port || !host || !globalPrefix) {
-      Logger.error(errors.join('\n'));
-      process.exit(1);
-    }
+    const port = this.getServerPort(customPortName);
+    const host = this.getServerHost();
+    const globalPrefix = this.getServerGlobalPrefix();
 
     return {
       port,
