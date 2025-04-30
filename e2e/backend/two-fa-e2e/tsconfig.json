@@ -9,7 +9,7 @@
   "include": ["jest.config.ts", "src/**/*.ts"],
   "references": [
     {
-      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
+      "path": "../../../libs/backend/get-env"
     }
   ]
 }

@@ -20,9 +20,6 @@
   ],
   "references": [
     {
-      "path": "../../../libs/backend/shared/tsconfig.lib.json"
-    },
-    {
       "path": "../../../libs/backend/two-fa-lib/tsconfig.lib.json"
     },
     {

@@ -32,6 +32,9 @@
     },
     {
       "path": "./libs/backend/shared"
+    },
+    {
+      "path": "./e2e/backend/two-fa-e2e"
     }
   ]
 }

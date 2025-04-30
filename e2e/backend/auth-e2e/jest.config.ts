@@ -19,5 +19,8 @@ export default {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
+  moduleNameMapper: {
+    '^@get-env$': '<rootDir>/../../../libs/backend/get-env/src/index.ts',
+  },
   coverageDirectory: 'test-output/jest/coverage',
 };
