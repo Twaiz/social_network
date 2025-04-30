@@ -6,6 +6,9 @@ import {
   JWT_SECRET_ERROR,
   MONGODB_LOGIN_ERROR,
   MONGODB_PASSWORD_ERROR,
+  SERVER_GLOBAL_PREFIX_ERROR,
+  SERVER_HOST_ERROR,
+  SERVER_PORT_ERROR,
 } from './get-env.constants';
 
 type EnvString = string | undefined;
@@ -45,5 +48,33 @@ export const GetEnv = {
       process.exit(1);
     }
     return mongodbLogin;
+  },
+
+  getMongodbConnectionParametrs(customPortName: string): {
+    port: string;
+    host: string;
+    globalPrefix: string;
+  } {
+    const portEnvKey = `SERVER_${customPortName}`;
+    const port = process.env[portEnvKey];
+    const host = process.env.SERVER_HOST;
+    const globalPrefix = process.env.SERVER_GLOBAL_PREFIX;
+
+    const errors: string[] = [];
+
+    if (!port) errors.push(SERVER_PORT_ERROR);
+    if (!host) errors.push(SERVER_HOST_ERROR);
+    if (!globalPrefix) errors.push(SERVER_GLOBAL_PREFIX_ERROR);
+
+    if (!port || !host || !globalPrefix) {
+      Logger.error(errors.join('\n'));
+      process.exit(1);
+    }
+
+    return {
+      port,
+      host,
+      globalPrefix,
+    };
   },
 };
