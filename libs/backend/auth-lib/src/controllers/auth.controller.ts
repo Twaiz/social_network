@@ -41,6 +41,7 @@ import {
   findUserByEmail,
   findUserByLogin,
   RegisterResponse,
+  LoginResponse,
 } from '@shared';
 @Controller('auth')
 export class AuthController {
@@ -85,7 +86,7 @@ export class AuthController {
   @Post('login')
   async login(
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
-  ): Promise<{ token: string }> {
+  ): Promise<LoginResponse> {
     const { email, login, password, twoFactorCode } = userLoginCredentialsDto;
     const emailOrLogin = email ? 'email' : 'login';
     const INVALID_LOGIN_CREDENTIALS = `${USER_INVALID_PASSWORD} или ${emailOrLogin}. Попробуйте ещё раз.`;
