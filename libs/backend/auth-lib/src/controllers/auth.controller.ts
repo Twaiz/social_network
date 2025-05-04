@@ -83,6 +83,7 @@ export class AuthController {
   }
 
   //* Login *//
+  @HttpCode(200)
   @Post('login')
   async login(
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
