@@ -1,5 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { DynamicModule, ForwardReference, Logger, Type } from '@nestjs/common';
+import {
+  DynamicModule,
+  ForwardReference,
+  INestApplication,
+  Logger,
+  Type,
+} from '@nestjs/common';
 import {
   SERVER_CONNECTION_FAILED,
   SERVER_CONNECTION_SUCCESS,
@@ -13,10 +19,10 @@ type IEntryNestModule =
   | ForwardReference
   | Promise<IEntryNestModule>;
 
-export async function bootstrap(
+export async function bootstrap<T>(
   module: IEntryNestModule,
   customPort: string,
-): Promise<void> {
+): Promise<INestApplication<T> | null> {
   const { port, host, globalPrefix } =
     GetEnv.getMongodbConnectionParametrs(customPort);
 
@@ -29,8 +35,10 @@ export async function bootstrap(
     Logger.log(
       `${SERVER_CONNECTION_SUCCESS}: http://${host}:${port}/${globalPrefix}`,
     );
+
+    return app;
   } catch (error) {
-    if (!(error instanceof Error)) return;
+    if (!(error instanceof Error)) return null;
 
     Logger.error(SERVER_CONNECTION_FAILED, error.stack, 'Bootstrap');
     process.exit(1);
