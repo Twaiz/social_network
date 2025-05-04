@@ -89,12 +89,13 @@ describe('App - Auth (e2e)', () => {
 
   it('auth/generate-email-token', async () => {
     const res = await request(app.getHttpServer())
-      .post('/api/auth/login')
+      .post('/api/auth/generate-email-token')
       .set('Authorization', `Bearer ${token}`)
       .expect(201);
 
     const user = await userModel
-      .findOne({ email: LoginCredentials.email })
+      .findOne({ login: LoginCredentials.login })
+      .select('+emailConfirmToken')
       .lean();
 
     if (!user) {
