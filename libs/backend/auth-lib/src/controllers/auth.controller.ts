@@ -50,7 +50,7 @@ export class AuthController {
   ) {}
 
   //* Register *//
-  @HttpCode(200)
+  @HttpCode(201)
   @Post('register')
   @UsePipes(new ValidationPipe())
   async register(
