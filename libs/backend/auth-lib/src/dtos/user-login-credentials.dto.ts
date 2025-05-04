@@ -5,17 +5,18 @@ export class UserLoginCredentialsDto {
   @IsString()
   @IsEmail()
   @IsNotEmpty()
-  email!: string;
+  email?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  login!: string;
+  login?: string;
 
   @IsString()
   @IsNotEmpty()
   password!: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   twoFactorCode?: string;
