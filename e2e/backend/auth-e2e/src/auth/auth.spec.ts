@@ -2,8 +2,12 @@ import { INestApplication } from '@nestjs/common';
 import { App } from 'supertest/types';
 import request from 'supertest';
 
-import { AuthModule, UserRegisterCredentialsDto } from '@auth-lib';
-import { RegisterResponse } from '@shared';
+import {
+  AuthModule,
+  UserLoginCredentialsDto,
+  UserRegisterCredentialsDto,
+} from '@auth-lib';
+import { LoginResponse, RegisterResponse } from '@shared';
 import { GetEnv } from '@get-env';
 import { bootstrap } from '@bootstrap';
 
@@ -13,6 +17,11 @@ const RegisterCredentials: UserRegisterCredentialsDto = {
   password: '1205Qaz!',
   firstName: 'Bohdan',
   secondName: 'Twaiz',
+};
+
+const LoginCredentials: UserLoginCredentialsDto = {
+  login: 'twaiz',
+  password: '1205Qaz!',
 };
 
 describe('App - Auth (e2e)', () => {
@@ -47,6 +56,17 @@ describe('App - Auth (e2e)', () => {
       firstName: RegisterCredentials.firstName,
       secondName: RegisterCredentials.secondName,
     });
+  });
+
+  it('auth/login -- success', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/api/auth/login')
+      .send(LoginCredentials)
+      .expect(200);
+
+    const data: LoginResponse = res.body;
+
+    expect(data).toHaveProperty('token');
   });
 
   afterAll(async () => {
