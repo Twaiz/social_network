@@ -26,7 +26,10 @@ const LoginCredentials: UserLoginCredentialsDto = {
 
 describe('App - Auth (e2e)', () => {
   let app: INestApplication<App>;
-  // let userId: string; //TODO добавить удаление созданого пользователя после всех тестов
+  // let userId: string;
+  /* 
+   TODO добавить удаление созданого пользователя после всех тестов. Это мы сможем добавить когда добавим app - user
+  */
 
   beforeAll(async () => {
     const customPort = process.env.AUTH_SERVER_PORT;
