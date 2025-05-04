@@ -26,6 +26,7 @@ const LoginCredentials: UserLoginCredentialsDto = {
 
 describe('App - Auth (e2e)', () => {
   let app: INestApplication<App>;
+  // let userId: string; //TODO добавить удаление созданого пользователя после всех тестов
 
   beforeAll(async () => {
     const customPort = process.env.AUTH_SERVER_PORT;
@@ -46,6 +47,7 @@ describe('App - Auth (e2e)', () => {
       .expect(201);
 
     const data: RegisterResponse = res.body;
+    // userId = data.user._id;
 
     expect(res.status).toBe(201);
     expect(data).toHaveProperty('user');
