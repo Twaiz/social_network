@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
   HttpCode,
   NotFoundException,
   Post,
@@ -31,10 +30,7 @@ import {
 
 import {
   IUser,
-  Roles,
-  EUserRole,
   JwtAuthGuard,
-  RolesGuard,
   type AuthenticatedRequest,
   findUserByEmail,
   findUserByLogin,
@@ -139,31 +135,5 @@ export class AuthController {
     await this.authService.confirmEmail(token);
 
     return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
-  }
-
-  //* Test Route For Testing Roles Guard (Admin) *//
-  @Get('for-admin')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(EUserRole.Admin)
-  getAdminMessage(): { message: string } {
-    return {
-      message: 'Тест роута для Админа',
-    };
-  }
-
-  //* Test Route For Testing Roles Guard (Moderator) *//
-  @Get('for-moderator')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(EUserRole.Moderator)
-  getModeratorMessage(): { message: string } {
-    return {
-      message: 'Тест роута для Модератора',
-    };
-  }
-
-  //* Get Message (For e2e Test) *//
-  @Get()
-  getMessage(): { message: string } {
-    return this.authService.getMessage();
   }
 }
