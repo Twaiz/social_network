@@ -8,8 +8,6 @@ import {
   Post,
   Req,
   UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -53,7 +51,6 @@ export class AuthController {
   //* Register *//
   @HttpCode(201)
   @Post('register')
-  @UsePipes(new ValidationPipe())
   async register(
     @Body() userRegisterCredentialsDto: UserRegisterCredentialsDto,
   ): Promise<RegisterResponse> {
