@@ -1,4 +1,6 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
+import { getModelToken } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { App } from 'supertest/types';
 import request from 'supertest';
 
@@ -7,7 +9,12 @@ import {
   UserLoginCredentialsDto,
   UserRegisterCredentialsDto,
 } from '@auth-lib';
-import { LoginResponse, RegisterResponse } from '@shared';
+import {
+  IUser,
+  LoginResponse,
+  RegisterResponse,
+  USER_NOT_FOUND,
+} from '@shared';
 import { GetEnv } from '@get-env';
 import { bootstrap } from '@bootstrap';
 
@@ -26,6 +33,8 @@ const LoginCredentials: UserLoginCredentialsDto = {
 
 describe('App - Auth (e2e)', () => {
   let app: INestApplication<App>;
+  let token: string;
+  let userModel: Model<IUser>;
   // let userId: string;
   /* 
    TODO добавить удаление созданого пользователя после всех тестов. Это мы сможем добавить когда добавим app - user
@@ -41,6 +50,7 @@ describe('App - Auth (e2e)', () => {
     }
 
     app = serverApp;
+    userModel = app.get(getModelToken('User'));
   });
 
   it('auth/register -- success', async () => {
@@ -72,8 +82,29 @@ describe('App - Auth (e2e)', () => {
       .expect(200);
 
     const data: LoginResponse = res.body;
+    token = data.token;
 
     expect(data).toHaveProperty('token');
+  });
+
+  it('auth/generate-email-token', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/api/auth/login')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(201);
+
+    const user = await userModel
+      .findOne({ email: LoginCredentials.email })
+      .lean();
+
+    if (!user) {
+      Logger.error(USER_NOT_FOUND, 'Auth-e2e');
+      process.exit(1);
+    }
+
+    expect(res.body).toHaveProperty('message');
+    expect(user).toHaveProperty('emailConfirmToken');
+    expect(user).toHaveProperty('emailExpiresToken');
   });
 
   afterAll(async () => {
