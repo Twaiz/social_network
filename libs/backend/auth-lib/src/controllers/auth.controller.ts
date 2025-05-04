@@ -111,7 +111,7 @@ export class AuthController {
   }
 
   //* Generate Email Token *//
-  @HttpCode(200)
+  @HttpCode(201)
   @Post('generate-email-token')
   @UseGuards(JwtAuthGuard)
   async generateEmailToken(
