@@ -5,4 +5,4 @@ import { GetEnv } from '@get-env';
 const customPort = process.env.AUTH_SERVER_PORT;
 const port = GetEnv.getServerPort(customPort);
 
-bootstrap(AuthModule, port);
+bootstrap<AuthModule>(AuthModule, port);
