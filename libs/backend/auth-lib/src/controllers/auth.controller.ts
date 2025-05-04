@@ -128,7 +128,7 @@ export class AuthController {
   @HttpCode(200)
   @Post('confirm-email')
   async confirmEmail(
-    @Body() emailConfirmToken: ConfirmEmail,
+    @Body() emailConfirmToken: ConfirmEmail, //TODO назвать ConfirmEmailDto
   ): Promise<{ message: string }> {
     const { token } = emailConfirmToken;
 

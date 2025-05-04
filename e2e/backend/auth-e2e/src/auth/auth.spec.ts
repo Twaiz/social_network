@@ -108,6 +108,8 @@ describe('App - Auth (e2e)', () => {
     expect(user).toHaveProperty('emailExpiresToken');
   });
 
+  //TODO добавить email-confirm test
+
   afterAll(async () => {
     await app.close();
   });
