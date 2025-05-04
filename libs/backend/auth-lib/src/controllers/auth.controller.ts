@@ -21,6 +21,7 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
+  USER_INVALID_PASSWORD,
 } from '../auth.constants';
 
 import { AuthService } from '../services';
@@ -39,7 +40,6 @@ import {
   type AuthenticatedRequest,
   findUserByEmail,
   findUserByLogin,
-  USER_NOT_FOUND,
   RegisterResponse,
 } from '@shared';
 @Controller('auth')
@@ -87,6 +87,8 @@ export class AuthController {
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
   ): Promise<{ token: string }> {
     const { email, login, password, twoFactorCode } = userLoginCredentialsDto;
+    const emailOrLogin = email ? 'email' : 'login';
+    const INVALID_LOGIN_CREDENTIALS = `${USER_INVALID_PASSWORD} или ${emailOrLogin}. Попробуйте ещё раз.`;
 
     let user: IUser | null = null;
 
@@ -101,7 +103,7 @@ export class AuthController {
     }
 
     if (!user) {
-      throw new NotFoundException(USER_NOT_FOUND);
+      throw new NotFoundException(INVALID_LOGIN_CREDENTIALS);
     }
 
     const token = await this.authService.login({
