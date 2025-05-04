@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import { disconnect } from 'node:process';
 import { App } from 'supertest/types';
-import axios from 'axios';
+import request from 'supertest';
 
 import { AuthModule, UserRegisterCredentialsDto } from '@auth-lib';
-import { IUser } from '@shared';
+import { RegisterResponse } from '@shared';
+import { GetEnv } from '@get-env';
+import { bootstrap } from '@bootstrap';
 
 const RegisterCredentials: UserRegisterCredentialsDto = {
   email: 'twaiz@gmail.com',
@@ -15,29 +15,41 @@ const RegisterCredentials: UserRegisterCredentialsDto = {
   secondName: 'Twaiz',
 };
 
-const AUTH_ROUTE = '/auth';
-
 describe('App - Auth (e2e)', () => {
   let app: INestApplication<App>;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AuthModule],
-    }).compile();
+  beforeAll(async () => {
+    const customPort = process.env.AUTH_SERVER_PORT;
+    const port = GetEnv.getServerPort(customPort);
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
+    const serverApp = await bootstrap<App>(AuthModule, port);
+    if (!serverApp) {
+      process.exit(1);
+    }
+
+    app = serverApp;
   });
 
   it('auth/register -- success', async () => {
-    const res: axios.AxiosResponse<Promise<{ user: IUser; token: string }>> =
-      await axios.post(`${AUTH_ROUTE}/register`, RegisterCredentials);
+    const res = await request(app.getHttpServer())
+      .post('/api/auth/register')
+      .send(RegisterCredentials)
+      .expect(201);
 
-    expect(res.status).toBe(200);
-    expect(res.data).toEqual(Promise<{ user: IUser; token: string }>);
+    const data: RegisterResponse = res.body;
+
+    expect(res.status).toBe(201);
+    expect(data).toHaveProperty('user');
+    expect(data).toHaveProperty('token');
+    expect(data.user).toMatchObject({
+      email: RegisterCredentials.email,
+      login: RegisterCredentials.login,
+      firstName: RegisterCredentials.firstName,
+      secondName: RegisterCredentials.secondName,
+    });
   });
 
   afterAll(async () => {
-    await disconnect();
+    await app.close();
   });
 });
