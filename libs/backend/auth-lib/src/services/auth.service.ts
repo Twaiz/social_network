@@ -170,11 +170,4 @@ export class AuthService {
 
     return token;
   }
-
-  //* Get Message (For e2e Test) *//
-  getMessage(): { message: string } {
-    return {
-      message: 'Hello API',
-    };
-  }
 }
