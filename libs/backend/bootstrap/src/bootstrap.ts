@@ -5,6 +5,7 @@ import {
   INestApplication,
   Logger,
   Type,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   SERVER_CONNECTION_FAILED,
@@ -30,6 +31,13 @@ export async function bootstrap<T>(
     const app = await NestFactory.create(module);
 
     app.setGlobalPrefix(globalPrefix);
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        transform: true,
+        forbidNonWhitelisted: true,
+      }),
+    );
     await app.listen(customPort);
 
     Logger.log(
