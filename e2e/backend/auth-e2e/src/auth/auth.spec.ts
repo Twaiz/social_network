@@ -20,14 +20,14 @@ import { bootstrap } from '@bootstrap';
 
 const RegisterCredentials: UserRegisterCredentialsDto = {
   email: 'twaiz@gmail.com',
-  login: 'twaiz',
+  login: 'twAiz',
   password: '1205Qaz!',
   firstName: 'Bohdan',
   secondName: 'Twaiz',
 };
 
 const LoginCredentials: UserLoginCredentialsDto = {
-  login: 'twaiz',
+  login: 'TwaiZ',
   password: '1205Qaz!',
 };
 
@@ -66,8 +66,8 @@ describe('App - Auth (e2e)', () => {
     expect(data).toHaveProperty('user');
     expect(data).toHaveProperty('token');
     expect(data.user).toMatchObject({
-      email: RegisterCredentials.email,
-      login: RegisterCredentials.login,
+      email: RegisterCredentials.email.toLowerCase(),
+      login: RegisterCredentials.login.toLowerCase(),
       firstName: RegisterCredentials.firstName,
       secondName: RegisterCredentials.secondName,
     });
