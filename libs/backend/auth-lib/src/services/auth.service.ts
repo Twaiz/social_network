@@ -22,7 +22,7 @@ import { LoginDto, UserRegisterCredentialsDto } from '../dtos';
 import { sendEmailConfirmation } from '../utils';
 
 import { TwoFaService } from '@two-fa-lib';
-import { IUser, USER_NOT_FOUND } from '@shared';
+import { IUser, RegisterResponse, USER_NOT_FOUND } from '@shared';
 import { GetEnv } from '@get-env';
 
 interface IJwtPayload {
@@ -51,10 +51,7 @@ export class AuthService {
   //* Create User (Register) *//
   async createUser(
     userRegisterCredentialsDto: UserRegisterCredentialsDto,
-  ): Promise<{
-    user: IUser;
-    token: string;
-  }> {
+  ): Promise<RegisterResponse> {
     const { email, login, password, firstName, secondName } =
       userRegisterCredentialsDto;
 
