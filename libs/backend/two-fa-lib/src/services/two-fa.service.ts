@@ -55,7 +55,7 @@ export class TwoFaService {
     });
   }
 
-  async verifyTwoFactorCode(user: IUser, code: string): Promise<void> {
+  verifyTwoFactorCode(user: IUser, code: string): void {
     const isTwoFactorCodeValid = authenticator.verify({
       token: code,
       secret: user.twoFactorSecret,
