@@ -24,7 +24,7 @@ import {
 import { AuthService } from '../services';
 import {
   UserLoginCredentialsDto,
-  ConfirmEmail,
+  ConfirmEmailDto,
   UserRegisterCredentialsDto,
 } from '../dtos';
 
@@ -128,7 +128,7 @@ export class AuthController {
   @HttpCode(200)
   @Post('confirm-email')
   async confirmEmail(
-    @Body() emailConfirmToken: ConfirmEmail, //TODO назвать ConfirmEmailDto
+    @Body() emailConfirmToken: ConfirmEmailDto,
   ): Promise<{ message: string }> {
     const { token } = emailConfirmToken;
 
