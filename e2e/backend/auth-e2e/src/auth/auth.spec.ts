@@ -41,8 +41,8 @@ describe('App - Auth (e2e)', () => {
   */
 
   beforeAll(async () => {
-    const customPort = process.env.AUTH_SERVER_PORT;
-    const port = GetEnv.getServerPort(customPort);
+    const authPort = process.env.AUTH_SERVER_PORT;
+    const port = GetEnv.getServerPort(authPort);
 
     const serverApp = await bootstrap<App>(AuthModule, port);
     if (!serverApp) {
