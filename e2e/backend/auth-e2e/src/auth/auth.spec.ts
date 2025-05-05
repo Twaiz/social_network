@@ -136,8 +136,8 @@ describe('App - Auth (e2e)', () => {
       process.exit(1);
     }
 
-    expect(userAfterConfirmEmail.emailConfirmToken).toEqual(undefined);
-    expect(userAfterConfirmEmail.emailExpiresToken).toEqual(undefined);
+    expect(userAfterConfirmEmail.emailConfirmToken).toBeFalsy();
+    expect(userAfterConfirmEmail.emailExpiresToken).toBeFalsy();
   });
 
   afterAll(async () => {
