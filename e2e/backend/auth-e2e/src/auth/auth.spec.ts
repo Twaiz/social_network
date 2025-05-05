@@ -108,7 +108,37 @@ describe('App - Auth (e2e)', () => {
     expect(user).toHaveProperty('emailExpiresToken');
   });
 
-  //TODO добавить email-confirm test
+  it('auth/confirm-email', async () => {
+    const userBeforeConfirmEmail = await userModel
+      .findOne({ login: LoginCredentials.login })
+      .select('+emailConfirmToken')
+      .lean();
+
+    if (!userBeforeConfirmEmail) {
+      Logger.error(USER_NOT_FOUND, 'Auth-e2e');
+      process.exit(1);
+    }
+
+    const res = await request(app.getHttpServer())
+      .post('/api/auth/confirm-email')
+      .send({ token: userBeforeConfirmEmail.emailConfirmToken })
+      .expect(200);
+
+    expect(res.body).toHaveProperty('message');
+
+    const userAfterConfirmEmail = await userModel
+      .findOne({ login: LoginCredentials.login })
+      .select('+emailConfirmToken')
+      .lean();
+
+    if (!userAfterConfirmEmail) {
+      Logger.error(USER_NOT_FOUND, 'Auth-e2e');
+      process.exit(1);
+    }
+
+    expect(userAfterConfirmEmail.emailConfirmToken).toEqual(undefined);
+    expect(userAfterConfirmEmail.emailExpiresToken).toEqual(undefined);
+  });
 
   afterAll(async () => {
     await app.close();
