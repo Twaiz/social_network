@@ -122,8 +122,8 @@ export class AuthService {
         },
         {
           isEmailConfirm: true,
-          emailConfirmToken: undefined,
-          emailExpiresToken: undefined,
+          emailConfirmToken: null,
+          emailExpiresToken: null,
         },
       )
       .select('+emailConfirmToken');
