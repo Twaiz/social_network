@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { App } from 'supertest/types';
 import request from 'supertest';
 
+import { APP_INIT_FAILED } from '../auth-e2e.constants';
+
 import {
   AuthModule,
   UserLoginCredentialsDto,
@@ -46,6 +48,7 @@ describe('App - Auth (e2e)', () => {
 
     const serverApp = await bootstrap<App>(AuthModule, port);
     if (!serverApp) {
+      Logger.error(APP_INIT_FAILED);
       process.exit(1);
     }
 
