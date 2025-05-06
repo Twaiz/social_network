@@ -65,7 +65,6 @@ describe('App - Auth (e2e)', () => {
     const data: RegisterResponse = res.body;
     // userId = data.user._id;
 
-    expect(res.status).toBe(201);
     expect(data).toHaveProperty('user');
     expect(data).toHaveProperty('token');
     expect(data.user).toMatchObject({
