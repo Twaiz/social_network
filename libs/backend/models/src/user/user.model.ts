@@ -4,7 +4,7 @@ import { isEmail } from 'validator';
 import { EMAIL_VALIDATION_ERROR } from './user.constants';
 
 import { IUser, EUserRole } from '@shared';
-import { loginToLowerCase } from './loginToLowerCase';
+import { loginToLowerCase } from './helpers/loginToLowerCase';
 
 export const UserSchema = new Schema<IUser>(
   {
