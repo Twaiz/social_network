@@ -32,11 +32,11 @@ import {
   IUser,
   JwtAuthGuard,
   type AuthenticatedRequest,
-  findUserByEmail,
-  findUserByLogin,
   RegisterResponse,
   LoginResponse,
 } from '@shared';
+
+import { findUserByEmail, findUserByLogin } from '@utils';
 @Controller('auth')
 export class AuthController {
   constructor(
