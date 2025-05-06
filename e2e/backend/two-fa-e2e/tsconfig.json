@@ -9,13 +9,16 @@
   "include": ["jest.config.ts", "src/**/*.ts"],
   "references": [
     {
-      "path": "../../../libs/backend/get-env"
+      "path": "../../../libs/backend/shared"
+    },
+    {
+      "path": "../../../libs/backend/bootstrap"
     },
     {
       "path": "../../../libs/backend/two-fa-lib"
     },
     {
-      "path": "../../../libs/backend/bootstrap"
+      "path": "../../../libs/backend/get-env"
     }
   ]
 }
