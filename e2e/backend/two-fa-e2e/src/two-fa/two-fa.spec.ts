@@ -1,10 +1,11 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import { App } from 'supertest/types';
 import request from 'supertest';
 
 import { TwoFaModule } from '@two-fa-lib';
 import { GetEnv } from '@get-env';
 import { bootstrap } from '@bootstrap';
+import { APP_INIT_FAILED } from '@shared';
 
 describe('App - TwoFa (e2e)', () => {
   let app: INestApplication<App>;
@@ -15,6 +16,7 @@ describe('App - TwoFa (e2e)', () => {
 
     const serverApp = await bootstrap<App>(TwoFaModule, port);
     if (!serverApp) {
+      Logger.error(APP_INIT_FAILED);
       process.exit(1);
     }
 
