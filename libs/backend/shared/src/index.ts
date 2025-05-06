@@ -5,3 +5,4 @@ export * from './interfaces';
 export * from './strategies';
 export * from './constants';
 export * from './responses';
+export * from './types';
