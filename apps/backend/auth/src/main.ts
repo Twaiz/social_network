@@ -1,13 +1,8 @@
-import { Logger } from '@nestjs/common';
-
 import { bootstrap } from '@bootstrap';
 import { AuthModule } from '@auth-lib';
-import { SERVER_PORT_NOT_FOUND } from '@shared';
+import { GetEnv } from '@get-env';
 
-const port = Number(process.env.AUTH_SERVER_PORT);
-if (!port) {
-  Logger.log(SERVER_PORT_NOT_FOUND);
-  process.exit(1);
-}
+const authPort = process.env.AUTH_SERVER_PORT;
+const port = GetEnv.getServerPort(authPort);
 
-bootstrap(AuthModule, port);
+bootstrap<AuthModule>(AuthModule, port);

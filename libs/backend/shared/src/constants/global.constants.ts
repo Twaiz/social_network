@@ -1,2 +1,4 @@
 export const USER_NOT_FOUND = '❌ Пользователь не найден';
-export const SERVER_PORT_NOT_FOUND = '❌ Не найден SERVER_PORT!';
+
+export const APP_INIT_FAILED =
+  '❌ Не удалось инициализировать приложение: bootstrap вернул null/undefined';

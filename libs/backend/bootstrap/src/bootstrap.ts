@@ -1,9 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { DynamicModule, ForwardReference, Logger, Type } from '@nestjs/common';
+import {
+  DynamicModule,
+  ForwardReference,
+  INestApplication,
+  Logger,
+  Type,
+  ValidationPipe,
+} from '@nestjs/common';
 import {
   SERVER_CONNECTION_FAILED,
   SERVER_CONNECTION_SUCCESS,
 } from './bootstrap.constants';
+
+import { GetEnv } from '@get-env';
 
 type IEntryNestModule =
   | Type
@@ -11,24 +20,33 @@ type IEntryNestModule =
   | ForwardReference
   | Promise<IEntryNestModule>;
 
-export async function bootstrap(
+export async function bootstrap<T>(
   module: IEntryNestModule,
-  customPort: number,
-): Promise<void> {
-  const host = process.env.SERVER_HOST || 'localhost';
-  const globalPrefix = process.env.SERVER_GLOBAL_PREFIX || 'api';
+  customPort: string,
+): Promise<INestApplication<T> | null> {
+  const { port, host, globalPrefix } =
+    GetEnv.getMongodbConnectionParametrs(customPort);
 
   try {
     const app = await NestFactory.create(module);
 
     app.setGlobalPrefix(globalPrefix);
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        transform: true,
+        forbidNonWhitelisted: true,
+      }),
+    );
     await app.listen(customPort);
 
     Logger.log(
-      `${SERVER_CONNECTION_SUCCESS}: http://${host}:${customPort}/${globalPrefix}`,
+      `${SERVER_CONNECTION_SUCCESS}: http://${host}:${port}/${globalPrefix}`,
     );
+
+    return app;
   } catch (error) {
-    if (!(error instanceof Error)) return;
+    if (!(error instanceof Error)) return null;
 
     Logger.error(SERVER_CONNECTION_FAILED, error.stack, 'Bootstrap');
     process.exit(1);

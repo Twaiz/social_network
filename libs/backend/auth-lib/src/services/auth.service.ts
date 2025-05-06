@@ -3,7 +3,6 @@ import {
   forwardRef,
   Inject,
   Injectable,
-  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -23,7 +22,7 @@ import { LoginDto, UserRegisterCredentialsDto } from '../dtos';
 import { sendEmailConfirmation } from '../utils';
 
 import { TwoFaService } from '@two-fa-lib';
-import { IUser, USER_NOT_FOUND } from '@shared';
+import { IUser, RegisterResponse, USER_NOT_FOUND } from '@shared';
 import { GetEnv } from '@get-env';
 
 interface IJwtPayload {
@@ -52,10 +51,7 @@ export class AuthService {
   //* Create User (Register) *//
   async createUser(
     userRegisterCredentialsDto: UserRegisterCredentialsDto,
-  ): Promise<{
-    user: IUser;
-    token: string;
-  }> {
+  ): Promise<RegisterResponse> {
     const { email, login, password, firstName, secondName } =
       userRegisterCredentialsDto;
 
@@ -126,13 +122,11 @@ export class AuthService {
         },
         {
           isEmailConfirm: true,
-          emailConfirmToken: undefined,
-          emailExpiresToken: undefined,
+          emailConfirmToken: null,
+          emailExpiresToken: null,
         },
       )
       .select('+emailConfirmToken');
-
-    Logger.log('userByConfirmEmail', userByConfirmEmail);
 
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
@@ -175,12 +169,5 @@ export class AuthService {
     });
 
     return token;
-  }
-
-  //* Get Message (For e2e Test) *//
-  getMessage(): { message: string } {
-    return {
-      message: 'Hello API',
-    };
   }
 }

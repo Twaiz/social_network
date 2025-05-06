@@ -2,14 +2,11 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
   HttpCode,
   NotFoundException,
   Post,
   Req,
   UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -21,25 +18,24 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
+  USER_INVALID_PASSWORD,
 } from '../auth.constants';
 
 import { AuthService } from '../services';
 import {
   UserLoginCredentialsDto,
-  ConfirmEmail,
+  ConfirmEmailDto,
   UserRegisterCredentialsDto,
 } from '../dtos';
 
 import {
   IUser,
-  Roles,
-  EUserRole,
   JwtAuthGuard,
-  RolesGuard,
   type AuthenticatedRequest,
   findUserByEmail,
   findUserByLogin,
-  USER_NOT_FOUND,
+  RegisterResponse,
+  LoginResponse,
 } from '@shared';
 @Controller('auth')
 export class AuthController {
@@ -49,11 +45,11 @@ export class AuthController {
   ) {}
 
   //* Register *//
+  @HttpCode(201)
   @Post('register')
-  @UsePipes(new ValidationPipe())
   async register(
     @Body() userRegisterCredentialsDto: UserRegisterCredentialsDto,
-  ): Promise<{ user: IUser; token: string }> {
+  ): Promise<RegisterResponse> {
     const { email, login } = userRegisterCredentialsDto;
 
     const userByEmail = await findUserByEmail(this.userModel, email);
@@ -80,11 +76,14 @@ export class AuthController {
   }
 
   //* Login *//
+  @HttpCode(200)
   @Post('login')
   async login(
     @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
-  ): Promise<{ token: string }> {
+  ): Promise<LoginResponse> {
     const { email, login, password, twoFactorCode } = userLoginCredentialsDto;
+    const emailOrLogin = email ? 'email' : 'login';
+    const INVALID_LOGIN_CREDENTIALS = `${USER_INVALID_PASSWORD} или ${emailOrLogin}. Попробуйте ещё раз.`;
 
     let user: IUser | null = null;
 
@@ -99,7 +98,7 @@ export class AuthController {
     }
 
     if (!user) {
-      throw new NotFoundException(USER_NOT_FOUND);
+      throw new NotFoundException(INVALID_LOGIN_CREDENTIALS);
     }
 
     const token = await this.authService.login({
@@ -112,7 +111,7 @@ export class AuthController {
   }
 
   //* Generate Email Token *//
-  @HttpCode(200)
+  @HttpCode(201)
   @Post('generate-email-token')
   @UseGuards(JwtAuthGuard)
   async generateEmailToken(
@@ -129,38 +128,12 @@ export class AuthController {
   @HttpCode(200)
   @Post('confirm-email')
   async confirmEmail(
-    @Body() emailConfirmToken: ConfirmEmail,
+    @Body() emailConfirmToken: ConfirmEmailDto,
   ): Promise<{ message: string }> {
     const { token } = emailConfirmToken;
 
     await this.authService.confirmEmail(token);
 
     return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
-  }
-
-  //* Test Route For Testing Roles Guard (Admin) *//
-  @Get('for-admin')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(EUserRole.Admin)
-  getAdminMessage(): { message: string } {
-    return {
-      message: 'Тест роута для Админа',
-    };
-  }
-
-  //* Test Route For Testing Roles Guard (Moderator) *//
-  @Get('for-moderator')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(EUserRole.Moderator)
-  getModeratorMessage(): { message: string } {
-    return {
-      message: 'Тест роута для Модератора',
-    };
-  }
-
-  //* Get Message (For e2e Test) *//
-  @Get()
-  getMessage(): { message: string } {
-    return this.authService.getMessage();
   }
 }

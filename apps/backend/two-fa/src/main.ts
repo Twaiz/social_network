@@ -1,13 +1,8 @@
-import { Logger } from '@nestjs/common';
-
 import { bootstrap } from '@bootstrap';
+import { GetEnv } from '@get-env';
 import { TwoFaModule } from '@two-fa-lib';
-import { SERVER_PORT_NOT_FOUND } from '@shared';
 
-const port = Number(process.env.TWO_FA_SERVER_PORT);
-if (!port) {
-  Logger.log(SERVER_PORT_NOT_FOUND);
-  process.exit(1);
-}
+const twoFaPort = process.env.TWO_FA_SERVER_PORT;
+const port = GetEnv.getServerPort(twoFaPort);
 
-bootstrap(TwoFaModule, port);
+bootstrap<TwoFaModule>(TwoFaModule, port);

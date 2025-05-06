@@ -9,15 +9,12 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-  displayName: '@social-network/auth-e2e',
+  displayName: '@social-network/two-fa-e2e',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  moduleNameMapper: {
-    '^@get-env$': '<rootDir>/../../../libs/backend/get-env/src/index.ts',
-  },
   coverageDirectory: 'test-output/jest/coverage',
 };

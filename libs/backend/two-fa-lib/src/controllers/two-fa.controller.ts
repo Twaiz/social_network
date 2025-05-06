@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Req,
@@ -39,5 +40,11 @@ export class TwoFaController {
     await this.twoFaService.enableTwoFactor(req.user, code);
 
     return { message: SUCCESS_2FA_ENABLED };
+  }
+
+  @HttpCode(200)
+  @Get('get-message')
+  async getMessage(): Promise<{ message: string }> {
+    return { message: 'Hello TwoFa Module' };
   }
 }

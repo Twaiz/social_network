@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -51,15 +50,12 @@ export class TwoFaService {
 
     this.verifyTwoFactorCode(userWithTwoFactorSecret, code);
 
-    Logger.log('user', user);
-    Logger.log('userWithTwoFactorSecret', userWithTwoFactorSecret);
-
     await this.userModel.findByIdAndUpdate(userWithTwoFactorSecret._id, {
       isTwoFactorEnabled: true,
     });
   }
 
-  async verifyTwoFactorCode(user: IUser, code: string): Promise<void> {
+  verifyTwoFactorCode(user: IUser, code: string): void {
     const isTwoFactorCodeValid = authenticator.verify({
       token: code,
       secret: user.twoFactorSecret,

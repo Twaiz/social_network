@@ -1,0 +1,25 @@
+{
+  "name": "@social-network/two-fa-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@social-network/two-fa"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "e2e/backend/two-fa-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "@social-network/two-fa:build"
+        ]
+      }
+    }
+  }
+}

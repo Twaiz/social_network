@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "out-tsc/@social-network/auth-e2e",
+    "outDir": "out-tsc/@social-network/two-fa-e2e",
     "esModuleInterop": true,
     "noUnusedLocals": false,
     "noImplicitAny": false
@@ -9,16 +9,16 @@
   "include": ["jest.config.ts", "src/**/*.ts"],
   "references": [
     {
-      "path": "../../../libs/backend/get-env"
-    },
-    {
       "path": "../../../libs/backend/shared"
     },
     {
-      "path": "../../../libs/backend/auth-lib"
+      "path": "../../../libs/backend/bootstrap"
     },
     {
-      "path": "../../../libs/backend/bootstrap"
+      "path": "../../../libs/backend/two-fa-lib"
+    },
+    {
+      "path": "../../../libs/backend/get-env"
     }
   ]
 }

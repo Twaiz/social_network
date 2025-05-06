@@ -1,0 +1,14 @@
+{
+  "name": "two-fa-e2e",
+  "root": "e2e/backend/two-fa-e2e",
+  "sourceRoot": "e2e/backend/two-fa-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "e2e/backend/two-fa-e2e/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

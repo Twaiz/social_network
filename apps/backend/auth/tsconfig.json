@@ -4,7 +4,7 @@
   "include": [],
   "references": [
     {
-      "path": "../../../libs/backend/shared"
+      "path": "../../../libs/backend/get-env"
     },
     {
       "path": "../../../libs/backend/auth-lib"
