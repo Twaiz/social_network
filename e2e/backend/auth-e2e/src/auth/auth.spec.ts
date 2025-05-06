@@ -4,14 +4,13 @@ import { Model } from 'mongoose';
 import { App } from 'supertest/types';
 import request from 'supertest';
 
-import { APP_INIT_FAILED } from '../auth-e2e.constants';
-
 import {
   AuthModule,
   UserLoginCredentialsDto,
   UserRegisterCredentialsDto,
 } from '@auth-lib';
 import {
+  APP_INIT_FAILED,
   IUser,
   LoginResponse,
   RegisterResponse,
