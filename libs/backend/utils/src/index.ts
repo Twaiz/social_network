@@ -1,1 +1,1 @@
-export * from './handlerController.utility';
+export * from './setup-e2e.utility';
