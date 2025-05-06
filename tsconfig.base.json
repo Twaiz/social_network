@@ -8,7 +8,8 @@
       "@get-env": ["./libs/backend/get-env/src"],
       "@models": ["./libs/backend/models/src"],
       "@shared": ["./libs/backend/shared/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
+      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"],
+      "@utils": ["./libs/backend/utils/src"]
     },
     "composite": true,
     "declarationMap": true,
