@@ -1,27 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import {
-  DynamicModule,
-  ForwardReference,
-  INestApplication,
-  Logger,
-  Type,
-  ValidationPipe,
-} from '@nestjs/common';
+import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import {
   SERVER_CONNECTION_FAILED,
   SERVER_CONNECTION_SUCCESS,
 } from './bootstrap.constants';
 
 import { GetEnv } from '@get-env';
-
-type IEntryNestModule =
-  | Type
-  | DynamicModule
-  | ForwardReference
-  | Promise<IEntryNestModule>;
+import { IEntryNestModule } from '@shared';
 
 export async function bootstrap<T>(
-  module: IEntryNestModule,
+  module: IEntryNestModule<T>,
   customPort: string,
 ): Promise<INestApplication<T> | null> {
   const { port, host, globalPrefix } =
