@@ -22,6 +22,9 @@
       "path": "../get-env/tsconfig.lib.json"
     },
     {
+      "path": "../utils/tsconfig.lib.json"
+    },
+    {
       "path": "../models/tsconfig.lib.json"
     },
     {

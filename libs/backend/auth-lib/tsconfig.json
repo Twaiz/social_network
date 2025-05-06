@@ -13,6 +13,9 @@
       "path": "../get-env"
     },
     {
+      "path": "../utils"
+    },
+    {
       "path": "../models"
     },
     {
