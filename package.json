@@ -114,6 +114,7 @@
     "libs/backend/auth-lib",
     "libs/backend/two-fa-lib",
     "libs/backend/shared",
-    "libs/backend/configs"
+    "libs/backend/configs",
+    "libs/backend/*"
   ]
 }

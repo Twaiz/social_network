@@ -35,6 +35,9 @@
     },
     {
       "path": "./e2e/backend/two-fa-e2e"
+    },
+    {
+      "path": "./libs/backend/utils"
     }
   ]
 }
