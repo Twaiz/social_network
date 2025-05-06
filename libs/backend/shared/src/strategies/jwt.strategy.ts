@@ -6,10 +6,10 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
 import { IUser } from '../interfaces';
-import { findUserByEmail } from '../utils';
 import { USER_NOT_FOUND } from '../constants';
 
 import { GetEnv } from '@get-env';
+import { findUserByEmail } from '@utils';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
