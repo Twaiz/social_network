@@ -41,6 +41,9 @@
     },
     {
       "path": "./libs/backend/entities"
+    },
+    {
+      "path": "./libs/backend/features"
     }
   ]
 }
