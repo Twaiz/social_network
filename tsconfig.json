@@ -38,6 +38,9 @@
     },
     {
       "path": "./libs/backend/utils"
+    },
+    {
+      "path": "./libs/backend/entities"
     }
   ]
 }
