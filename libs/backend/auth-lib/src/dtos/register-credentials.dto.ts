@@ -4,7 +4,7 @@ import {
   LOGIN_MIN_LENGTH_ERROR,
 } from '../auth.constants';
 
-export class UserRegisterCredentialsDto {
+export class RegisterCredentialsDto {
   @IsString()
   @IsEmail()
   email!: string;
