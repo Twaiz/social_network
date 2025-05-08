@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 import { IUser } from '@shared';
 
-export class LoginDto {
+export class LoginServiceDto {
   user!: IUser;
 
   @IsString()
