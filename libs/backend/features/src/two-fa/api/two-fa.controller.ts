@@ -8,9 +8,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { SUCCESS_2FA_ENABLED } from '../two-fa.constants';
-import { TwoFaService } from '../services';
-import { Enable2FADto } from '../dtos';
+// import { SUCCESS_2FA_ENABLED } from '../../../../two-fa-lib/src/two-fa.constants';
+// import { TwoFaService } from '../../../../two-fa-lib/src/services';
+// import { Enable2FADto } from '../../../../two-fa-lib/src/dtos';
 
 import { JwtAuthGuard, type AuthenticatedRequest } from '@shared';
 
