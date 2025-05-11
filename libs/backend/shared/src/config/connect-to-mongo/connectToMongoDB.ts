@@ -7,7 +7,7 @@ import {
   DB_CONNECTION_SUCCESS,
 } from './constant/connectToMongoDB.constants';
 
-import { GetEnv } from '@get-env';
+import { GetEnv } from '../../kernel/lib/get-env/get-env';
 
 export const connectToMongoDB = async (
   configService: ConfigService,

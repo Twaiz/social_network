@@ -13,7 +13,7 @@ import {
   SERVER_CONNECTION_SUCCESS,
 } from './constant/bootstrap.constants';
 
-import { GetEnv } from '@get-env';
+import { GetEnv } from '../get-env/get-env';
 
 export type IEntryNestModule<T> =
   | Type<T>

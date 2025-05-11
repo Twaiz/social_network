@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
-import { GetEnv } from '@get-env';
+import { GetEnv } from '../../kernel/lib/get-env/get-env';
 
 export const getJwtConfig = (
   configService: ConfigService,
