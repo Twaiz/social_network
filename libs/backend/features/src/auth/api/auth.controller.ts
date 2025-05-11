@@ -18,15 +18,15 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
-  USER_INVALID_PASSWORD,
-} from '../auth.constants';
+} from './constant/auth-controller.constants';
+import { USER_INVALID_PASSWORD } from '../auth.constants';
 
-import { AuthService } from '../services';
+import { AuthService } from '../model';
 import {
-  UserLoginCredentialsDto,
-  ConfirmEmailDto,
-  UserRegisterCredentialsDto,
-} from '../dtos';
+  ConfirmEmailCredentialsDto,
+  LoginCredentialsDto,
+  RegisterCredentialsDto,
+} from '../types';
 
 import {
   IUser,
@@ -35,8 +35,8 @@ import {
   RegisterResponse,
   LoginResponse,
 } from '@shared';
-
 import { findUserByEmail, findUserByLogin } from '@utils';
+
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -48,9 +48,9 @@ export class AuthController {
   @HttpCode(201)
   @Post('register')
   async register(
-    @Body() userRegisterCredentialsDto: UserRegisterCredentialsDto,
+    @Body() registerCredentialsDto: RegisterCredentialsDto,
   ): Promise<RegisterResponse> {
-    const { email, login } = userRegisterCredentialsDto;
+    const { email, login } = registerCredentialsDto;
 
     const userByEmail = await findUserByEmail(this.userModel, email);
     const userByLogin = await findUserByLogin(this.userModel, login);
@@ -72,16 +72,16 @@ export class AuthController {
       );
     }
 
-    return await this.authService.createUser(userRegisterCredentialsDto);
+    return await this.authService.createUser(registerCredentialsDto);
   }
 
   //* Login *//
   @HttpCode(200)
   @Post('login')
   async login(
-    @Body() userLoginCredentialsDto: UserLoginCredentialsDto,
+    @Body() loginCredentialsDto: LoginCredentialsDto,
   ): Promise<LoginResponse> {
-    const { email, login, password, twoFactorCode } = userLoginCredentialsDto;
+    const { email, login, password, twoFactorCode } = loginCredentialsDto;
     const emailOrLogin = email ? 'email' : 'login';
     const INVALID_LOGIN_CREDENTIALS = `${USER_INVALID_PASSWORD} или ${emailOrLogin}. Попробуйте ещё раз.`;
 
@@ -128,9 +128,9 @@ export class AuthController {
   @HttpCode(200)
   @Post('confirm-email')
   async confirmEmail(
-    @Body() emailConfirmToken: ConfirmEmailDto,
+    @Body() confirmEmailCredentials: ConfirmEmailCredentialsDto,
   ): Promise<{ message: string }> {
-    const { token } = emailConfirmToken;
+    const { token } = confirmEmailCredentials;
 
     await this.authService.confirmEmail(token);
 
