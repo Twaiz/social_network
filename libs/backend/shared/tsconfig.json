@@ -8,12 +8,6 @@
     },
     {
       "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "../utils"
-    },
-    {
-      "path": "../models"
     }
   ]
 }
