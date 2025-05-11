@@ -16,8 +16,9 @@ import { addHours } from 'date-fns';
 import {
   CONFIRM_EMAIL_TOKEN_INVALID,
   NOT_FOUND_2FA_CODE,
-  USER_INVALID_PASSWORD,
-} from '../auth.constants';
+} from './constant/auth-service.constants';
+import { USER_INVALID_PASSWORD } from '../../auth.constants';
+
 import { LoginDto, UserRegisterCredentialsDto } from '../dtos';
 import { sendEmailConfirmation } from '../utils';
 
