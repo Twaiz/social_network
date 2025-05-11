@@ -1,5 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
+import {
+  DynamicModule,
+  ForwardReference,
+  INestApplication,
+  Logger,
+  Type,
+  ValidationPipe,
+} from '@nestjs/common';
 
 import {
   SERVER_CONNECTION_FAILED,
@@ -7,7 +14,12 @@ import {
 } from './constant/bootstrap.constants';
 
 import { GetEnv } from '@get-env';
-import { IEntryNestModule } from '../../../types/global.types';
+
+export type IEntryNestModule<T> =
+  | Type<T>
+  | DynamicModule
+  | ForwardReference
+  | Promise<Type<T> | DynamicModule | ForwardReference>;
 
 export async function bootstrap<T>(
   module: IEntryNestModule<T>,
