@@ -22,9 +22,9 @@ import { USER_INVALID_PASSWORD } from '../auth.constants';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 import { sendEmailConfirmation } from './lib/sendEmailConfirmation';
 
+//TODO хз что с этим делать, т.к. по правилам FSD слой auth не может ничего брать из слоя two-fa
 import { TwoFaService } from '@two-fa-lib';
-import { IUser, RegisterResponse, USER_NOT_FOUND } from '@shared';
-import { GetEnv } from '@get-env';
+import { IUser, RegisterResponse, USER_NOT_FOUND, GetEnv } from '@shared';
 
 interface IJwtPayload {
   _id: string;
