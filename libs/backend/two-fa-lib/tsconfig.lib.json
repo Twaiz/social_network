@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../features/src/two-fa/dto/enable-2FA.dto.ts"],
   "references": [
     {
       "path": "../models/tsconfig.lib.json"
