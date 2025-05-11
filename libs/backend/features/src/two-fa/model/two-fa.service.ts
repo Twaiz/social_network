@@ -10,8 +10,7 @@ import * as qrcode from 'qrcode';
 
 import { INVALID_2FA_CODE } from './constant/two-fa-service.constants';
 
-import { IUser, USER_NOT_FOUND } from '@shared';
-import { findUserByEmail } from '@utils';
+import { IUser, USER_NOT_FOUND, findUserByEmail } from '@shared';
 
 @Injectable()
 export class TwoFaService {
