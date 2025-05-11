@@ -1,3 +1,5 @@
+export * from './api/user.queries';
+
 export * from './config/connect-to-mongo/connectToMongoDB';
 export * from './config/constants/global.constants';
 export * from './config/jwt/getJwtConfig';
