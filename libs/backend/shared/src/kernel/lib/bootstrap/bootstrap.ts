@@ -7,7 +7,7 @@ import {
 } from './constant/bootstrap.constants';
 
 import { GetEnv } from '@get-env';
-import { IEntryNestModule } from '../types/global.types';
+import { IEntryNestModule } from '../../../types/global.types';
 
 export async function bootstrap<T>(
   module: IEntryNestModule<T>,
