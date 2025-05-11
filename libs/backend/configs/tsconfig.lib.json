@@ -13,7 +13,12 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../shared/src/config/getJwtConfig.ts",
+    "../shared/src/config/connectToMongoDB.ts",
+    "../shared/src/config/configs.constants.ts"
+  ],
   "references": [
     {
       "path": "../get-env/tsconfig.lib.json"

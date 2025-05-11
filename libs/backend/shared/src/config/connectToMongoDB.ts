@@ -5,7 +5,7 @@ import { MongooseModuleOptions } from '@nestjs/mongoose';
 import {
   DB_CONNECTION_FAILED,
   DB_CONNECTION_SUCCESS,
-} from './configs.constants';
+} from './constant/connectToMongoDB.constants';
 
 import { GetEnv } from '@get-env';
 
