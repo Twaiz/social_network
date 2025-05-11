@@ -17,9 +17,9 @@ import {
   CONFIRM_EMAIL_TOKEN_INVALID,
   NOT_FOUND_2FA_CODE,
 } from './constant/auth-service.constants';
-import { USER_INVALID_PASSWORD } from '../../auth.constants';
+import { USER_INVALID_PASSWORD } from '../auth.constants';
 
-import { LoginServiceDto, RegisterCredentialsDto } from '../../types/dto';
+import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 import { sendEmailConfirmation } from './lib/sendEmailConfirmation';
 
 import { TwoFaService } from '@two-fa-lib';

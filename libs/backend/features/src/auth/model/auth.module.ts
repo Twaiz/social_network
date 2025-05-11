@@ -4,8 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { AuthController } from '../../api';
-import { AuthService } from '../services/auth.service';
+import { AuthController } from '../api/auth.controller';
+import { AuthService } from './auth.service';
 
 import { TwoFaModule } from '@two-fa-lib';
 import { UserSchema } from '@models';
