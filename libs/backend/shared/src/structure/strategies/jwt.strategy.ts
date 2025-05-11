@@ -9,6 +9,7 @@ import { IUser } from '../interfaces';
 import { USER_NOT_FOUND } from '../constants';
 
 import { GetEnv } from '@get-env';
+//TODO решить вопрос с ебучим findUserByEmailи куда его засунуть, чтобы после небыло проблем с цикличностью. Из-за него и начался весь этот пиздец в архитектуре.
 import { findUserByEmail } from '@utils';
 
 @Injectable()
