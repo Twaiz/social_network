@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
+
 import {
   SERVER_CONNECTION_FAILED,
   SERVER_CONNECTION_SUCCESS,
-} from './bootstrap.constants';
+} from './constant/bootstrap.constants';
 
 import { GetEnv } from '@get-env';
-import { IEntryNestModule } from '@shared';
+import { IEntryNestModule } from '../types/global.types';
 
 export async function bootstrap<T>(
   module: IEntryNestModule<T>,
