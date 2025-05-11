@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
-import { INVALID_2FA_CODE } from '../two-fa.constants';
+import { INVALID_2FA_CODE } from './constant/two-fa-service.constants';
 
 import { IUser, USER_NOT_FOUND } from '@shared';
 import { findUserByEmail } from '@utils';
