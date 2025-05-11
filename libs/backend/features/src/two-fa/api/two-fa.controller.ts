@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 
 import { SUCCESS_2FA_ENABLED } from './constant/two-fa-controller.constant';
-// import { TwoFaService } from '../../../../two-fa-lib/src/services';
-// import { Enable2FADto } from '../../../../two-fa-lib/src/dtos';
+import { Enable2FADto } from '../dto';
+//TODO короче, хз что тут делать, т.к. у нас есть правила импортов в слоях. Нельзя, чтобы слой api что-то брал из слоя model та и вообще во всех других слоях. Хз, что делать
+import { TwoFaService } from '../model/two-fa.service';
 
 import { JwtAuthGuard, type AuthenticatedRequest } from '@shared';
 
