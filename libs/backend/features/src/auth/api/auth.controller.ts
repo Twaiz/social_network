@@ -28,13 +28,14 @@ import { RegisterCredentialsDto } from '../dto/register-credentials.dto';
 import { AuthService } from '../model/auth.service';
 
 import {
+  findUserByEmail,
+  findUserByLogin,
   IUser,
   JwtAuthGuard,
   type AuthenticatedRequest,
   RegisterResponse,
   LoginResponse,
 } from '@shared';
-import { findUserByEmail, findUserByLogin } from '@utils';
 
 @Controller('auth')
 export class AuthController {
