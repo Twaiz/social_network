@@ -19,8 +19,8 @@ import {
 } from './constant/auth-service.constants';
 import { USER_INVALID_PASSWORD } from '../../auth.constants';
 
-import { LoginDto, UserRegisterCredentialsDto } from '../dtos';
-import { sendEmailConfirmation } from '../utils';
+import { LoginServiceDto, RegisterCredentialsDto } from '../../types/dto';
+import { sendEmailConfirmation } from './lib/sendEmailConfirmation';
 
 import { TwoFaService } from '@two-fa-lib';
 import { IUser, RegisterResponse, USER_NOT_FOUND } from '@shared';
@@ -51,10 +51,10 @@ export class AuthService {
 
   //* Create User (Register) *//
   async createUser(
-    userRegisterCredentialsDto: UserRegisterCredentialsDto,
+    registerCredentialsDto: RegisterCredentialsDto,
   ): Promise<RegisterResponse> {
     const { email, login, password, firstName, secondName } =
-      userRegisterCredentialsDto;
+      registerCredentialsDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
@@ -85,8 +85,8 @@ export class AuthService {
   }
 
   //* Login *//
-  async login(loginDto: LoginDto): Promise<string> {
-    const { user, password, twoFactorCode } = loginDto;
+  async login(LoginServiceDto: LoginServiceDto): Promise<string> {
+    const { user, password, twoFactorCode } = LoginServiceDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
