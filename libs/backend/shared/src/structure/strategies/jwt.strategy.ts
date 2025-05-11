@@ -5,12 +5,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
-import { IUser } from '../types/interfaces';
-import { USER_NOT_FOUND } from '../constants';
+import { USER_NOT_FOUND } from '../../config/constants/global.constants';
+import { IUser } from '../types/interfaces/user.interface';
 
-import { GetEnv } from '@get-env';
-//TODO решить вопрос с ебучим findUserByEmailи куда его засунуть, чтобы после небыло проблем с цикличностью. Из-за него и начался весь этот пиздец в архитектуре.
-import { findUserByEmail } from '@utils';
+import { GetEnv } from '../../kernel/lib/get-env/get-env';
+import { findUserByEmail } from '../../api/user.queries';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
