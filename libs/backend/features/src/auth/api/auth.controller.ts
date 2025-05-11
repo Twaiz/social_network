@@ -21,12 +21,11 @@ import {
 } from './constant/auth-controller.constants';
 import { USER_INVALID_PASSWORD } from '../auth.constants';
 
-import { AuthService } from '../model';
-import {
-  ConfirmEmailCredentialsDto,
-  LoginCredentialsDto,
-  RegisterCredentialsDto,
-} from '../types/dto';
+import { ConfirmEmailCredentialsDto } from '../dto/confirmEmail-credentials.dto';
+import { LoginCredentialsDto } from '../dto/login-credentials.dto';
+import { RegisterCredentialsDto } from '../dto/register-credentials.dto';
+
+import { AuthService } from '../model/auth.service';
 
 import {
   IUser,
