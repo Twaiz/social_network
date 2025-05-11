@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-// import { SUCCESS_2FA_ENABLED } from '../../../../two-fa-lib/src/two-fa.constants';
+import { SUCCESS_2FA_ENABLED } from './constant/two-fa-controller.constant';
 // import { TwoFaService } from '../../../../two-fa-lib/src/services';
 // import { Enable2FADto } from '../../../../two-fa-lib/src/dtos';
 
