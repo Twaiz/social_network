@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
-import { IUser } from '../interfaces';
+import { IUser } from '../types/interfaces';
 import { USER_NOT_FOUND } from '../constants';
 
 import { GetEnv } from '@get-env';
