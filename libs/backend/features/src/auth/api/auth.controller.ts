@@ -26,7 +26,7 @@ import {
   ConfirmEmailCredentialsDto,
   LoginCredentialsDto,
   RegisterCredentialsDto,
-} from '../types';
+} from '../types/dto';
 
 import {
   IUser,
