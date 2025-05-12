@@ -78,6 +78,7 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/qrcode": "^1.5.5",
     "@types/supertest": "^6.0.3",
+    "dependency-cruiser": "^16.10.2",
     "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-jest": "^28.11.0",
