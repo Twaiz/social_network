@@ -11,9 +11,8 @@ import {
 import {
   SERVER_CONNECTION_FAILED,
   SERVER_CONNECTION_SUCCESS,
-} from './constant/bootstrap.constants';
-
-import { GetEnv } from '../get-env/get-env';
+} from './constant';
+import { GetEnv } from '../get-env';
 
 export type IEntryNestModule<T> =
   | Type<T>
