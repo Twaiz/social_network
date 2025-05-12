@@ -1,8 +1,5 @@
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import {
-  LOGIN_MAX_LENGTH_ERROR,
-  LOGIN_MIN_LENGTH_ERROR,
-} from './constant/dto-validation.constants';
+import { LOGIN_MAX_LENGTH_ERROR, LOGIN_MIN_LENGTH_ERROR } from './constant';
 
 export class RegisterCredentialsDto {
   @IsString()
