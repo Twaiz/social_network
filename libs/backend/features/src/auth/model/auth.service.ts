@@ -1,7 +1,5 @@
 import {
   BadRequestException,
-  forwardRef,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -22,9 +20,13 @@ import { USER_INVALID_PASSWORD } from '../auth.constants';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 import { sendEmailConfirmation } from './lib/sendEmailConfirmation';
 
-//TODO хз что с этим делать, т.к. по правилам FSD слой auth не может ничего брать из слоя two-fa
-import { TwoFaService } from '@two-fa-lib';
-import { IUser, RegisterResponse, USER_NOT_FOUND, GetEnv } from '@shared';
+import {
+  IUser,
+  RegisterResponse,
+  USER_NOT_FOUND,
+  GetEnv,
+  verifyTwoFactorCode,
+} from '@shared';
 
 interface IJwtPayload {
   _id: string;
@@ -45,8 +47,6 @@ export class AuthService {
     @InjectModel('User') private readonly userModel: Model<IUser>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    @Inject(forwardRef(() => TwoFaService))
-    private readonly twoFaService: TwoFaService,
   ) {}
 
   //* Create User (Register) *//
@@ -101,7 +101,7 @@ export class AuthService {
         throw new BadRequestException(NOT_FOUND_2FA_CODE);
       }
 
-      await this.twoFaService.verifyTwoFactorCode(user, twoFactorCode);
+      verifyTwoFactorCode(user, twoFactorCode);
     }
 
     const token = await this.getJwtToken({
