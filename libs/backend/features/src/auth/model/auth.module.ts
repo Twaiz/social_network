@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
@@ -8,13 +8,14 @@ import { AuthController } from '../api/auth.controller';
 import { AuthService } from './auth.service';
 
 //TODO хз что с этим делать, т.к. по правилам FSD слой auth не может ничего брать из слоя two-fa
+//TODO - есть решение. Вынести функцию, из-за которой мы импортируем TwoFaService (TwoFaModule) в shared/lib и после можно будет уже из shared импортить, но это не нарушает правила FSD
 import { TwoFaModule } from '@two-fa-lib';
 import { UserSchema } from '@entities/user';
 import { JwtStrategy, getJwtConfig, connectToMongoDB } from '@shared';
 
 @Module({
   imports: [
-    forwardRef(() => TwoFaModule),
+    TwoFaModule,
     ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
