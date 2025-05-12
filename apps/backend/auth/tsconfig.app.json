@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "types": ["node"],
-    "rootDir": "src",
+    "rootDir": ".",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
     "target": "es2021"
   },
@@ -11,13 +11,7 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../../libs/backend/get-env/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/auth-lib/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
+      "path": "../../../libs/backend/shared/tsconfig.lib.json"
     }
   ]
 }

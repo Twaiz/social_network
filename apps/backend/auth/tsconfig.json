@@ -4,13 +4,7 @@
   "include": [],
   "references": [
     {
-      "path": "../../../libs/backend/get-env"
-    },
-    {
-      "path": "../../../libs/backend/auth-lib"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap"
+      "path": "../../../libs/backend/shared"
     },
     {
       "path": "./tsconfig.app.json"
