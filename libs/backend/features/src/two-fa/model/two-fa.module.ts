@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-//TODO короче, хз что тут делать, т.к. у нас есть правила импортов в слоях. Нельзя, чтобы слой model что-то брал из слоя api та и вообще во всех других слоях. Хз, что делать
-import { TwoFaController } from '../controllers';
+import { TwoFaController } from '../api';
 import { TwoFaService } from './two-fa.service';
 
 import { connectToMongoDB, JwtStrategy } from '@shared';
