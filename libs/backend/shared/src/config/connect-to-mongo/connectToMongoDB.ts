@@ -2,12 +2,8 @@ import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModuleOptions } from '@nestjs/mongoose';
 
-import {
-  DB_CONNECTION_FAILED,
-  DB_CONNECTION_SUCCESS,
-} from './constant/connectToMongoDB.constants';
-
-import { GetEnv } from '../../kernel/lib/get-env/get-env';
+import { DB_CONNECTION_FAILED, DB_CONNECTION_SUCCESS } from './constant';
+import { GetEnv } from '../../kernel';
 
 export const connectToMongoDB = async (
   configService: ConfigService,
