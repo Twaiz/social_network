@@ -9,16 +9,7 @@
   "include": ["jest.config.ts", "src/**/*.ts"],
   "references": [
     {
-      "path": "../../../libs/backend/get-env"
-    },
-    {
       "path": "../../../libs/backend/shared"
-    },
-    {
-      "path": "../../../libs/backend/auth-lib"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap"
     }
   ]
 }

@@ -10,15 +10,6 @@
   "references": [
     {
       "path": "../../../libs/backend/shared"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap"
-    },
-    {
-      "path": "../../../libs/backend/two-fa-lib"
-    },
-    {
-      "path": "../../../libs/backend/get-env"
     }
   ]
 }
