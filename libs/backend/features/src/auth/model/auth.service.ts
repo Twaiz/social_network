@@ -11,14 +11,11 @@ import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
-import {
-  CONFIRM_EMAIL_TOKEN_INVALID,
-  NOT_FOUND_2FA_CODE,
-} from './constant/auth-service.constants';
 import { USER_INVALID_PASSWORD } from '../auth.constants';
 
+import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
-import { sendEmailConfirmation } from './lib/sendEmailConfirmation';
+import { sendEmailConfirmation } from './lib';
 
 import {
   IUser,
