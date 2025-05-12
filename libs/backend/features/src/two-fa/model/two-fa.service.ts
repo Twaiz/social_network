@@ -1,16 +1,15 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
-import { INVALID_2FA_CODE } from './constant/two-fa-service.constants';
-
-import { IUser, USER_NOT_FOUND, findUserByEmail } from '@shared';
+import {
+  IUser,
+  USER_NOT_FOUND,
+  findUserByEmail,
+  verifyTwoFactorCode,
+} from '@shared';
 
 @Injectable()
 export class TwoFaService {
@@ -48,21 +47,10 @@ export class TwoFaService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    this.verifyTwoFactorCode(userWithTwoFactorSecret, code);
+    verifyTwoFactorCode(userWithTwoFactorSecret, code);
 
     await this.userModel.findByIdAndUpdate(userWithTwoFactorSecret._id, {
       isTwoFactorEnabled: true,
     });
-  }
-
-  verifyTwoFactorCode(user: IUser, code: string): void {
-    const isTwoFactorCodeValid = authenticator.verify({
-      token: code,
-      secret: user.twoFactorSecret,
-    });
-
-    if (!isTwoFactorCodeValid) {
-      throw new BadRequestException(INVALID_2FA_CODE);
-    }
   }
 }
