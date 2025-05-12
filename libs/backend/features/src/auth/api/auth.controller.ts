@@ -21,13 +21,13 @@ import {
 } from './constant/auth-controller.constants';
 import { USER_INVALID_PASSWORD } from '../auth.constants';
 
-//TODO - ошибка, надо не зависить от каждого файла, а зависить от barrel-файл. Так мы не будем зависить от самого dto, а просто типа как конфигурация.
-import { ConfirmEmailCredentialsDto } from '../dto/confirmEmail-credentials.dto';
-import { LoginCredentialsDto } from '../dto/login-credentials.dto';
-import { RegisterCredentialsDto } from '../dto/register-credentials.dto';
+import {
+  ConfirmEmailCredentialsDto,
+  LoginCredentialsDto,
+  RegisterCredentialsDto,
+} from '../dto';
 
-//TODO - ошибка, как в Two-fa и как я выше написал.
-import { AuthService } from '../model/auth.service';
+import { AuthService } from '../model';
 
 import {
   findUserByEmail,
