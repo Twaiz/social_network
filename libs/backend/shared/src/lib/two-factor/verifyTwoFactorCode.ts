@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { authenticator } from 'otplib';
 
-import { IUser } from '../../structure/types/interfaces/user.interface';
-import { INVALID_2FA_CODE } from './constant/two-factor.constants';
+import { IUser } from '../../structure';
+import { INVALID_2FA_CODE } from './constant';
 
 export const verifyTwoFactorCode = (user: IUser, code: string): void => {
   const isTwoFactorCodeValid = authenticator.verify({
