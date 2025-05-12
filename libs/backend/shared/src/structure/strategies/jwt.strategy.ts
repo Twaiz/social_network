@@ -5,11 +5,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
-import { USER_NOT_FOUND } from '../../config/constants/global.constants';
-import { IUser } from '../types/interfaces/user.interface';
-
-import { GetEnv } from '../../kernel/lib/get-env/get-env';
-import { findUserByEmail } from '../../api/user.queries';
+import { USER_NOT_FOUND } from '../../config';
+import { IUser } from '../types';
+import { GetEnv } from '../../kernel';
+import { findUserByEmail } from '../../api';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
