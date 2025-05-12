@@ -9,7 +9,7 @@ import {
   SERVER_GLOBAL_PREFIX_ERROR,
   SERVER_HOST_ERROR,
   SERVER_PORT_ERROR,
-} from './constant/get-env.constants';
+} from './constant';
 
 type EnvString = string | undefined;
 
