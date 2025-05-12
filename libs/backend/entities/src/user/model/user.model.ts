@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { isEmail } from 'validator';
 
-import { EMAIL_VALIDATION_ERROR } from './constant/user-validation.constants';
-import { loginToLowerCase } from './lib/hooks/loginToLowerCase';
+import { EMAIL_VALIDATION_ERROR } from './constant';
+import { loginToLowerCase } from './lib';
 
 import { IUser, EUserRole } from '@shared';
 
