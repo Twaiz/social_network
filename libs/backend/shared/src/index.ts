@@ -7,6 +7,8 @@ export * from './config/jwt/getJwtConfig';
 export * from './kernel/lib/bootstrap/bootstrap';
 export * from './kernel/lib/get-env/get-env';
 
+export * from './lib/two-factor/verifyTwoFactorCode';
+
 export * from './structure/decorators/roles/roles.decorator';
 export * from './structure/types/enums/user.role';
 export * from './structure/guards/jwtAuth.guard';
