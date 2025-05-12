@@ -18,7 +18,7 @@ import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
-} from './constant/auth-controller.constants';
+} from './constant';
 import { USER_INVALID_PASSWORD } from '../auth.constants';
 
 import {
