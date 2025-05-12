@@ -11,6 +11,7 @@ import {
 import { SUCCESS_2FA_ENABLED } from './constant/two-fa-controller.constant';
 import { Enable2FADto } from '../dto';
 //TODO короче, хз что тут делать, т.к. у нас есть правила импортов в слоях. Нельзя, чтобы слой api что-то брал из слоя model та и вообще во всех других слоях. Хз, что делать
+//TODO - есть решение, смотреть рабочий стол
 import { TwoFaService } from '../model/two-fa.service';
 
 import { JwtAuthGuard, type AuthenticatedRequest } from '@shared';
