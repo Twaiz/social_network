@@ -4,8 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-//TODO - ошибка, как в Two-fa
-import { AuthController } from '../api/auth.controller';
+import { AuthController } from '../api';
 import { AuthService } from './auth.service';
 
 import { UserSchema } from '@entities/user';
