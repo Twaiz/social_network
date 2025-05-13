@@ -7,6 +7,9 @@
       "path": "../../../libs/backend/shared"
     },
     {
+      "path": "../../../libs/backend/features"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]
