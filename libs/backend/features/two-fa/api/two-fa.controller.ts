@@ -10,7 +10,7 @@ import {
 
 import { SUCCESS_2FA_ENABLED } from './constant';
 import { Enable2FADto } from '../dto';
-import { TwoFaService } from '../model';
+import { TwoFaService } from '../model/two-fa.service';
 
 import { JwtAuthGuard, type AuthenticatedRequest } from '@shared';
 
