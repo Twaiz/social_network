@@ -6,6 +6,7 @@ module.exports = {
     alias: {
       '@shared': resolve(__dirname, '../../../libs/backend/shared'),
       '@features/*': resolve(__dirname, '../../../libs/backend/features/*'),
+      '@entities/*': resolve(__dirname, '../../../libs/backend/entities/*'),
     },
   },
   output: {
