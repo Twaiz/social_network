@@ -10,6 +10,9 @@
   "references": [
     {
       "path": "../../../libs/backend/shared"
+    },
+    {
+      "path": "../../../libs/backend/features"
     }
   ]
 }
