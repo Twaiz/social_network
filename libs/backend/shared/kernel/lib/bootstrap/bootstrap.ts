@@ -14,14 +14,14 @@ import {
 } from './constant';
 import { GetEnv } from '../get-env';
 
-export type IEntryNestModule<T> =
-  | Type<T>
+export type IEntryNestModule =
+  | Type
   | DynamicModule
   | ForwardReference
-  | Promise<Type<T> | DynamicModule | ForwardReference>;
+  | Promise<Type | DynamicModule | ForwardReference>;
 
 export async function bootstrap<T>(
-  module: IEntryNestModule<T>,
+  module: IEntryNestModule,
   customPort: string,
 ): Promise<INestApplication<T> | null> {
   const { port, host, globalPrefix } =
