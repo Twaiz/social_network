@@ -27,7 +27,7 @@ import {
   RegisterCredentialsDto,
 } from '../dto';
 
-import { AuthService } from '../model';
+import { AuthService } from '../model/auth.service';
 
 import {
   findUserByEmail,
