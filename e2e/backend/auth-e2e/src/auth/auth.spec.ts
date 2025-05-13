@@ -5,21 +5,22 @@ import { App } from 'supertest/types';
 import request from 'supertest';
 
 import {
-  AuthModule,
-  UserLoginCredentialsDto,
-  UserRegisterCredentialsDto,
-} from '@auth-lib';
-import {
   APP_INIT_FAILED,
   IUser,
   LoginResponse,
   RegisterResponse,
   USER_NOT_FOUND,
+  GetEnv,
+  bootstrap,
 } from '@shared';
-import { GetEnv } from '@get-env';
-import { bootstrap } from '@bootstrap';
 
-const RegisterCredentials: UserRegisterCredentialsDto = {
+import {
+  AuthModule,
+  LoginCredentialsDto,
+  RegisterCredentialsDto,
+} from '@features/auth';
+
+const RegisterCredentials: RegisterCredentialsDto = {
   email: 'twaiz@gmail.com',
   login: 'twAiz',
   password: '1205Qaz!',
@@ -27,7 +28,7 @@ const RegisterCredentials: UserRegisterCredentialsDto = {
   secondName: 'Twaiz',
 };
 
-const LoginCredentials: UserLoginCredentialsDto = {
+const LoginCredentials: LoginCredentialsDto = {
   login: 'TwaiZ',
   password: '1205Qaz!',
 };
