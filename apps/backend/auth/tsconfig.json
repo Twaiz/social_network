@@ -7,10 +7,7 @@
       "path": "../../../libs/backend/shared"
     },
     {
-      "path": "../../../libs/backend/auth-lib"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap"
+      "path": "../../../libs/backend/features"
     },
     {
       "path": "./tsconfig.app.json"

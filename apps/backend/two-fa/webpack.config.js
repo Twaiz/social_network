@@ -4,12 +4,9 @@ const { join, resolve } = require('node:path');
 module.exports = {
   resolve: {
     alias: {
-      '@bootstrap': resolve(__dirname, '../../../libs/backend/bootstrap/src'),
-      '@configs': resolve(__dirname, '../../../libs/backend/configs/src'),
-      '@get-env': resolve(__dirname, '../../../libs/backend/get-env/src'),
-      '@models': resolve(__dirname, '../../../libs/backend/models/src'),
-      '@shared': resolve(__dirname, '../../../libs/backend/shared/src'),
-      '@two-fa-lib': resolve(__dirname, '../../../libs/backend/two-fa-lib/src'),
+      '@shared': resolve(__dirname, '../../../libs/backend/shared'),
+      '@features/*': resolve(__dirname, '../../../libs/backend/features/*'),
+      '@entities/*': resolve(__dirname, '../../../libs/backend/entities/*'),
     },
   },
   output: {

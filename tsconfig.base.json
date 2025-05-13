@@ -2,13 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@auth-lib": ["./libs/backend/auth-lib/src"],
-      "@bootstrap": ["./libs/backend/bootstrap/src"],
-      "@configs": ["./libs/backend/configs/src"],
-      "@get-env": ["./libs/backend/get-env/src"],
-      "@models": ["./libs/backend/models/src"],
-      "@shared": ["./libs/backend/shared/src"],
-      "@two-fa-lib": ["./libs/backend/two-fa-lib/src"]
+      "@features/*": ["./libs/backend/features/*"],
+      "@entities/*": ["./libs/backend/entities/*"],
+      "@shared": ["./libs/backend/shared"]
     },
     "composite": true,
     "declarationMap": true,

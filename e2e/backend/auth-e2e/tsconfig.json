@@ -6,9 +6,13 @@
     "noUnusedLocals": false,
     "noImplicitAny": false
   },
-  "include": [
-    "jest.config.ts",
-    "src/**/*.ts"
-  ],
-  "references": []
+  "include": ["jest.config.ts", "src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../../libs/backend/shared"
+    },
+    {
+      "path": "../../../libs/backend/features"
+    }
+  ]
 }

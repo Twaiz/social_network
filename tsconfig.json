@@ -10,28 +10,19 @@
       "path": "./apps/backend/auth"
     },
     {
-      "path": "./libs/backend/configs"
-    },
-    {
-      "path": "./libs/backend/get-env"
-    },
-    {
       "path": "./apps/backend/two-fa"
     },
     {
-      "path": "./libs/backend/bootstrap"
-    },
-    {
-      "path": "./libs/backend/models"
-    },
-    {
-      "path": "./libs/backend/auth-lib"
-    },
-    {
-      "path": "./libs/backend/two-fa-lib"
+      "path": "./e2e/backend/two-fa-e2e"
     },
     {
       "path": "./libs/backend/shared"
+    },
+    {
+      "path": "./libs/backend/entities"
+    },
+    {
+      "path": "./libs/backend/features"
     }
   ]
 }

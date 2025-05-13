@@ -47,7 +47,10 @@
         "libs/backend/models/*",
         "libs/backend/auth-lib/*",
         "libs/backend/two-fa-lib/*",
-        "libs/backend/shared/*"
+        "libs/backend/shared/*",
+        "libs/backend/utils/*",
+        "libs/backend/entities/*",
+        "libs/backend/features/*"
       ]
     },
     {
@@ -93,7 +96,10 @@
         "libs/backend/models/*",
         "libs/backend/auth-lib/*",
         "libs/backend/two-fa-lib/*",
-        "libs/backend/shared/*"
+        "libs/backend/shared/*",
+        "libs/backend/utils/*",
+        "libs/backend/entities/*",
+        "libs/backend/features/*"
       ],
       "options": {
         "typecheck": {

@@ -3,30 +3,18 @@
   "compilerOptions": {
     "outDir": "dist",
     "types": ["node"],
-    "rootDir": "src",
+    "rootDir": ".",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
     "target": "es2021"
   },
   "include": ["src/**/*.ts"],
-  "exclude": [
-    "out-tsc",
-    "dist",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
-    "eslint.config.js",
-    "eslint.config.cjs",
-    "eslint.config.mjs"
-  ],
+  "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
       "path": "../../../libs/backend/shared/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/two-fa-lib/tsconfig.lib.json"
-    },
-    {
-      "path": "../../../libs/backend/bootstrap/tsconfig.lib.json"
+      "path": "../../../libs/backend/features/tsconfig.lib.json"
     }
   ]
 }
