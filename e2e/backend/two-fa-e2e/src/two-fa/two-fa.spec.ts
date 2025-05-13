@@ -2,10 +2,8 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { App } from 'supertest/types';
 import request from 'supertest';
 
-import { TwoFaModule } from '@two-fa-lib';
-import { GetEnv } from '@get-env';
-import { bootstrap } from '@bootstrap';
-import { APP_INIT_FAILED } from '@shared';
+import { TwoFaModule } from '@features/two-fa';
+import { GetEnv, bootstrap, APP_INIT_FAILED } from '@shared';
 
 describe('App - TwoFa (e2e)', () => {
   let app: INestApplication<App>;
