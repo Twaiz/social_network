@@ -56,6 +56,7 @@ describe('App - Auth (e2e)', () => {
     userModel = app.get(getModelToken('User'));
   });
 
+  //* Register *//
   it('auth/register -- success', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/register')
@@ -77,6 +78,7 @@ describe('App - Auth (e2e)', () => {
     //TODO прочитать то, что я заскринил "лучшие практики для e2e-тестов"
   });
 
+  //* Login *//
   it('auth/login -- success', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/login')
@@ -89,7 +91,8 @@ describe('App - Auth (e2e)', () => {
     expect(data).toHaveProperty('token');
   });
 
-  it('auth/generate-email-token', async () => {
+  //* Generate Email Token *//
+  it('auth/generate-email-token -- success', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/auth/generate-email-token')
       .set('Authorization', `Bearer ${token}`)
@@ -110,7 +113,8 @@ describe('App - Auth (e2e)', () => {
     expect(user).toHaveProperty('emailExpiresToken');
   });
 
-  it('auth/confirm-email', async () => {
+  //* Confirm Email *//
+  it('auth/confirm-email -- success', async () => {
     const userBeforeConfirmEmail = await userModel
       .findOne({ login: LoginCredentials.login })
       .select('+emailConfirmToken')
@@ -140,6 +144,16 @@ describe('App - Auth (e2e)', () => {
 
     expect(userAfterConfirmEmail.emailConfirmToken).toBeFalsy();
     expect(userAfterConfirmEmail.emailExpiresToken).toBeFalsy();
+  });
+
+  it('auth/check-isEmailConfirm -- success', async () => {
+    const res = await request(app.getHttpServer())
+      .get('/api/auth/check-isEmailConfirm')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(res.body).toHaveProperty('message');
+    Logger.log(res.body);
   });
 
   afterAll(async () => {
