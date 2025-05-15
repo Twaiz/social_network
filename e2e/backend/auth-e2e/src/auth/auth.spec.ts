@@ -146,6 +146,14 @@ describe('App - Auth (e2e)', () => {
     expect(userAfterConfirmEmail.emailExpiresToken).toBeFalsy();
   });
 
+  it('auth/check-isEmailConfirm -- success', async () => {
+    const res = await request(app.getHttpServer())
+      .get('auth/check-isEmailConfirm')
+      .expect(200);
+
+    expect(res.body).toHaveProperty('message');
+  });
+
   afterAll(async () => {
     await app.close();
   });
