@@ -109,6 +109,7 @@ export class AuthController {
       user,
       password,
       twoFactorCode,
+      errorMessage: INVALID_LOGIN_CREDENTIALS,
     });
 
     return { token };
