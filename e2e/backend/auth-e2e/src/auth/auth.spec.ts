@@ -148,10 +148,12 @@ describe('App - Auth (e2e)', () => {
 
   it('auth/check-isEmailConfirm -- success', async () => {
     const res = await request(app.getHttpServer())
-      .get('auth/check-isEmailConfirm')
+      .get('/api/auth/check-isEmailConfirm')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200);
 
     expect(res.body).toHaveProperty('message');
+    Logger.log(res.body);
   });
 
   afterAll(async () => {
