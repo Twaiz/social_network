@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   HttpCode,
   NotFoundException,
   Post,
@@ -37,6 +38,7 @@ import {
   type AuthenticatedRequest,
   RegisterResponse,
   LoginResponse,
+  EmailConfirmGuard,
 } from '@shared';
 
 @Controller('auth')
@@ -137,5 +139,15 @@ export class AuthController {
     await this.authService.confirmEmail(token);
 
     return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
+  }
+
+  //* Test Route for Check isEmailConfirm *//
+  @HttpCode(200)
+  @Get('check-isEmailConfirm')
+  @UseGuards(JwtAuthGuard, EmailConfirmGuard)
+  async checkIsEmailConfirm(): Promise<{ message: string }> {
+    return {
+      message: 'У вас подтверждена почта!)',
+    };
   }
 }
