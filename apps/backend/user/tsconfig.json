@@ -5,6 +5,15 @@
   "references": [
     {
       "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "../../../libs/backend/shared"
+    },
+    {
+      "path": "../../../libs/backend/features"
+    },
+    {
+      "path": "../../../libs/backend/entities"
     }
   ]
 }
