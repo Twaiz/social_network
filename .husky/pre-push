@@ -1,5 +1,1 @@
-npm run serve-two-fa &
-
-sleep 10
-
 npx nx affected -t lint test build
