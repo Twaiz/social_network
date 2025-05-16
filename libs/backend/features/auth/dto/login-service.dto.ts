@@ -12,4 +12,8 @@ export class LoginServiceDto {
   @IsString()
   @IsNotEmpty()
   twoFactorCode?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  errorMessage!: string;
 }

@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npx nx run-many --target=serve --all",
+    "stop": "taskkill /F /IM node.exe || exit 0",
     "prepare": "husky install",
     "serve-auth": "nx serve auth",
     "serve-two-fa": "nx serve two-fa",

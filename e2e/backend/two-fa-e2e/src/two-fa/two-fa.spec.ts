@@ -9,7 +9,7 @@ describe('App - TwoFa (e2e)', () => {
   let app: INestApplication<App>;
 
   beforeAll(async () => {
-    const customPort = process.env.AUTH_SERVER_PORT;
+    const customPort = process.env.TWO_FA_SERVER_PORT;
     const port = GetEnv.getServerPort(customPort);
 
     const serverApp = await bootstrap<App>(TwoFaModule, port);

@@ -11,8 +11,6 @@ import { Model } from 'mongoose';
 import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
-import { USER_INVALID_PASSWORD } from '../auth.constants';
-
 import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 import { sendEmailConfirmation } from './lib';
@@ -83,14 +81,14 @@ export class AuthService {
 
   //* Login *//
   async login(LoginServiceDto: LoginServiceDto): Promise<string> {
-    const { user, password, twoFactorCode } = LoginServiceDto;
+    const { user, password, twoFactorCode, errorMessage } = LoginServiceDto;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
 
     const isPasswordValid = compareSync(password, user.passwordHash);
     if (!isPasswordValid) {
-      throw new BadRequestException(USER_INVALID_PASSWORD);
+      throw new BadRequestException(errorMessage);
     }
 
     if (user.isTwoFactorEnabled) {
