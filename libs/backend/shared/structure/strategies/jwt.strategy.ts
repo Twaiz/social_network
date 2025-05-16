@@ -26,7 +26,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: { email: string }): Promise<IUser> {
-    //TODO - добавить в функции findUserByEmail и другие, добавить проверку есть ли user или нет. У нас просто после каждого такого запроса, идет проверка есть ли user или нет.
     const user = await findUserByEmail(this.userModel, payload.email);
     if (!user) {
       Logger.error(USER_NOT_FOUND);

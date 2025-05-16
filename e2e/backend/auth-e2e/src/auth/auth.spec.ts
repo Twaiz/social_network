@@ -74,8 +74,6 @@ describe('App - Auth (e2e)', () => {
       firstName: RegisterCredentials.firstName,
       secondName: RegisterCredentials.secondName,
     });
-
-    //TODO прочитать то, что я заскринил "лучшие практики для e2e-тестов"
   });
 
   //* Login *//
