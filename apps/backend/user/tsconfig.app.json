@@ -11,13 +11,10 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../../../libs/backend/shared/tsconfig.lib.json"
-    },
-    {
       "path": "../../../libs/backend/features/tsconfig.lib.json"
     },
     {
-      "path": "../../../libs/backend/entities/tsconfig.lib.json"
+      "path": "../../../libs/backend/shared/tsconfig.lib.json"
     }
   ]
 }
