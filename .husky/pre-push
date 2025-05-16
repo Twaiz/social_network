@@ -1,1 +1,5 @@
+npm run stop &
+
+sleep 3
+
 npx nx affected -t lint test build
