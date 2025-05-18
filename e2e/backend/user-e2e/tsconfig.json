@@ -10,6 +10,9 @@
   "references": [
     {
       "path": "../../../libs/backend/shared/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/features/tsconfig.lib.json"
     }
   ]
 }
