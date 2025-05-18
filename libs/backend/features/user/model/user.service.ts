@@ -19,6 +19,7 @@ export class UserService {
 
   async updateUserInfo(
     user: IUser,
+    //TODO - переназвать dto
     dto: NewUserInfoCredentialsDto,
   ): Promise<IUser> {
     const { login, firstName, secondName } = dto;
