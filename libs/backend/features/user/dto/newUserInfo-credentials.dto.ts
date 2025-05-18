@@ -1,15 +1,18 @@
-import { IsEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class NewUserInfoCredentialsDto {
+  @IsOptional()
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   login!: string;
 
+  @IsOptional()
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   firstName!: string;
 
+  @IsOptional()
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   secondName!: string;
 }
