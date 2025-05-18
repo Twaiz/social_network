@@ -57,6 +57,7 @@ export class AuthController {
   ): Promise<RegisterResponse> {
     const { email, login } = registerCredentialsDto;
 
+    //TODO - вынести код проверок в AuthService
     const userByEmail = await findUserByEmail(this.userModel, email);
     const userByLogin = await findUserByLogin(this.userModel, login);
 
@@ -92,6 +93,7 @@ export class AuthController {
 
     let user: IUser | null = null;
 
+    //TODO - вынести код проверок в AuthService
     if (email && login) {
       throw new BadRequestException(BOTH_EMAIL_AND_LOGIN_ERROR);
     }
