@@ -19,10 +19,9 @@ export class UserService {
 
   async updateUserInfo(
     user: IUser,
-    //TODO - переназвать dto
-    dto: NewUserInfoCredentialsDto,
+    newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
   ): Promise<IUser> {
-    const { login, firstName, secondName } = dto;
+    const { login, firstName, secondName } = newUserInfoCredentialsDto;
 
     if (login && login !== user.login) {
       const loginTaken = await this.userModel.findOne({ login });
