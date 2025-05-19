@@ -21,7 +21,11 @@ import {
 } from './constant';
 import { USER_INVALID_PASSWORD } from '../auth.constants';
 
-import { ConfirmEmailCredentialsDto, RegisterCredentialsDto } from '../dto';
+import {
+  ConfirmEmailCredentialsDto,
+  RegisterCredentialsDto,
+  LoginCredentialsDto,
+} from '../dto';
 
 import { AuthService } from '../model/auth.service';
 
@@ -34,7 +38,6 @@ import {
   RegisterResponse,
   LoginResponse,
   EmailConfirmGuard,
-  LoginCredentialsDto,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
 } from '@shared';
 
