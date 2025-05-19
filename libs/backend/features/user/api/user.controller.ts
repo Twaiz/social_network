@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   HttpCode,
   Post,
@@ -25,7 +26,7 @@ export class UserController {
   @Post('updateUserInfo')
   async updateUserInfo(
     @Req() req: AuthenticatedRequest,
-    newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
+    @Body() newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
   ): Promise<IUser> {
     if (!newUserInfoCredentialsDto) {
       throw new BadRequestException(EMPTY_DTO);
