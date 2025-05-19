@@ -10,8 +10,8 @@ import {
   IUser,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   USER_NOT_FOUND,
+  NewUserInfoCredentialsDto,
 } from '@shared';
-import { NewUserInfoCredentialsDto } from '../dto';
 
 @Injectable()
 export class UserService {
