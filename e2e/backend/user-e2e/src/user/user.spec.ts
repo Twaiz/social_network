@@ -3,6 +3,7 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import request from 'supertest';
 import { App } from 'supertest/types';
 
 import {
@@ -11,8 +12,14 @@ import {
   getActiveToken,
   GetEnv,
   IUser,
+  NewUserInfoCredentialsDto,
 } from '@shared';
 import { UserModule } from '@features/user';
+
+const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
+  firstName: 'Oleg',
+  secondName: 'Olegovich',
+};
 
 describe('App - User (e2e)', () => {
   let app: INestApplication<App>;
@@ -39,5 +46,29 @@ describe('App - User (e2e)', () => {
     userModel = app.get(getModelToken('User'));
 
     token = await getActiveToken(jwtService, configService, userModel);
+  });
+
+  it('user/updateUserInfo -- success', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/api/user/updateUserInfo')
+      .set('Authorization', `Bearer ${token}`)
+      .send(NewUserInfoCredentials)
+      .expect(200);
+
+    const data: IUser = res.body;
+
+    if (NewUserInfoCredentials.login) {
+      expect(data.login).toEqual(NewUserInfoCredentials.login ?? data.login);
+    }
+    if (NewUserInfoCredentials.firstName) {
+      expect(data.firstName).toEqual(
+        NewUserInfoCredentials.firstName ?? data.firstName,
+      );
+    }
+    if (NewUserInfoCredentials.secondName) {
+      expect(data.secondName).toEqual(
+        NewUserInfoCredentials.secondName ?? data.secondName,
+      );
+    }
   });
 });
