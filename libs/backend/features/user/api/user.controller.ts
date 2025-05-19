@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { UserService } from '../model';
+import { UserService } from '../model/user.service';
 import { EMPTY_DTO } from './constant/user-controller.constants';
 import {
   type AuthenticatedRequest,
