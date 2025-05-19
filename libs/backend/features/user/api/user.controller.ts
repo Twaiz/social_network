@@ -10,7 +10,7 @@ export class UserController {
 
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)
-  @Post('update')
+  @Post('updateUserInfo')
   async updateUserInfo(
     @Req() req: AuthenticatedRequest,
     newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
