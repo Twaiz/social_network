@@ -15,19 +15,13 @@ import { Model } from 'mongoose';
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
-  //TODO - исправить ошибку
-  USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from './constant';
 import { USER_INVALID_PASSWORD } from '../auth.constants';
 
-import {
-  ConfirmEmailCredentialsDto,
-  LoginCredentialsDto,
-  RegisterCredentialsDto,
-} from '../dto';
+import { ConfirmEmailCredentialsDto, RegisterCredentialsDto } from '../dto';
 
 import { AuthService } from '../model/auth.service';
 
@@ -40,6 +34,8 @@ import {
   RegisterResponse,
   LoginResponse,
   EmailConfirmGuard,
+  LoginCredentialsDto,
+  USER_ALREADY_REGISTERED_WITH_LOGIN,
 } from '@shared';
 
 @Controller('auth')

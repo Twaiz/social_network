@@ -12,13 +12,10 @@ import {
   USER_NOT_FOUND,
   GetEnv,
   bootstrap,
+  LoginCredentialsDto,
 } from '@shared';
 
-import {
-  AuthModule,
-  LoginCredentialsDto,
-  RegisterCredentialsDto,
-} from '@features/auth';
+import { AuthModule, RegisterCredentialsDto } from '@features/auth';
 
 const RegisterCredentials: RegisterCredentialsDto = {
   email: 'twaiz@gmail.com',
