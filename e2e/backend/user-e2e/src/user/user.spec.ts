@@ -71,4 +71,10 @@ describe('App - User (e2e)', () => {
       );
     }
   });
+
+  afterAll(async () => {
+    if (app) {
+      await app.close();
+    }
+  });
 });
