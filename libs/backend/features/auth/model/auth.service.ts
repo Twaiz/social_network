@@ -21,20 +21,8 @@ import {
   USER_NOT_FOUND,
   GetEnv,
   verifyTwoFactorCode,
+  getJwtToken,
 } from '@shared';
-
-interface IJwtPayload {
-  _id: string;
-  email: string;
-  login: string;
-  role: string;
-}
-
-interface JwtCreationParams {
-  user: IUser;
-  jwtSecret: string;
-  jwtExpiresIn: string;
-}
 
 @Injectable()
 export class AuthService {
@@ -67,7 +55,7 @@ export class AuthService {
 
     const user = await newUser.save();
 
-    const token = await this.getJwtToken({
+    const token = await getJwtToken(this.jwtService, {
       user,
       jwtSecret,
       jwtExpiresIn,
@@ -99,7 +87,7 @@ export class AuthService {
       verifyTwoFactorCode(user, twoFactorCode);
     }
 
-    const token = await this.getJwtToken({
+    const token = await getJwtToken(this.jwtService, {
       user,
       jwtSecret,
       jwtExpiresIn,
@@ -146,24 +134,5 @@ export class AuthService {
     }
 
     sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
-  }
-
-  //* Get Jwt Token *//
-  async getJwtToken(jwtCreationParams: JwtCreationParams): Promise<string> {
-    const { user, jwtSecret, jwtExpiresIn } = jwtCreationParams;
-
-    const payload: IJwtPayload = {
-      _id: user._id,
-      email: user.email,
-      login: user.login,
-      role: user.role,
-    };
-
-    const token = await this.jwtService.signAsync(payload, {
-      secret: jwtSecret,
-      expiresIn: jwtExpiresIn,
-    });
-
-    return token;
   }
 }
