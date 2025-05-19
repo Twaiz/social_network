@@ -4,15 +4,15 @@ export class NewUserInfoCredentialsDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  login!: string;
+  login?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  firstName!: string;
+  firstName?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  secondName!: string;
+  secondName?: string;
 }
