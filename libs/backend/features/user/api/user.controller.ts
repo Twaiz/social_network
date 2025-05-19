@@ -1,7 +1,15 @@
-import { Controller, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  HttpCode,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 
 import { UserService } from '../model';
 import { NewUserInfoCredentialsDto } from '../dto';
+import { EMPTY_DTO } from './constant/user-controller.constants';
 import { type AuthenticatedRequest, IUser, JwtAuthGuard } from '@shared';
 
 @Controller('user')
@@ -15,6 +23,10 @@ export class UserController {
     @Req() req: AuthenticatedRequest,
     newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
   ): Promise<IUser> {
+    if (!newUserInfoCredentialsDto) {
+      throw new BadRequestException(EMPTY_DTO);
+    }
+
     const user = req.user;
 
     return this.userService.updateUserInfo(user, newUserInfoCredentialsDto);
