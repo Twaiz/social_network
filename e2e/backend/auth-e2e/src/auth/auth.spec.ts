@@ -34,6 +34,8 @@ const LoginCredentials: LoginCredentialsDto = {
 };
 
 describe('App - Auth (e2e)', () => {
+  //TODO - реализовать првоерки как в user.spec - confirmChangedEmail. Ибо какой хуй с тех проверок, если они нихера почти и не проверяют
+
   let app: INestApplication<App>;
   let token: string;
   let userModel: Model<IUser>;
