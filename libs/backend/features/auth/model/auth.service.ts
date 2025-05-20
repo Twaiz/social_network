@@ -133,6 +133,7 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
+    //TODO - удалить кастомный метод sendEmailConfirmation и использовать глобальный sendEmail
     sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
 }
