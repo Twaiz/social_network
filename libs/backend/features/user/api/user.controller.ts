@@ -20,13 +20,11 @@ import {
   IUser,
   JwtAuthGuard,
   NewUserInfoCredentialsDto,
+  ChangeEmailCredentialsDto,
 } from '@shared';
 
 import { UserService } from '../model/user.service';
-import {
-  ChangeEmailCredentialsDto,
-  ConfirmChangedEmailCredentialsDto,
-} from '../dto';
+import { ConfirmChangedEmailCredentialsDto } from '../dto';
 
 @Controller('user')
 export class UserController {
