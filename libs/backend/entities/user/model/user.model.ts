@@ -66,27 +66,22 @@ export const UserSchema = new Schema<IUser>(
       default: false,
     },
     twoFactorSecret: {
-      type: String,
+      type: String || null,
       default: null,
-      select: false,
     },
     emailConfirmToken: {
-      type: String,
-      default: null,
+      type: String || null,
       select: false,
     },
     emailExpiresToken: {
-      type: Date,
-      default: null,
+      type: Date || null,
     },
     changeEmailToken: {
-      type: String,
-      default: null,
+      type: String || null,
       select: false,
     },
     changeEmailNew: {
-      type: String,
-      default: null,
+      type: String || null,
       unique: true,
       trim: true,
       lowercase: true,
@@ -94,7 +89,6 @@ export const UserSchema = new Schema<IUser>(
         validator: (email: string) => email === null || isEmail(email),
         message: EMAIL_VALIDATION_ERROR,
       },
-      sparse: true,
     },
     changeEmailExpires: {
       type: Date,
