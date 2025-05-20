@@ -10,12 +10,16 @@ import {
   APP_INIT_FAILED,
   bootstrap,
   ChangeEmailCredentialsDto,
+  ConfirmChangedEmailCredentialsDto,
   getActiveToken,
   GetEnv,
   IUser,
   NewUserInfoCredentialsDto,
+  USER_NOT_FOUND,
 } from '@shared';
 import { UserModule } from '@features/user';
+
+import { CHANGEEMAILTOKEN_OR_CHANGEEMAILNEW_NOT_FOUND } from './constant';
 
 const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
   firstName: 'Oleg',
@@ -85,6 +89,45 @@ describe('App - User (e2e)', () => {
       .expect(201);
 
     expect(res.body).toHaveProperty('message');
+  });
+
+  it('user/confirm-changed-email -- success', async () => {
+    const decoded = jwtService.verify(token);
+    const userId = decoded.id;
+
+    const userBefore = await userModel
+      .findOne({ _id: userId })
+      .select('+changeEmailToken +changeEmailNew')
+      .lean();
+    if (!userBefore) {
+      Logger.error(USER_NOT_FOUND);
+      process.exit(1);
+    }
+
+    if (!userBefore.changeEmailToken || !userBefore.changeEmailNew) {
+      Logger.error(CHANGEEMAILTOKEN_OR_CHANGEEMAILNEW_NOT_FOUND);
+      process.exit(1);
+    }
+
+    const res = await request(app.getHttpServer())
+      .post('/api/user/confirm-changed-email')
+      .send({
+        changeEmailToken: userBefore.changeEmailToken,
+      } as ConfirmChangedEmailCredentialsDto)
+      .expect(200);
+
+    expect(res.body).toHaveProperty('message');
+
+    const userAfter = await userModel.findById(userId).lean();
+    if (!userAfter) {
+      Logger.error(USER_NOT_FOUND);
+      process.exit(1);
+    }
+
+    expect(userAfter.email).toBe(userBefore.changeEmailNew);
+    expect(userAfter.changeEmailToken).toBeNull();
+    expect(userAfter.changeEmailNew).toBeNull();
+    expect(userAfter.changeEmailExpires).toBeNull();
   });
 
   afterAll(async () => {
