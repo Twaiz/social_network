@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import nodemailer from 'nodemailer';
 
-export const sendEmailConfirmation = async (
+export const sendEmail = async (
   configService: ConfigService,
   subject: string,
   htmlContent: string,
