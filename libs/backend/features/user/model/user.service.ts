@@ -91,7 +91,7 @@ export class UserService {
     }
 
     //TODO - вынести в отдельную функцию, как в confirmChangedEmail
-    const confirmationUrl = `https://social-network.com/confirm-email?token=${changeEmailToken}`;
+    const confirmationUrl = `https://social-network.com/confirm-changed-email?token=${changeEmailToken}`;
     const htmlContent = `
     <p>Здравствуйте, ${user.firstName}${user.secondName}!</p>
     <p>Вы запросили смену email на <strong>${newEmail}</strong>.</p>
