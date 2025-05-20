@@ -9,13 +9,18 @@ import {
 } from '@nestjs/common';
 
 import { UserService } from '../model/user.service';
-import { EMPTY_DTO } from './constant/user-controller.constants';
+import {
+  CHANGE_EMAIL_GENERATE,
+  EMPTY_DTO,
+} from './constant/user-controller.constants';
 import {
   type AuthenticatedRequest,
+  EmailConfirmGuard,
   IUser,
   JwtAuthGuard,
   NewUserInfoCredentialsDto,
 } from '@shared';
+import { ChangeEmailCredentialsDto } from '../dto';
 
 @Controller('user')
 export class UserController {
@@ -35,5 +40,19 @@ export class UserController {
     const user = req.user;
 
     return this.userService.updateUserInfo(user, newUserInfoCredentialsDto);
+  }
+
+  @HttpCode(201)
+  @Post('change-email')
+  @UseGuards(JwtAuthGuard, EmailConfirmGuard)
+  async changeEmail(
+    @Req() req: AuthenticatedRequest,
+    @Body() changeEmailCredentialsDto: ChangeEmailCredentialsDto,
+  ): Promise<{ message: string }> {
+    const user = req.user;
+
+    await this.userService.changeEmail(user, changeEmailCredentialsDto);
+
+    return { message: CHANGE_EMAIL_GENERATE };
   }
 }
