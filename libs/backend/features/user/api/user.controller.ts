@@ -8,11 +8,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { UserService } from '../model/user.service';
 import {
   CHANGE_EMAIL_GENERATE,
+  CHANGE_EMAIL_SUCCESS,
   EMPTY_DTO,
 } from './constant/user-controller.constants';
+
 import {
   type AuthenticatedRequest,
   EmailConfirmGuard,
@@ -20,7 +21,12 @@ import {
   JwtAuthGuard,
   NewUserInfoCredentialsDto,
 } from '@shared';
-import { ChangeEmailCredentialsDto } from '../dto';
+
+import { UserService } from '../model/user.service';
+import {
+  ChangeEmailCredentialsDto,
+  ConfirmChangedEmailCredentialsDto,
+} from '../dto';
 
 @Controller('user')
 export class UserController {
@@ -49,10 +55,24 @@ export class UserController {
     @Req() req: AuthenticatedRequest,
     @Body() changeEmailCredentialsDto: ChangeEmailCredentialsDto,
   ): Promise<{ message: string }> {
+    const { newEmail } = changeEmailCredentialsDto;
     const user = req.user;
 
-    await this.userService.changeEmail(user, changeEmailCredentialsDto);
+    await this.userService.changeEmail(user, newEmail);
 
     return { message: CHANGE_EMAIL_GENERATE };
+  }
+
+  @HttpCode(200)
+  @Post('confirm-changed-email')
+  async confirmChangedEmail(
+    @Body()
+    confirmChangedEmailCredentialsDto: ConfirmChangedEmailCredentialsDto,
+  ): Promise<{ message: string }> {
+    const { changeEmailToken } = confirmChangedEmailCredentialsDto;
+
+    await this.userService.confirmChangedEmail(changeEmailToken);
+
+    return { message: CHANGE_EMAIL_SUCCESS };
   }
 }
