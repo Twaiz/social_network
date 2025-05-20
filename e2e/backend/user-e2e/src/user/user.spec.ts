@@ -138,6 +138,8 @@ describe('App - User (e2e)', () => {
     expect(userAfter.changeEmailToken).toBeNull();
     expect(userAfter.changeEmailNew).toBeNull();
     expect(userAfter.changeEmailExpires).toBeNull();
+
+    //TODO - сделать так, чтобы email возращался до прежнего
   });
 
   afterAll(async () => {
