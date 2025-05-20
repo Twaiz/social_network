@@ -19,7 +19,7 @@ import {
 } from '@shared';
 import { UserModule } from '@features/user';
 
-import { CHANGEEMAILTOKEN_OR_CHANGEEMAILNEW_NOT_FOUND } from './constant';
+import { CHANGE_EMAIL_TOKEN_NOT_FOUND } from './constant';
 
 const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
   firstName: 'Oleg',
@@ -35,6 +35,7 @@ describe('App - User (e2e)', () => {
 
   let app: INestApplication<App>;
   let token: string;
+  let user: IUser;
 
   let jwtService: JwtService;
   let configService: ConfigService;
@@ -56,7 +57,13 @@ describe('App - User (e2e)', () => {
     configService = app.get(ConfigService);
     userModel = app.get(getModelToken('User'));
 
-    token = await getActiveToken(jwtService, configService, userModel);
+    const fullLogin = await getActiveToken(
+      jwtService,
+      configService,
+      userModel,
+    );
+    token = fullLogin.token;
+    user = fullLogin.user;
   });
 
   it('user/updateUserInfo -- success', async () => {
@@ -94,20 +101,17 @@ describe('App - User (e2e)', () => {
   });
 
   it('user/confirm-changed-email -- success', async () => {
-    const decoded = jwtService.verify(token);
-    const userId = decoded.id;
-
     const userBefore = await userModel
-      .findOne({ _id: userId })
-      .select('+changeEmailToken +changeEmailNew')
+      .findOne({ _id: user._id })
+      .select('+changeEmailToken')
       .lean();
     if (!userBefore) {
       Logger.error(USER_NOT_FOUND);
       process.exit(1);
     }
 
-    if (!userBefore.changeEmailToken || !userBefore.changeEmailNew) {
-      Logger.error(CHANGEEMAILTOKEN_OR_CHANGEEMAILNEW_NOT_FOUND);
+    if (!userBefore.changeEmailToken) {
+      Logger.error(CHANGE_EMAIL_TOKEN_NOT_FOUND);
       process.exit(1);
     }
 
@@ -120,7 +124,11 @@ describe('App - User (e2e)', () => {
 
     expect(res.body).toHaveProperty('message');
 
-    const userAfter = await userModel.findById(userId).lean();
+    const userAfter = await userModel
+      .findOne({ _id: user._id })
+      .select('+changeEmailToken')
+      .lean();
+
     if (!userAfter) {
       Logger.error(USER_NOT_FOUND);
       process.exit(1);
