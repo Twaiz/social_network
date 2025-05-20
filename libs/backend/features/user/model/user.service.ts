@@ -20,10 +20,6 @@ import {
 } from '@shared';
 
 import {
-  ChangeEmailCredentialsDto,
-  ConfirmChangedEmailCredentialsDto,
-} from '../dto';
-import {
   CHANGE_EMAIL_TOKEN_NOT_FOUND,
   CONFIRM_CHANGE_EMAIL_TOKEN_INVALID,
   IDENTICAL_EMAIL,
@@ -67,12 +63,8 @@ export class UserService {
     return updatedUser;
   }
 
-  async changeEmail(
-    user: IUser,
-    changeEmailCredentialsDto: ChangeEmailCredentialsDto,
-  ): Promise<void> {
+  async changeEmail(user: IUser, newEmail: string): Promise<void> {
     const currentEmail = user.email;
-    const { newEmail } = changeEmailCredentialsDto;
 
     if (newEmail === user.email) {
       throw new BadRequestException(IDENTICAL_EMAIL);
@@ -117,11 +109,7 @@ export class UserService {
     );
   }
 
-  async confirmChangedEmail(
-    confirmChangedEmailCredentialsDto: ConfirmChangedEmailCredentialsDto,
-  ): Promise<void> {
-    const { changeEmailToken } = confirmChangedEmailCredentialsDto;
-
+  async confirmChangedEmail(changeEmailToken: string): Promise<void> {
     const userByChangeEmail = await this.userModel.findOne({
       changeEmailToken,
       changeEmailExpires: { $gt: new Date() },
