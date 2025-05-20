@@ -16,7 +16,10 @@ export const getActiveToken = async (
   jwtService: JwtService,
   configService: ConfigService,
   userModel: Model<IUser>,
-): Promise<string> => {
+): Promise<{
+  token: string;
+  user: IUser;
+}> => {
   const jwtSecret = GetEnv.getJwtSecret(configService);
   const jwtExpiresIn = GetEnv.getJwtExpiresIn(configService);
 
@@ -38,5 +41,8 @@ export const getActiveToken = async (
     jwtExpiresIn,
   });
 
-  return token;
+  return {
+    token,
+    user,
+  };
 };
