@@ -9,6 +9,7 @@ import { App } from 'supertest/types';
 import {
   APP_INIT_FAILED,
   bootstrap,
+  ChangeEmailCredentialsDto,
   getActiveToken,
   GetEnv,
   IUser,
@@ -19,6 +20,10 @@ import { UserModule } from '@features/user';
 const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
   firstName: 'Oleg',
   secondName: 'Olegovich',
+};
+
+const ChangeEmailCredentials: ChangeEmailCredentialsDto = {
+  newEmail: 'newAdmin@gmail.com',
 };
 
 describe('App - User (e2e)', () => {
@@ -70,6 +75,16 @@ describe('App - User (e2e)', () => {
         NewUserInfoCredentials.secondName ?? data.secondName,
       );
     }
+  });
+
+  it('user/change-email', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/api/user/change-email')
+      .set('Authorization', `Bearer ${token}`)
+      .send(ChangeEmailCredentials)
+      .expect(201);
+
+    expect(res.body).toHaveProperty('message');
   });
 
   afterAll(async () => {
