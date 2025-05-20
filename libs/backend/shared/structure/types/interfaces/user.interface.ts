@@ -20,4 +20,8 @@ export interface IUser {
 
   emailConfirmToken: string | null;
   emailExpiresToken: Date | null;
+
+  changeEmailToken: string | null;
+  changeEmailNew: string | null;
+  changeEmailExpires: Date | null;
 }
