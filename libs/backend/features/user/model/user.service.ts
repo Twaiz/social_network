@@ -98,6 +98,7 @@ export class UserService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
+    //TODO - вынести в отдельную функцию, как в confirmChangedEmail
     const confirmationUrl = `https://social-network.com/confirm-email?token=${changeEmailToken}`;
     const htmlContent = `
     <p>Здравствуйте, ${user.firstName}${user.secondName}!</p>
@@ -156,4 +157,6 @@ export class UserService {
       fullName,
     );
   }
+
+  //TODO - добавить методы для Admin-а. CUD - Create, Update, Delete
 }
