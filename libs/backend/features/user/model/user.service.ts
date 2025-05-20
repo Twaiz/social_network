@@ -19,8 +19,16 @@ import {
   sendEmail,
 } from '@shared';
 
-import { ChangeEmailCredentialsDto } from '../dto';
-import { IDENTICAL_EMAIL } from './constant';
+import {
+  ChangeEmailCredentialsDto,
+  ConfirmChangedEmailCredentialsDto,
+} from '../dto';
+import {
+  CHANGE_EMAIL_TOKEN_NOT_FOUND,
+  CONFIRM_CHANGE_EMAIL_TOKEN_INVALID,
+  IDENTICAL_EMAIL,
+} from './constant';
+import { sendEmailChangeConfirm } from './lib';
 
 @Injectable()
 export class UserService {
@@ -105,6 +113,47 @@ export class UserService {
       'Подтверждение смены email',
       htmlContent,
       currentEmail,
+    );
+  }
+
+  async confirmChangedEmail(
+    confirmChangedEmailCredentialsDto: ConfirmChangedEmailCredentialsDto,
+  ): Promise<void> {
+    const { changeEmailToken } = confirmChangedEmailCredentialsDto;
+
+    const userByChangeEmail = await this.userModel.findOne({
+      changeEmailToken,
+      changeEmailExpires: { $gt: new Date() },
+    });
+    if (!userByChangeEmail) {
+      throw new BadRequestException(CONFIRM_CHANGE_EMAIL_TOKEN_INVALID);
+    }
+
+    const newEmail = userByChangeEmail.changeEmailNew;
+    const oldEmail = userByChangeEmail.email;
+    const fullName = `${userByChangeEmail.firstName} ${userByChangeEmail.secondName}`;
+
+    if (!newEmail) {
+      throw new NotFoundException(CHANGE_EMAIL_TOKEN_NOT_FOUND);
+    }
+
+    await this.userModel.findOneAndUpdate(
+      { _id: userByChangeEmail._id },
+      {
+        email: newEmail,
+
+        changeEmailToken: null,
+        changeEmailExpires: null,
+        changeEmailNew: null,
+      },
+      { new: true },
+    );
+
+    await sendEmailChangeConfirm(
+      this.configService,
+      oldEmail,
+      newEmail,
+      fullName,
     );
   }
 }
