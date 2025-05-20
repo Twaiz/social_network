@@ -14,6 +14,7 @@ export const UserSchema = new Schema<IUser>(
       unique: true,
       trim: true,
       lowercase: true,
+      index: true,
       validate: {
         validator: (email: string) => isEmail(email),
         message: EMAIL_VALIDATION_ERROR,
@@ -27,6 +28,7 @@ export const UserSchema = new Schema<IUser>(
       lowercase: true,
       minlength: 4,
       maxlength: 16,
+      index: true,
     },
     passwordHash: {
       type: String,
@@ -65,30 +67,62 @@ export const UserSchema = new Schema<IUser>(
     },
     twoFactorSecret: {
       type: String,
+      default: null,
       select: false,
     },
     emailConfirmToken: {
-      type: String || null,
+      type: String,
+      default: null,
       select: false,
     },
     emailExpiresToken: {
-      type: Date || null,
+      type: Date,
+      default: null,
     },
     changeEmailToken: {
-      type: String || null,
+      type: String,
+      default: null,
       select: false,
     },
     changeEmailNew: {
-      type: String || null,
+      type: String,
+      default: null,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      validate: {
+        validator: (email: string) => email === null || isEmail(email),
+        message: EMAIL_VALIDATION_ERROR,
+      },
+      sparse: true,
     },
     changeEmailExpires: {
-      type: Date || null,
+      type: Date,
+      default: null,
     },
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toJSON: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        ret.passwordHash = undefined;
+        ret.twoFactorSecret = undefined;
+        ret.emailConfirmToken = undefined;
+        ret.changeEmailToken = undefined;
+        return ret;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        ret.passwordHash = undefined;
+        ret.twoFactorSecret = undefined;
+        ret.emailConfirmToken = undefined;
+        ret.changeEmailToken = undefined;
+        return ret;
+      },
+    },
   },
 );
 
@@ -100,12 +134,4 @@ UserSchema.pre('findOneAndUpdate', loginToLowerCase);
 
 UserSchema.virtual('fullName').get(function (this: IUser) {
   return `${this.firstName} ${this.secondName}`;
-});
-
-UserSchema.set('toJSON', {
-  transform: (_doc, ret) => {
-    ret.twoFactorSecret = undefined;
-    ret.emailConfirmToken = undefined;
-    return ret;
-  },
 });
