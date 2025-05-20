@@ -74,6 +74,16 @@ export const UserSchema = new Schema<IUser>(
     emailExpiresToken: {
       type: Date || undefined,
     },
+    changeEmailToken: {
+      type: String || null,
+      select: false,
+    },
+    changeEmailNew: {
+      type: String || null,
+    },
+    changeEmailExpires: {
+      type: Date || null,
+    },
   },
   {
     timestamps: true,
