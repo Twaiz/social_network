@@ -1,1 +1,1 @@
-export * from './sendEmailChangeConfirm';
+export * from './sendEmailChangeEmailConfirm';
