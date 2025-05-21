@@ -1,2 +1,2 @@
-export * from './sendEmailChangeEmailConfirm';
+export * from './sendEmailConfirmNewEmail';
 export * from './sendEmailChangePassword';
