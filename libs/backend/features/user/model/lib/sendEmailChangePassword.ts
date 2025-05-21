@@ -20,7 +20,7 @@ export const sendEmailChangePassword = async (
 
   await sendEmail(
     configService,
-    'Подтверждение смены password',
+    'Подтверждение изменения пароля',
     htmlContent,
     email,
   );
