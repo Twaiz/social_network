@@ -94,6 +94,10 @@ export const UserSchema = new Schema<IUser>(
       type: Date,
       default: null,
     },
+    changePasswordNew: {
+      type: String || null,
+      select: false,
+    },
   },
   {
     timestamps: true,
