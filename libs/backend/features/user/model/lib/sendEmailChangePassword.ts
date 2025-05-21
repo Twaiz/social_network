@@ -7,7 +7,7 @@ export const sendEmailChangePassword = async (
   fullName: string,
   token: string,
 ): Promise<void> => {
-  const confirmationUrl = `https://social-network.com/confirm-changed-password?token=${token}`;
+  const confirmationUrl = `https://social-network.com/confirm-new-password?token=${token}`;
 
   const htmlContent = `
     <p>Здравствуйте, ${fullName}!</p>
