@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { compareSync } from 'bcryptjs';
 
-export const verifyPassword = async (
+export const verifyPassword = (
   currentPasswordHash: string,
   newPassword: string,
   errorMessage: string,
-): Promise<boolean> => {
+): boolean => {
   const isPasswordValid = compareSync(currentPasswordHash, newPassword);
   if (!isPasswordValid) {
     throw new BadRequestException(errorMessage);
