@@ -18,8 +18,6 @@ import {
   findUserByEmail,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   sendEmail,
-  ChangePasswordCredentialsDto,
-  ConfirmNewPasswordCredentialsDto,
 } from '@shared';
 
 import {
@@ -154,12 +152,8 @@ export class UserService {
     );
   }
 
-  async changePassword(
-    user: IUser,
-    changePasswordCredentialsDto: ChangePasswordCredentialsDto,
-  ): Promise<void> {
+  async changePassword(user: IUser, newPassword: string): Promise<void> {
     const { passwordHash, _id, email, firstName, secondName } = user;
-    const { newPassword } = changePasswordCredentialsDto;
     const fullName = `${firstName} ${secondName}`;
 
     const salt = genSaltSync(10);
@@ -192,11 +186,7 @@ export class UserService {
     );
   }
 
-  async confirmNewPassword(
-    confirmNewPasswordCredentialsDto: ConfirmNewPasswordCredentialsDto,
-  ): Promise<void> {
-    const { changePasswordToken } = confirmNewPasswordCredentialsDto;
-
+  async confirmNewPassword(changePasswordToken: string): Promise<void> {
     const userByChangePassword = await this.userModel.findOne({
       changePasswordToken,
       changePasswordExpires: { $gt: new Date() },
