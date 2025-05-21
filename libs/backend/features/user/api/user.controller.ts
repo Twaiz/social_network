@@ -11,6 +11,7 @@ import {
 import {
   CHANGE_EMAIL_GENERATE,
   CHANGE_EMAIL_SUCCESS,
+  CHANGE_PASSWORD_PROCESS,
   EMPTY_DTO,
 } from './constant/user-controller.constants';
 
@@ -22,6 +23,7 @@ import {
   NewUserInfoCredentialsDto,
   ChangeEmailCredentialsDto,
   ConfirmChangedEmailCredentialsDto,
+  ChangePasswordCredentialsDto,
 } from '@shared';
 
 import { UserService } from '../model/user.service';
@@ -72,5 +74,20 @@ export class UserController {
     await this.userService.confirmChangedEmail(changeEmailToken);
 
     return { message: CHANGE_EMAIL_SUCCESS };
+  }
+
+  @HttpCode(201)
+  @UseGuards(JwtAuthGuard, EmailConfirmGuard)
+  @Post('change-password')
+  async changePassword(
+    @Req() req: AuthenticatedRequest,
+    @Body() changePasswordCredentialsDto: ChangePasswordCredentialsDto,
+  ): Promise<{ message: string }> {
+    const user = req.user;
+    const { newPassword } = changePasswordCredentialsDto;
+
+    await this.userService.changePassword(user, newPassword);
+
+    return { message: CHANGE_PASSWORD_PROCESS };
   }
 }
