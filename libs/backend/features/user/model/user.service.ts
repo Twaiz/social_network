@@ -8,7 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { addHours } from 'date-fns';
 import { randomBytes } from 'node:crypto';
-import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
+import { genSaltSync, hashSync } from 'bcryptjs';
 
 import {
   IUser,
@@ -19,16 +19,20 @@ import {
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   sendEmail,
   ChangePasswordCredentialsDto,
-  USER_PASSWORD_INVALID,
+  ConfirmNewPasswordCredentialsDto,
 } from '@shared';
 
 import {
   CHANGE_EMAIL_TOKEN_NOT_FOUND,
-  CONFIRM_CHANGE_EMAIL_TOKEN_INVALID,
+  CONFIRM_CHANGE_TOKEN_INVALID,
   IDENTICAL_EMAIL,
   IDENTICAL_PASSWORD,
 } from './constant';
-import { sendEmailConfirmNewEmail, sendEmailChangePassword } from './lib';
+import {
+  sendEmailConfirmNewEmail,
+  sendEmailChangePassword,
+  sendEmailConfirmNewPassword,
+} from './lib';
 
 @Injectable()
 export class UserService {
@@ -119,7 +123,7 @@ export class UserService {
       changeEmailExpires: { $gt: new Date() },
     });
     if (!userByChangeEmail) {
-      throw new BadRequestException(CONFIRM_CHANGE_EMAIL_TOKEN_INVALID);
+      throw new BadRequestException(CONFIRM_CHANGE_TOKEN_INVALID);
     }
 
     const newEmail = userByChangeEmail.changeEmailNew;
@@ -185,6 +189,40 @@ export class UserService {
       email,
       fullName,
       changePasswordToken,
+    );
+  }
+
+  async confirmNewPassword(
+    confirmNewPasswordCredentialsDto: ConfirmNewPasswordCredentialsDto,
+  ): Promise<void> {
+    const { changePasswordToken } = confirmNewPasswordCredentialsDto;
+
+    const userByChangePassword = await this.userModel.findOne({
+      changePasswordToken,
+      changePasswordExpires: { $gt: new Date() },
+    });
+    if (!userByChangePassword) {
+      throw new BadRequestException(CONFIRM_CHANGE_TOKEN_INVALID);
+    }
+
+    const fullName = `${userByChangePassword.firstName} ${userByChangePassword.secondName}`;
+
+    await this.userModel.findOneAndUpdate(
+      { _id: userByChangePassword.id },
+      {
+        passwordHash: userByChangePassword.changePasswordNew,
+
+        changePasswordExpires: null,
+        changePasswordNew: null,
+        changePasswordToken: null,
+      },
+      { new: true },
+    );
+
+    await sendEmailConfirmNewPassword(
+      this.configService,
+      userByChangePassword.email,
+      fullName,
     );
   }
 
