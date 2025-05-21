@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import {
-  CHANGE_EMAIL_GENERATE,
+  CHANGE_EMAIL_PROCESS,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_PASSWORD_PROCESS,
   EMPTY_DTO,
@@ -60,7 +60,7 @@ export class UserController {
 
     await this.userService.changeEmail(user, newEmail);
 
-    return { message: CHANGE_EMAIL_GENERATE };
+    return { message: CHANGE_EMAIL_PROCESS };
   }
 
   @HttpCode(200)
