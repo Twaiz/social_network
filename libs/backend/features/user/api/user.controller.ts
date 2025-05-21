@@ -12,6 +12,7 @@ import {
   CHANGE_EMAIL_PROCESS,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_PASSWORD_PROCESS,
+  CHANGE_PASSWORD_SUCESS,
   EMPTY_DTO,
 } from './constant/user-controller.constants';
 
@@ -24,6 +25,7 @@ import {
   ChangeEmailCredentialsDto,
   ConfirmChangedEmailCredentialsDto,
   ChangePasswordCredentialsDto,
+  ConfirmNewPasswordCredentialsDto,
 } from '@shared';
 
 import { UserService } from '../model/user.service';
@@ -89,5 +91,17 @@ export class UserController {
     await this.userService.changePassword(user, newPassword);
 
     return { message: CHANGE_PASSWORD_PROCESS };
+  }
+
+  @HttpCode(200)
+  @Post('confirm-new-password')
+  async confirmNewPassword(
+    @Body() confirmNewPasswordCredentialsDto: ConfirmNewPasswordCredentialsDto,
+  ): Promise<{ message: string }> {
+    const { changePasswordToken } = confirmNewPasswordCredentialsDto;
+
+    await this.userService.confirmNewPassword(changePasswordToken);
+
+    return { message: CHANGE_PASSWORD_SUCESS };
   }
 }
