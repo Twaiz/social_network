@@ -8,7 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'node:crypto';
 import { Model } from 'mongoose';
-import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
+import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
 import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
@@ -22,6 +22,7 @@ import {
   GetEnv,
   verifyTwoFactorCode,
   getJwtToken,
+  verifyPassword,
 } from '@shared';
 
 @Injectable()
@@ -74,10 +75,7 @@ export class AuthService {
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
 
-    const isPasswordValid = compareSync(password, user.passwordHash);
-    if (!isPasswordValid) {
-      throw new BadRequestException(errorMessage);
-    }
+    verifyPassword(user.passwordHash, password, errorMessage);
 
     if (user.isTwoFactorEnabled) {
       if (!twoFactorCode) {
