@@ -25,5 +25,7 @@ export interface IUser {
   changeEmailNew: string | null;
   changeEmailExpires: Date | null;
 
+  changePasswordToken: string | null;
   changePasswordNew: string | null;
+  changePasswordExpires: Date | null;
 }
