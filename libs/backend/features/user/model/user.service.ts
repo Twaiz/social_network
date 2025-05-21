@@ -28,7 +28,7 @@ import {
   IDENTICAL_EMAIL,
   IDENTICAL_PASSWORD,
 } from './constant';
-import { sendEmailChangeConfirm, sendEmailChangePassword } from './lib';
+import { sendEmailConfirmNewEmail, sendEmailChangePassword } from './lib';
 
 @Injectable()
 export class UserService {
@@ -142,7 +142,7 @@ export class UserService {
       { new: true },
     );
 
-    await sendEmailChangeConfirm(
+    await sendEmailConfirmNewEmail(
       this.configService,
       oldEmail,
       newEmail,
