@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { addHours } from 'date-fns';
 import { randomBytes } from 'node:crypto';
+import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 
 import {
   IUser,
@@ -17,14 +18,17 @@ import {
   findUserByEmail,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   sendEmail,
+  ChangePasswordCredentialsDto,
+  USER_PASSWORD_INVALID,
 } from '@shared';
 
 import {
   CHANGE_EMAIL_TOKEN_NOT_FOUND,
   CONFIRM_CHANGE_EMAIL_TOKEN_INVALID,
   IDENTICAL_EMAIL,
+  IDENTICAL_PASSWORD,
 } from './constant';
-import { sendEmailChangeConfirm } from './lib';
+import { sendEmailChangeConfirm, sendEmailChangePassword } from './lib';
 
 @Injectable()
 export class UserService {
@@ -143,6 +147,44 @@ export class UserService {
       oldEmail,
       newEmail,
       fullName,
+    );
+  }
+
+  async changePassword(
+    user: IUser,
+    changePasswordCredentialsDto: ChangePasswordCredentialsDto,
+  ): Promise<void> {
+    const { passwordHash, _id, email, firstName, secondName } = user;
+    const { newPassword } = changePasswordCredentialsDto;
+    const fullName = `${firstName} ${secondName}`;
+
+    const salt = genSaltSync(10);
+    const newPasswordHash = hashSync(newPassword, salt);
+
+    if (passwordHash === newPasswordHash) {
+      throw new BadRequestException(IDENTICAL_PASSWORD);
+    }
+
+    const changePasswordToken = randomBytes(32).toString('hex');
+    const changePasswordExpires = addHours(new Date(), 24);
+    const userByChangePassword = await this.userModel.findByIdAndUpdate(
+      _id,
+      {
+        changePasswordToken,
+        changePasswordNew: newPasswordHash,
+        changePasswordExpires,
+      },
+      { new: true },
+    );
+    if (!userByChangePassword) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
+
+    await sendEmailChangePassword(
+      this.configService,
+      email,
+      fullName,
+      changePasswordToken,
     );
   }
 
