@@ -91,8 +91,7 @@ export const UserSchema = new Schema<IUser>(
       },
     },
     changeEmailExpires: {
-      type: Date,
-      default: null,
+      type: Date || null,
     },
     changePasswordNew: {
       type: String || null,
