@@ -8,9 +8,7 @@ import { findUserByLogin } from '../../api';
 import { GetEnv } from '../../kernel';
 import { getJwtToken } from '../../lib';
 import { IUser } from '../../structure';
-
-import { USER_NOT_FOUND } from '../constants';
-import { USER_PASSWORD_INVALID } from './constant';
+import { USER_NOT_FOUND, USER_PASSWORD_INVALID } from '../constants';
 
 export const getActiveToken = async (
   jwtService: JwtService,
