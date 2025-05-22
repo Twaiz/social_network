@@ -12,6 +12,7 @@ import {
   ChangeEmailCredentialsDto,
   ChangePasswordCredentialsDto,
   ConfirmChangedEmailCredentialsDto,
+  ConfirmNewPasswordCredentialsDto,
   getActiveToken,
   GetEnv,
   IUser,
@@ -191,6 +192,41 @@ describe('App - User (e2e)', () => {
     const expiresDate = new Date(userAfter.changePasswordExpires);
 
     expect(expiresDate.getTime()).toBeGreaterThan(now.getTime());
+  });
+
+  it('user/confirm-new-password -- success', async () => {
+    const userBefore = await userModel
+      .findById(user._id)
+      .select('+changePasswordToken +changePasswordNew')
+      .lean();
+    if (!userBefore) {
+      Logger.error(USER_NOT_FOUND);
+      process.exit(1);
+    }
+
+    const res = await request(app.getHttpServer())
+      .post('api/user/confirm-new-password')
+      .send({
+        changePasswordToken: userBefore.changeEmailToken,
+      } as ConfirmNewPasswordCredentialsDto)
+      .expect(200);
+
+    expect(res.body).toHaveProperty('message');
+
+    const userAfter = await userModel
+      .findById(user._id)
+      .select('+changePasswordToken +changePasswordNew')
+      .lean();
+    if (!userAfter) {
+      Logger.error(USER_NOT_FOUND);
+      process.exit(1);
+    }
+
+    expect(userAfter.passwordHash).toBe(userBefore.changePasswordNew);
+
+    expect(userAfter.changePasswordExpires).toBeNull();
+    expect(userAfter.changePasswordToken).toBeNull();
+    expect(userAfter.changePasswordNew).toBeNull();
   });
 
   afterAll(async () => {
