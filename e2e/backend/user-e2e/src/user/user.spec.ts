@@ -10,6 +10,7 @@ import {
   APP_INIT_FAILED,
   bootstrap,
   ChangeEmailCredentialsDto,
+  ChangePasswordCredentialsDto,
   ConfirmChangedEmailCredentialsDto,
   getActiveToken,
   GetEnv,
@@ -28,6 +29,10 @@ const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
 
 const ChangeEmailCredentials: ChangeEmailCredentialsDto = {
   newEmail: 'newAdmin@gmail.com',
+};
+
+const ChangePasswordCredentials: ChangePasswordCredentialsDto = {
+  newPassword: 'admin321',
 };
 
 describe('App - User (e2e)', () => {
@@ -140,6 +145,52 @@ describe('App - User (e2e)', () => {
     expect(userAfter.changeEmailExpires).toBeNull();
 
     //TODO - сделать так, чтобы email возращался до прежнего
+  });
+
+  it('user/change-password -- success', async () => {
+    const userBefore = await userModel
+      .findById(user._id)
+      .select('+changePasswordToken +changePasswordNew')
+      .lean();
+    if (!userBefore) {
+      Logger.error(USER_NOT_FOUND);
+      process.exit(1);
+    }
+
+    const res = await request(app.getHttpServer())
+      .post('/api/user/change-password')
+      .set('Authorization', `Bearer ${token}`)
+      .send(ChangePasswordCredentials)
+      .expect(201);
+
+    expect(res.body).toHaveProperty('message');
+
+    const userAfter = await userModel
+      .findOne({ _id: user._id })
+      .select('+changePasswordToken +changePasswordNew')
+      .lean();
+    if (
+      !userAfter ||
+      !userAfter.changePasswordToken ||
+      !userAfter.changePasswordNew ||
+      !userAfter.changePasswordExpires
+    ) {
+      Logger.error(USER_NOT_FOUND);
+      process.exit(1);
+    }
+
+    const lengthChangePasswordToken = userAfter.changePasswordToken.length;
+
+    expect(userAfter.changePasswordNew).toBe(userBefore.passwordHash);
+
+    expect(userAfter.changePasswordToken).toBeDefined();
+    expect(typeof userAfter.changePasswordToken).toBe('string');
+    expect(lengthChangePasswordToken).toBeGreaterThan(0);
+
+    const now = new Date();
+    const expiresDate = new Date(userAfter.changePasswordExpires);
+
+    expect(expiresDate.getTime()).toBeGreaterThan(now.getTime());
   });
 
   afterAll(async () => {
