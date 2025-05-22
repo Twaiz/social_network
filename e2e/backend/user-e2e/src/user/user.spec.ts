@@ -205,7 +205,7 @@ describe('App - User (e2e)', () => {
     }
 
     const res = await request(app.getHttpServer())
-      .post('api/user/confirm-new-password')
+      .post('/api/user/confirm-new-password')
       .send({
         changePasswordToken: userBefore.changeEmailToken,
       } as ConfirmNewPasswordCredentialsDto)
