@@ -187,10 +187,12 @@ export class UserService {
   }
 
   async confirmNewPassword(changePasswordToken: string): Promise<void> {
-    const userByChangePassword = await this.userModel.findOne({
-      changePasswordToken,
-      changePasswordExpires: { $gt: new Date() },
-    });
+    const userByChangePassword = await this.userModel
+      .findOne({
+        changePasswordToken,
+        changePasswordExpires: { $gt: new Date() },
+      })
+      .select('+changePasswordNew');
     if (!userByChangePassword) {
       throw new BadRequestException(CONFIRM_CHANGE_TOKEN_INVALID);
     }
