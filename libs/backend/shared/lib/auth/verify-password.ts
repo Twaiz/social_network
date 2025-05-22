@@ -6,7 +6,7 @@ export const verifyPassword = (
   newPassword: string,
   errorMessage: string,
 ): boolean => {
-  const isPasswordValid = compareSync(currentPasswordHash, newPassword);
+  const isPasswordValid = compareSync(newPassword, currentPasswordHash);
   if (!isPasswordValid) {
     throw new BadRequestException(errorMessage);
   }
