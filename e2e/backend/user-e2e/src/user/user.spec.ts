@@ -207,7 +207,7 @@ describe('App - User (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/api/user/confirm-new-password')
       .send({
-        changePasswordToken: userBefore.changeEmailToken,
+        changePasswordToken: userBefore.changePasswordToken,
       } as ConfirmNewPasswordCredentialsDto)
       .expect(200);
 
