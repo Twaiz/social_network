@@ -17,6 +17,7 @@ node_modules
 .settings/
 *.sublime-workspace
 .todo
+.vscode
 
 # IDE - VSCode
 .vscode/*
