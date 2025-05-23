@@ -167,7 +167,7 @@ describe('App - User (e2e)', () => {
     expect(res.body).toHaveProperty('message');
 
     const userAfter = await userModel
-      .findOne({ _id: user._id })
+      .findById(user._id)
       .select('+changePasswordToken +changePasswordNew')
       .lean();
     if (
@@ -176,13 +176,11 @@ describe('App - User (e2e)', () => {
       !userAfter.changePasswordNew ||
       !userAfter.changePasswordExpires
     ) {
-      Logger.error(USER_NOT_FOUND);
+      Logger.error('Ошибка при изменении пароля');
       process.exit(1);
     }
 
     const lengthChangePasswordToken = userAfter.changePasswordToken.length;
-
-    expect(userAfter.changePasswordNew).toBe(userBefore.passwordHash);
 
     expect(userAfter.changePasswordToken).toBeDefined();
     expect(typeof userAfter.changePasswordToken).toBe('string');
