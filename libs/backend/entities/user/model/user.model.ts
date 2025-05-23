@@ -94,6 +94,7 @@ export const UserSchema = new Schema<IUser>(
       type: Date || null,
     },
     changePasswordNew: {
+      //TODO - добавить хотя бы минимальную проверку на валидность пароля
       type: String || null,
       select: false,
     },
