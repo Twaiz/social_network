@@ -136,4 +136,6 @@ export class AuthService {
     //TODO - удалить кастомный метод sendEmailConfirmation и использовать глобальный sendEmail
     // sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
+
+  //TODO - почему ещё нету метода forgetPassword. Мы уже делаем часть userCredentials, но ещё нормально не закончили auth часть. Решить этот вопрос.
 }
