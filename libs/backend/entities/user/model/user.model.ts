@@ -31,6 +31,7 @@ export const UserSchema = new Schema<IUser>(
       index: true,
     },
     passwordHash: {
+      //TODO - добавить хотя бы минимальную проверку на валидность пароля
       type: String,
       required: true,
     },
@@ -94,7 +95,7 @@ export const UserSchema = new Schema<IUser>(
       type: Date || null,
     },
     changePasswordNew: {
-      //TODO - добавить хотя бы минимальную проверку на валидность пароля
+      //TODO - добавить хотя бы минимальную проверку на валидность пароля, как в 'passwordHash'
       type: String || null,
       select: false,
     },
