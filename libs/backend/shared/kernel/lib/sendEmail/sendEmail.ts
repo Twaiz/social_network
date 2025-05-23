@@ -7,6 +7,7 @@ export const sendEmail = async (
   htmlContent: string,
   email: string,
 ): Promise<void> => {
+  //TODO - решить что-то с mailtrap и вообще отправкой писем на почту. Щас у нас лимит по отправки, значит надо придумать что-то другое.
   const transporter = nodemailer.createTransport({
     host: configService.get<string>('MAIL_HOST'),
     port: configService.get<number>('MAIL_PORT'),
