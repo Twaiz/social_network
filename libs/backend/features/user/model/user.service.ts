@@ -34,6 +34,7 @@ import {
 
 @Injectable()
 export class UserService {
+  //TODO - добавить использование TWO-FA в весь проект. Щас он у нас только при login и всё, а мы то можем ещё и сюда добавить та и вообще куда угодно для безопасности или если забыл пароль.
   constructor(
     @InjectModel('User') private readonly userModel: Model<IUser>,
     private readonly configService: ConfigService,
