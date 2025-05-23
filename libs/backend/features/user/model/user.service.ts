@@ -107,12 +107,12 @@ export class UserService {
     <p><strong>Если вы не запрашивали изменение, просто проигнорируйте это письмо!</strong></p>
   `;
 
-    await sendEmail(
-      this.configService,
-      'Подтверждение смены email',
-      htmlContent,
-      currentEmail,
-    );
+    // await sendEmail(
+    //   this.configService,
+    //   'Подтверждение смены email',
+    //   htmlContent,
+    //   currentEmail,
+    // );
   }
 
   async confirmChangedEmail(changeEmailToken: string): Promise<void> {
@@ -144,12 +144,12 @@ export class UserService {
       { new: true },
     );
 
-    await sendEmailConfirmNewEmail(
-      this.configService,
-      oldEmail,
-      newEmail,
-      fullName,
-    );
+    // await sendEmailConfirmNewEmail(
+    //   this.configService,
+    //   oldEmail,
+    //   newEmail,
+    //   fullName,
+    // );
   }
 
   async changePassword(user: IUser, newPassword: string): Promise<void> {
@@ -178,12 +178,12 @@ export class UserService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    await sendEmailChangePassword(
-      this.configService,
-      email,
-      fullName,
-      changePasswordToken,
-    );
+    // await sendEmailChangePassword(
+    //   this.configService,
+    //   email,
+    //   fullName,
+    //   changePasswordToken,
+    // );
   }
 
   async confirmNewPassword(changePasswordToken: string): Promise<void> {
@@ -211,11 +211,11 @@ export class UserService {
       { new: true },
     );
 
-    await sendEmailConfirmNewPassword(
-      this.configService,
-      userByChangePassword.email,
-      fullName,
-    );
+    // await sendEmailConfirmNewPassword(
+    //   this.configService,
+    //   userByChangePassword.email,
+    //   fullName,
+    // );
   }
 
   //TODO - добавить методы для Admin-а. CUD - Create, Update, Delete

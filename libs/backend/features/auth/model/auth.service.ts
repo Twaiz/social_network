@@ -134,6 +134,6 @@ export class AuthService {
     }
 
     //TODO - удалить кастомный метод sendEmailConfirmation и использовать глобальный sendEmail
-    sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
+    // sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
 }
