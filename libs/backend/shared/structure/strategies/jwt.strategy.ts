@@ -12,6 +12,7 @@ import { findUserByEmail, findUserByLogin } from '../../api';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+  //TODO - добавить нормальную проверку на валидность токена. У нас на данный момент токен работает даже тогда, когда обновился пароль. Блять, надо это сделать, это безопасноть нашего пользователя.
   constructor(
     configService: ConfigService,
     @InjectModel('User') private readonly userModel: Model<IUser>,
