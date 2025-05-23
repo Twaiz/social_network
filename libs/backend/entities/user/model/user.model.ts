@@ -108,6 +108,7 @@ export const UserSchema = new Schema<IUser>(
     },
   },
   {
+    //TODO - давны давно это добавили, но под новые поля не подогнали. Так какой смысл с него?
     timestamps: true,
     toJSON: {
       virtuals: true,
