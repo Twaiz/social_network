@@ -74,7 +74,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/backend/two-fa-e2e/**/*"]
+      "exclude": ["apps/backend/two-fa-e2e/**/*", "apps/backend/user-e2e/**/*"]
     },
     {
       "plugin": "@nx/js/typescript",

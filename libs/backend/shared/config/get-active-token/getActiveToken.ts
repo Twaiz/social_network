@@ -1,0 +1,41 @@
+import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Model } from 'mongoose';
+
+import { findUserByLogin } from '../../api';
+import { GetEnv } from '../../kernel';
+import { getJwtToken, verifyPassword } from '../../lib';
+import { IUser } from '../../structure';
+import { USER_NOT_FOUND, USER_PASSWORD_INVALID } from '../constants';
+
+export const getActiveToken = async (
+  jwtService: JwtService,
+  configService: ConfigService,
+  userModel: Model<IUser>,
+): Promise<{
+  token: string;
+  user: IUser;
+}> => {
+  const jwtSecret = GetEnv.getJwtSecret(configService);
+  const jwtExpiresIn = GetEnv.getJwtExpiresIn(configService);
+
+  const user = await findUserByLogin(userModel, 'admin');
+  if (!user) {
+    Logger.error(USER_NOT_FOUND);
+    process.exit(1);
+  }
+
+  verifyPassword(user.passwordHash, 'admin123', USER_PASSWORD_INVALID);
+
+  const token = await getJwtToken(jwtService, {
+    user,
+    jwtSecret,
+    jwtExpiresIn,
+  });
+
+  return {
+    token,
+    user,
+  };
+};

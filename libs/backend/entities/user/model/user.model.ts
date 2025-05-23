@@ -14,6 +14,7 @@ export const UserSchema = new Schema<IUser>(
       unique: true,
       trim: true,
       lowercase: true,
+      index: true,
       validate: {
         validator: (email: string) => isEmail(email),
         message: EMAIL_VALIDATION_ERROR,
@@ -27,8 +28,10 @@ export const UserSchema = new Schema<IUser>(
       lowercase: true,
       minlength: 4,
       maxlength: 16,
+      index: true,
     },
     passwordHash: {
+      //TODO - добавить хотя бы минимальную проверку на валидность пароля
       type: String,
       required: true,
     },
@@ -64,21 +67,69 @@ export const UserSchema = new Schema<IUser>(
       default: false,
     },
     twoFactorSecret: {
-      type: String,
-      select: false,
+      type: String || null,
+      default: null,
     },
     emailConfirmToken: {
-      type: String || undefined,
+      type: String || null,
       select: false,
     },
     emailExpiresToken: {
-      type: Date || undefined,
+      type: Date || null,
+    },
+    changeEmailToken: {
+      type: String || null,
+      select: false,
+    },
+    changeEmailNew: {
+      type: String || null,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      validate: {
+        validator: (email: string) => email === null || isEmail(email),
+        message: EMAIL_VALIDATION_ERROR,
+      },
+    },
+    changeEmailExpires: {
+      type: Date || null,
+    },
+    changePasswordNew: {
+      //TODO - добавить хотя бы минимальную проверку на валидность пароля, как в 'passwordHash'
+      type: String || null,
+      select: false,
+    },
+    changePasswordExpires: {
+      type: Date || null,
+    },
+    changePasswordToken: {
+      type: String || null,
+      select: false,
     },
   },
   {
+    //TODO - давны давно это добавили, но под новые поля не подогнали. Так какой смысл с него?
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toJSON: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        ret.passwordHash = undefined;
+        ret.twoFactorSecret = undefined;
+        ret.emailConfirmToken = undefined;
+        ret.changeEmailToken = undefined;
+        return ret;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        ret.passwordHash = undefined;
+        ret.twoFactorSecret = undefined;
+        ret.emailConfirmToken = undefined;
+        ret.changeEmailToken = undefined;
+        return ret;
+      },
+    },
   },
 );
 
@@ -90,12 +141,4 @@ UserSchema.pre('findOneAndUpdate', loginToLowerCase);
 
 UserSchema.virtual('fullName').get(function (this: IUser) {
   return `${this.firstName} ${this.secondName}`;
-});
-
-UserSchema.set('toJSON', {
-  transform: (_doc, ret) => {
-    ret.twoFactorSecret = undefined;
-    ret.emailConfirmToken = undefined;
-    return ret;
-  },
 });

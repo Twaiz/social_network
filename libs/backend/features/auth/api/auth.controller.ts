@@ -14,18 +14,15 @@ import { Model } from 'mongoose';
 
 import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
-  USER_ALREADY_REGISTERED_WITH_EMAIL,
-  USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from './constant';
-import { USER_INVALID_PASSWORD } from '../auth.constants';
 
 import {
   ConfirmEmailCredentialsDto,
-  LoginCredentialsDto,
   RegisterCredentialsDto,
+  LoginCredentialsDto,
 } from '../dto';
 
 import { AuthService } from '../model/auth.service';
@@ -39,6 +36,9 @@ import {
   RegisterResponse,
   LoginResponse,
   EmailConfirmGuard,
+  USER_ALREADY_REGISTERED_WITH_LOGIN,
+  USER_ALREADY_REGISTERED_WITH_EMAIL,
+  USER_PASSWORD_INVALID,
 } from '@shared';
 
 @Controller('auth')
@@ -56,6 +56,7 @@ export class AuthController {
   ): Promise<RegisterResponse> {
     const { email, login } = registerCredentialsDto;
 
+    //TODO - вынести код проверок в AuthService
     const userByEmail = await findUserByEmail(this.userModel, email);
     const userByLogin = await findUserByLogin(this.userModel, login);
 
@@ -87,10 +88,11 @@ export class AuthController {
   ): Promise<LoginResponse> {
     const { email, login, password, twoFactorCode } = loginCredentialsDto;
     const emailOrLogin = email ? 'email' : 'login';
-    const INVALID_LOGIN_CREDENTIALS = `${USER_INVALID_PASSWORD} или ${emailOrLogin}. Попробуйте ещё раз.`;
+    const INVALID_LOGIN_CREDENTIALS = `${USER_PASSWORD_INVALID} или ${emailOrLogin}. Попробуйте ещё раз.`;
 
     let user: IUser | null = null;
 
+    //TODO - вынести код проверок в AuthService
     if (email && login) {
       throw new BadRequestException(BOTH_EMAIL_AND_LOGIN_ERROR);
     }

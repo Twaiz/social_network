@@ -23,6 +23,12 @@
     },
     {
       "path": "./libs/backend/features"
+    },
+    {
+      "path": "./e2e/backend/user-e2e"
+    },
+    {
+      "path": "./apps/backend/user"
     }
   ]
 }

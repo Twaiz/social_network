@@ -8,7 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'node:crypto';
 import { Model } from 'mongoose';
-import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
+import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
 import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
@@ -21,20 +21,9 @@ import {
   USER_NOT_FOUND,
   GetEnv,
   verifyTwoFactorCode,
+  getJwtToken,
+  verifyPassword,
 } from '@shared';
-
-interface IJwtPayload {
-  _id: string;
-  email: string;
-  login: string;
-  role: string;
-}
-
-interface JwtCreationParams {
-  user: IUser;
-  jwtSecret: string;
-  jwtExpiresIn: string;
-}
 
 @Injectable()
 export class AuthService {
@@ -67,7 +56,7 @@ export class AuthService {
 
     const user = await newUser.save();
 
-    const token = await this.getJwtToken({
+    const token = await getJwtToken(this.jwtService, {
       user,
       jwtSecret,
       jwtExpiresIn,
@@ -86,10 +75,7 @@ export class AuthService {
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
 
-    const isPasswordValid = compareSync(password, user.passwordHash);
-    if (!isPasswordValid) {
-      throw new BadRequestException(errorMessage);
-    }
+    verifyPassword(user.passwordHash, password, errorMessage);
 
     if (user.isTwoFactorEnabled) {
       if (!twoFactorCode) {
@@ -99,7 +85,7 @@ export class AuthService {
       verifyTwoFactorCode(user, twoFactorCode);
     }
 
-    const token = await this.getJwtToken({
+    const token = await getJwtToken(this.jwtService, {
       user,
       jwtSecret,
       jwtExpiresIn,
@@ -127,6 +113,8 @@ export class AuthService {
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
     }
+
+    //TODO - добавить сообщения на почту об успешном подтверждение и прочем, как в changeEmail
   }
 
   //* Generate Email Token *//
@@ -145,25 +133,9 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
+    //TODO - удалить кастомный метод sendEmailConfirmation и использовать глобальный sendEmail
+    // sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
 
-  //* Get Jwt Token *//
-  async getJwtToken(jwtCreationParams: JwtCreationParams): Promise<string> {
-    const { user, jwtSecret, jwtExpiresIn } = jwtCreationParams;
-
-    const payload: IJwtPayload = {
-      _id: user._id,
-      email: user.email,
-      login: user.login,
-      role: user.role,
-    };
-
-    const token = await this.jwtService.signAsync(payload, {
-      secret: jwtSecret,
-      expiresIn: jwtExpiresIn,
-    });
-
-    return token;
-  }
+  //TODO - почему ещё нету метода forgetPassword. Мы уже делаем часть userCredentials, но ещё нормально не закончили auth часть. Решить этот вопрос.
 }
