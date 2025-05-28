@@ -13,6 +13,7 @@ import {
   ChangePasswordCredentialsDto,
   ConfirmChangedEmailCredentialsDto,
   ConfirmNewPasswordCredentialsDto,
+  findUserByEmail,
   getActiveToken,
   GetEnv,
   IUser,
@@ -213,10 +214,11 @@ describe('App - User (e2e)', () => {
 
     expect(res.body).toHaveProperty('message');
 
-    const userAfter = await userModel
-      .findById(user._id)
-      .select('+changePasswordToken +changePasswordNew')
-      .lean();
+    const userAfter = await findUserByEmail(
+      userModel,
+      user.email,
+      '+passwordHash +changePasswordToken +changePasswordNew',
+    );
     if (!userAfter) {
       Logger.error(USER_NOT_FOUND);
       process.exit(1);
