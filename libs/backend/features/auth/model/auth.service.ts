@@ -18,7 +18,7 @@ import {
   PASSWORDHASH_IS_NOT_FOUND,
 } from './constant';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
-import { sendEmailConfirmation } from './lib';
+// import { sendEmailConfirmation } from './lib';
 
 import {
   IUser,
@@ -143,7 +143,7 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    //TODO - удалить кастомный метод sendEmailConfirmation и использовать глобальный sendEmail
+    //TODO - переделать метод sendEmailConfirmation. сделать как в других кастомных методах отправки писем
     // sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
 
