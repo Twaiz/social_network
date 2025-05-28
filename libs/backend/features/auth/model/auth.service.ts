@@ -69,6 +69,7 @@ export class AuthService {
   }
 
   //* Login *//
+  //TODO - service не должен принимать dto, он должен принимать аргументы
   async login(LoginServiceDto: LoginServiceDto): Promise<string> {
     const { user, password, twoFactorCode, errorMessage } = LoginServiceDto;
 
