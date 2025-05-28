@@ -33,6 +33,7 @@ export const UserSchema = new Schema<IUser>(
     passwordHash: {
       type: String,
       required: true,
+      select: false,
     },
     role: {
       type: String,
@@ -69,6 +70,7 @@ export const UserSchema = new Schema<IUser>(
     twoFactorSecret: {
       type: String || null,
       default: null,
+      select: false,
     },
 
     //* Confirm Email *\\
@@ -126,6 +128,8 @@ export const UserSchema = new Schema<IUser>(
         ret.twoFactorSecret = undefined;
         ret.emailConfirmToken = undefined;
         ret.changeEmailToken = undefined;
+        ret.changePasswordNew = undefined;
+        ret.changePasswordToken = undefined;
 
         return ret;
       },
@@ -137,6 +141,8 @@ export const UserSchema = new Schema<IUser>(
         ret.twoFactorSecret = undefined;
         ret.emailConfirmToken = undefined;
         ret.changeEmailToken = undefined;
+        ret.changePasswordNew = undefined;
+        ret.changePasswordToken = undefined;
 
         return ret;
       },
