@@ -138,9 +138,9 @@ export class UserService {
       {
         email: newEmail,
 
-        changeEmailToken: null,
-        changeEmailExpires: null,
-        changeEmailNew: null,
+        changeEmailToken: undefined,
+        changeEmailExpires: undefined,
+        changeEmailNew: undefined,
       },
       { new: true },
     );
