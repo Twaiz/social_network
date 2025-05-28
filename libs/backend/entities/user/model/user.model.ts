@@ -68,8 +68,8 @@ export const UserSchema = new Schema<IUser>(
       default: false,
     },
     twoFactorSecret: {
-      type: String || null,
-      default: null,
+      type: String,
+      default: undefined,
       select: false,
     },
 
@@ -80,42 +80,50 @@ export const UserSchema = new Schema<IUser>(
       default: false,
     },
     emailConfirmToken: {
-      type: String || null,
+      type: String,
+      default: undefined,
       select: false,
     },
     emailExpiresToken: {
-      type: Date || null,
+      type: Date,
+      default: undefined,
     },
 
     //* New Email *\\
     changeEmailToken: {
-      type: String || null,
+      type: String,
+      default: undefined,
       select: false,
     },
     changeEmailNew: {
-      type: String || null,
+      type: String,
+      default: undefined,
       unique: true,
       trim: true,
       lowercase: true,
       validate: {
-        validator: (email: string) => email === null || isEmail(email),
+        validator: (email: string) => email === undefined || isEmail(email),
         message: EMAIL_VALIDATION_ERROR,
       },
     },
     changeEmailExpires: {
-      type: Date || null,
+      type: Date,
+      default: undefined,
     },
 
     //* New Password *\\
     changePasswordNew: {
-      type: String || null,
+      type: String,
+      default: undefined,
       select: false,
     },
     changePasswordExpires: {
-      type: Date || null,
+      type: Date,
+      default: undefined,
     },
     changePasswordToken: {
-      type: String || null,
+      type: String,
+      default: undefined,
       select: false,
     },
   },
