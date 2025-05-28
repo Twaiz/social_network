@@ -3,7 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { addHours } from 'date-fns';
@@ -17,7 +17,7 @@ import {
   NewUserInfoCredentialsDto,
   findUserByEmail,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
-  sendEmail,
+  // sendEmail,
 } from '@shared';
 
 import {
@@ -26,18 +26,18 @@ import {
   IDENTICAL_EMAIL,
   IDENTICAL_PASSWORD,
 } from './constant';
-import {
-  sendEmailConfirmNewEmail,
-  sendEmailChangePassword,
-  sendEmailConfirmNewPassword,
-} from './lib';
+// import {
+//   sendEmailConfirmNewEmail,
+//   sendEmailChangePassword,
+//   sendEmailConfirmNewPassword,
+// } from './lib';
 
 @Injectable()
 export class UserService {
   //TODO - добавить использование TWO-FA в весь проект. Щас он у нас только при login и всё, а мы то можем ещё и сюда добавить та и вообще куда угодно для безопасности или если забыл пароль.
   constructor(
     @InjectModel('User') private readonly userModel: Model<IUser>,
-    private readonly configService: ConfigService,
+    // private readonly configService: ConfigService,
   ) {}
 
   async updateUserInfo(
@@ -71,7 +71,7 @@ export class UserService {
   }
 
   async changeEmail(user: IUser, newEmail: string): Promise<void> {
-    const currentEmail = user.email;
+    // const currentEmail = user.email;
 
     if (newEmail === user.email) {
       throw new BadRequestException(IDENTICAL_EMAIL);
@@ -98,15 +98,15 @@ export class UserService {
     }
 
     //TODO - вынести в отдельную функцию, как в confirmChangedEmail
-    const confirmationUrl = `https://social-network.com/confirm-changed-email?token=${changeEmailToken}`;
-    const htmlContent = `
-    <p>Здравствуйте, ${user.firstName}${user.secondName}!</p>
-    <p>Вы запросили смену email на <strong>${newEmail}</strong>.</p>
-    <p>Если вы действительно хотите изменить свой адрес, пожалуйста, подтвердите действие, перейдя по следующей ссылке:</p>
-    <p><a href="${confirmationUrl}">${confirmationUrl}</a></p>
-    <p>Ссылка действительна в течение 24 часов.</p>
-    <p><strong>Если вы не запрашивали изменение, просто проигнорируйте это письмо!</strong></p>
-  `;
+    //   const confirmationUrl = `https://social-network.com/confirm-changed-email?token=${changeEmailToken}`;
+    //   const htmlContent = `
+    //   <p>Здравствуйте, ${user.firstName}${user.secondName}!</p>
+    //   <p>Вы запросили смену email на <strong>${newEmail}</strong>.</p>
+    //   <p>Если вы действительно хотите изменить свой адрес, пожалуйста, подтвердите действие, перейдя по следующей ссылке:</p>
+    //   <p><a href="${confirmationUrl}">${confirmationUrl}</a></p>
+    //   <p>Ссылка действительна в течение 24 часов.</p>
+    //   <p><strong>Если вы не запрашивали изменение, просто проигнорируйте это письмо!</strong></p>
+    // `;
 
     // await sendEmail(
     //   this.configService,
@@ -126,8 +126,8 @@ export class UserService {
     }
 
     const newEmail = userByChangeEmail.changeEmailNew;
-    const oldEmail = userByChangeEmail.email;
-    const fullName = `${userByChangeEmail.firstName} ${userByChangeEmail.secondName}`;
+    // const oldEmail = userByChangeEmail.email;
+    // const fullName = `${userByChangeEmail.firstName} ${userByChangeEmail.secondName}`;
 
     if (!newEmail) {
       throw new NotFoundException(CHANGE_EMAIL_TOKEN_NOT_FOUND);
@@ -154,8 +154,12 @@ export class UserService {
   }
 
   async changePassword(user: IUser, newPassword: string): Promise<void> {
-    const { passwordHash, _id, email, firstName, secondName } = user;
-    const fullName = `${firstName} ${secondName}`;
+    const {
+      passwordHash,
+      _id,
+      //  email, firstName, secondName
+    } = user;
+    // const fullName = `${firstName} ${secondName}`;
 
     const salt = genSaltSync(10);
     const newPasswordHash = hashSync(newPassword, salt);
@@ -198,7 +202,7 @@ export class UserService {
       throw new BadRequestException(CONFIRM_CHANGE_TOKEN_INVALID);
     }
 
-    const fullName = `${userByChangePassword.firstName} ${userByChangePassword.secondName}`;
+    // const fullName = `${userByChangePassword.firstName} ${userByChangePassword.secondName}`;
 
     await this.userModel.findOneAndUpdate(
       { _id: userByChangePassword.id },
