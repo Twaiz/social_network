@@ -144,6 +144,8 @@ describe('App - User (e2e)', () => {
     }
 
     expect(userAfter.email).toBe(userBefore.changeEmailNew);
+
+    //TODO - заменить проверку из на null на undefined. у нас изменились типы
     expect(userAfter.changeEmailToken).toBeNull();
     expect(userAfter.changeEmailNew).toBeNull();
     expect(userAfter.changeEmailExpires).toBeNull();
@@ -226,6 +228,7 @@ describe('App - User (e2e)', () => {
 
     expect(userAfter.passwordHash).toBe(userBefore.changePasswordNew);
 
+    //TODO - заменить проверку из на null на undefined. у нас изменились типы
     expect(userAfter.changePasswordExpires).toBeNull();
     expect(userAfter.changePasswordToken).toBeNull();
     expect(userAfter.changePasswordNew).toBeNull();
