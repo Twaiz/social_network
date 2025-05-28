@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -11,7 +12,11 @@ import { Model } from 'mongoose';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
-import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
+import {
+  CONFIRM_EMAIL_TOKEN_INVALID,
+  NOT_FOUND_2FA_CODE,
+  PASSWORDHASH_IS_NOT_FOUND,
+} from './constant';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 import { sendEmailConfirmation } from './lib';
 
@@ -72,6 +77,10 @@ export class AuthService {
   //TODO - service не должен принимать dto, он должен принимать аргументы
   async login(LoginServiceDto: LoginServiceDto): Promise<string> {
     const { user, password, twoFactorCode, errorMessage } = LoginServiceDto;
+    if (!user.passwordHash) {
+      Logger.error(PASSWORDHASH_IS_NOT_FOUND);
+      throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
+    }
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
