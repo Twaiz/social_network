@@ -205,9 +205,9 @@ export class UserService {
       {
         passwordHash: userByChangePassword.changePasswordNew,
 
-        changePasswordExpires: null,
-        changePasswordNew: null,
-        changePasswordToken: null,
+        changePasswordExpires: undefined,
+        changePasswordNew: undefined,
+        changePasswordToken: undefined,
       },
       { new: true },
     );
