@@ -31,7 +31,6 @@ export const UserSchema = new Schema<IUser>(
       index: true,
     },
     passwordHash: {
-      //TODO - добавить хотя бы минимальную проверку на валидность пароля
       type: String,
       required: true,
     },
@@ -41,6 +40,8 @@ export const UserSchema = new Schema<IUser>(
       enum: Object.values(EUserRole),
       default: EUserRole.User,
     },
+
+    //* Full Name *\\
     firstName: {
       type: String,
       required: true,
@@ -51,17 +52,16 @@ export const UserSchema = new Schema<IUser>(
       required: true,
       trim: true,
     },
+
+    //* Profile Complete *\\
     isProfileComplete: {
       type: Boolean,
       required: true,
       default: false,
     },
+
+    //* Two Factor *\\
     isTwoFactorEnabled: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    isEmailConfirm: {
       type: Boolean,
       required: true,
       default: false,
@@ -70,6 +70,13 @@ export const UserSchema = new Schema<IUser>(
       type: String || null,
       default: null,
     },
+
+    //* Confirm Email *\\
+    isEmailConfirm: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     emailConfirmToken: {
       type: String || null,
       select: false,
@@ -77,6 +84,8 @@ export const UserSchema = new Schema<IUser>(
     emailExpiresToken: {
       type: Date || null,
     },
+
+    //* New Email *\\
     changeEmailToken: {
       type: String || null,
       select: false,
@@ -94,8 +103,9 @@ export const UserSchema = new Schema<IUser>(
     changeEmailExpires: {
       type: Date || null,
     },
+
+    //* New Password *\\
     changePasswordNew: {
-      //TODO - добавить хотя бы минимальную проверку на валидность пароля, как в 'passwordHash'
       type: String || null,
       select: false,
     },
@@ -108,7 +118,6 @@ export const UserSchema = new Schema<IUser>(
     },
   },
   {
-    //TODO - давны давно это добавили, но под новые поля не подогнали. Так какой смысл с него?
     timestamps: true,
     toJSON: {
       virtuals: true,
@@ -117,6 +126,7 @@ export const UserSchema = new Schema<IUser>(
         ret.twoFactorSecret = undefined;
         ret.emailConfirmToken = undefined;
         ret.changeEmailToken = undefined;
+
         return ret;
       },
     },
@@ -127,6 +137,7 @@ export const UserSchema = new Schema<IUser>(
         ret.twoFactorSecret = undefined;
         ret.emailConfirmToken = undefined;
         ret.changeEmailToken = undefined;
+
         return ret;
       },
     },
