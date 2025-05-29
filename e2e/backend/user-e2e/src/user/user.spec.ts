@@ -1,3 +1,4 @@
+//? Внешние зависимости ?\\
 import { ConfigService } from '@nestjs/config';
 import { INestApplication, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -5,7 +6,9 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import request from 'supertest';
 import { App } from 'supertest/types';
+//? ---Внешние зависимости--- ?\\
 
+//? Внутренние зависимости ?\\
 import {
   APP_INIT_FAILED,
   bootstrap,
@@ -23,7 +26,9 @@ import {
 import { UserModule } from '@features/user';
 
 import { CHANGE_EMAIL_TOKEN_NOT_FOUND } from './constant';
+//? ---Внутренние зависимости--- ?\\
 
+//? Тестовые данные ?\\
 const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
   firstName: 'Oleg',
   secondName: 'Olegovich',
@@ -36,10 +41,13 @@ const ChangeEmailCredentials: ChangeEmailCredentialsDto = {
 const ChangePasswordCredentials: ChangePasswordCredentialsDto = {
   newPassword: 'admin321',
 };
+//? ---Тестовые данные--- ?\\
 
+//? User-E2E тест ?\\
 describe('App - User (e2e)', () => {
   //TODO - реализовать првоерки как в confirmChangedEmail. Ибо какой хуй с тех проверок, если они нихера почти и не проверяют
 
+  //? Объявление переменных ?\\
   let app: INestApplication<App>;
   let token: string;
   let user: IUser;
@@ -47,7 +55,9 @@ describe('App - User (e2e)', () => {
   let jwtService: JwtService;
   let configService: ConfigService;
   let userModel: Model<IUser>;
+  //? ---Объявление переменных--- ?\\
 
+  //? Подготовка перед тестами ?\\
   beforeAll(async () => {
     const userPort = process.env.USER_SERVER_PORT;
     const port = GetEnv.getServerPort(userPort);
@@ -72,7 +82,9 @@ describe('App - User (e2e)', () => {
     token = fullLogin.token;
     user = fullLogin.user;
   });
+  //? ---Подготовка перед тестами--- ?\\
 
+  //? 1-ый Запрос - Update User Info ?\\
   it('user/updateUserInfo -- success', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/user/updateUserInfo')
@@ -96,9 +108,10 @@ describe('App - User (e2e)', () => {
       );
     }
   });
+  //? ---1-ый Запрос - Update User Info--- ?\\
 
-  //!РЕШИТЬ!\\
   //TODO - когда у нас происходить смена email то после смена пароля не модет выполниться. Есть предположение, что это из-за проверок токена типа на валидность. Надо это как-то обойти для e2e тестов. Вот, из-за этого у нас в Postman тесты на смену пароля проходили, а в e2e нет. Проблема найдена, теперь надо её решить!
+  //? 2-ый Запрос - Change Email ?\\
   it('user/change-email', async () => {
     const res = await request(app.getHttpServer())
       .post('/api/user/change-email')
@@ -108,7 +121,9 @@ describe('App - User (e2e)', () => {
 
     expect(res.body).toHaveProperty('message');
   });
+  //? ---2-ой Запрос - Change Email--- ?\\
 
+  //? 3-ий Запрос - Confirm Changed Email ?\\
   it('user/confirm-changed-email -- success', async () => {
     const userBefore = await userModel
       .findOne({ _id: user._id })
@@ -148,10 +163,10 @@ describe('App - User (e2e)', () => {
     expect(userAfter.changeEmailToken).toBeUndefined();
     expect(userAfter.changeEmailNew).toBeUndefined();
     expect(userAfter.changeEmailExpires).toBeUndefined();
-
-    //TODO - сделать так, чтобы email возращался до прежнего
   });
+  //? ---3-ий Запрос - Confirm Changed Email--- ?\\
 
+  //? 4-ый Запрос - Change Password ?\\
   it('user/change-password -- success', async () => {
     const userBefore = await userModel
       .findById(user._id)
@@ -195,7 +210,9 @@ describe('App - User (e2e)', () => {
 
     expect(expiresDate.getTime()).toBeGreaterThan(now.getTime());
   });
+  //? ---4-ый Запрос - Change Password--- ?\\
 
+  //? 5-ый Запрос - Confrim New Password ?\\
   it('user/confirm-new-password -- success', async () => {
     const userBefore = await userModel
       .findById(user._id)
@@ -232,10 +249,13 @@ describe('App - User (e2e)', () => {
     expect(userAfter.changePasswordToken).toBeNull();
     expect(userAfter.changePasswordNew).toBeNull();
   });
+  //? ---5-ый Запрос - Confrim New Password--- ?\\
 
+  //? Сброс после тестов ?\\
   afterAll(async () => {
     if (app) {
       await app.close();
     }
   });
+  //? ---Сброс после тестов--- ?\\
 });
