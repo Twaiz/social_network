@@ -27,6 +27,7 @@ import {
   ConfirmChangedEmailCredentialsDto,
   ChangePasswordCredentialsDto,
   ConfirmNewPasswordCredentialsDto,
+  VerifyPasswordGuard,
 } from '@shared';
 
 import { UserService } from '../model/user.service';
@@ -36,7 +37,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @HttpCode(200)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, EmailConfirmGuard, VerifyPasswordGuard)
   @Post('updateUserInfo')
   async updateUserInfo(
     @Req() req: AuthenticatedRequest,
@@ -66,7 +67,7 @@ export class UserController {
 
   @HttpCode(201)
   @Post('change-email')
-  @UseGuards(JwtAuthGuard, EmailConfirmGuard)
+  @UseGuards(JwtAuthGuard, EmailConfirmGuard, VerifyPasswordGuard)
   async changeEmail(
     @Req() req: AuthenticatedRequest,
     @Body() changeEmailCredentials: ChangeEmailCredentialsDto,
@@ -97,7 +98,7 @@ export class UserController {
   }
 
   @HttpCode(201)
-  @UseGuards(JwtAuthGuard, EmailConfirmGuard)
+  @UseGuards(JwtAuthGuard, EmailConfirmGuard, VerifyPasswordGuard)
   @Post('change-password')
   async changePassword(
     @Req() req: AuthenticatedRequest,
