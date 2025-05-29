@@ -1,3 +1,1 @@
-export * from './sendEmailConfirmNewEmail';
-export * from './sendEmailChangePassword';
-export * from './sendEmailConfirmNewPassword';
+export * from './sendEmail';
