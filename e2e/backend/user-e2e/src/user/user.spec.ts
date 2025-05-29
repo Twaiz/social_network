@@ -123,8 +123,8 @@ describe('App - User (e2e)', () => {
   });
   //? ---2-ой Запрос - Change Email--- ?\\
 
-  //? 3-ий Запрос - Confirm Changed Email ?\\
-  it('user/confirm-changed-email -- success', async () => {
+  //? 3-ий Запрос - Confirm New Email ?\\
+  it('user/confirm-new-email -- success', async () => {
     const userBefore = await userModel
       .findOne({ _id: user._id })
       .select('+changeEmailToken')
@@ -140,7 +140,7 @@ describe('App - User (e2e)', () => {
     }
 
     const res = await request(app.getHttpServer())
-      .post('/api/user/confirm-changed-email')
+      .post('/api/user/confirm-new-email')
       .send({
         changeEmailToken: userBefore.changeEmailToken,
       } as ConfirmChangedEmailCredentialsDto)
@@ -164,7 +164,7 @@ describe('App - User (e2e)', () => {
     expect(userAfter.changeEmailNew).toBeUndefined();
     expect(userAfter.changeEmailExpires).toBeUndefined();
   });
-  //? ---3-ий Запрос - Confirm Changed Email--- ?\\
+  //? ---3-ий Запрос - Confirm New Email--- ?\\
 
   //? 4-ый Запрос - Change Password ?\\
   it('user/change-password -- success', async () => {
@@ -212,7 +212,7 @@ describe('App - User (e2e)', () => {
   });
   //? ---4-ый Запрос - Change Password--- ?\\
 
-  //? 5-ый Запрос - Confrim New Password ?\\
+  //? 5-ый Запрос - Confirm New Password ?\\
   it('user/confirm-new-password -- success', async () => {
     const userBefore = await userModel
       .findById(user._id)
@@ -248,7 +248,7 @@ describe('App - User (e2e)', () => {
     expect(userAfter.changePasswordToken).toBeUndefined();
     expect(userAfter.changePasswordNew).toBeUndefined();
   });
-  //? ---5-ый Запрос - Confrim New Password--- ?\\
+  //? ---5-ый Запрос - Confirm New Password--- ?\\
 
   //? Сброс после тестов ?\\
   afterAll(async () => {

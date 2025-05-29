@@ -111,7 +111,7 @@ export class UserService {
     // );
   }
 
-  async confirmChangedEmail(changeEmailToken: string): Promise<void> {
+  async confirmNewEmail(changeEmailToken: string): Promise<void> {
     const userByChangeEmail = await this.userModel.findOne({
       changeEmailToken,
       changeEmailExpires: { $gt: new Date() },

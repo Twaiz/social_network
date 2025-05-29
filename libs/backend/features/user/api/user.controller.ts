@@ -84,14 +84,14 @@ export class UserController {
   }
 
   @HttpCode(200)
-  @Post('confirm-changed-email')
-  async confirmChangedEmail(
+  @Post('confirm-new-email')
+  async confirmNewEmail(
     @Body()
     confirmChangedEmailCredentials: ConfirmChangedEmailCredentialsDto,
   ): Promise<{ message: string }> {
     const { changeEmailToken } = confirmChangedEmailCredentials;
 
-    await this.userService.confirmChangedEmail(changeEmailToken);
+    await this.userService.confirmNewEmail(changeEmailToken);
 
     return { message: CHANGE_EMAIL_SUCCESS };
   }
