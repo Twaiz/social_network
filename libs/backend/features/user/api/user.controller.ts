@@ -15,7 +15,7 @@ import {
   CHANGE_PASSWORD_SUCESS,
   EMPTY_DTO,
   IDENTICAL_EMAIL,
-} from './constant/user-controller.constants';
+} from './constant';
 
 import {
   type AuthenticatedRequest,
