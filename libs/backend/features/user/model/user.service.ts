@@ -23,9 +23,9 @@ import {
 import {
   CHANGE_EMAIL_TOKEN_NOT_FOUND,
   CONFIRM_CHANGE_TOKEN_INVALID,
-  IDENTICAL_EMAIL,
   IDENTICAL_PASSWORD,
 } from './constant';
+
 // import {
 //   sendEmailConfirmNewEmail,
 //   sendEmailChangePassword,
@@ -72,10 +72,6 @@ export class UserService {
 
   async changeEmail(user: IUser, newEmail: string): Promise<void> {
     // const currentEmail = user.email;
-
-    if (newEmail === user.email) {
-      throw new BadRequestException(IDENTICAL_EMAIL);
-    }
 
     const userWithSuchEmail = await findUserByEmail(this.userModel, newEmail);
     if (userWithSuchEmail) {
