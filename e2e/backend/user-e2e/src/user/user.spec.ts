@@ -244,10 +244,9 @@ describe('App - User (e2e)', () => {
 
     expect(userAfter.passwordHash).toBe(userBefore.changePasswordNew);
 
-    //TODO - заменить проверку из на null на undefined. у нас изменились типы
-    expect(userAfter.changePasswordExpires).toBeNull();
-    expect(userAfter.changePasswordToken).toBeNull();
-    expect(userAfter.changePasswordNew).toBeNull();
+    expect(userAfter.changePasswordExpires).toBeUndefined();
+    expect(userAfter.changePasswordToken).toBeUndefined();
+    expect(userAfter.changePasswordNew).toBeUndefined();
   });
   //? ---5-ый Запрос - Confrim New Password--- ?\\
 
