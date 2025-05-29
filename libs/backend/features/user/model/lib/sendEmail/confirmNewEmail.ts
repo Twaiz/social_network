@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { sendEmail } from '@shared';
 
-export const sendEmailConfirmNewEmail = async (
+export const confirmNewEmail = async (
   configService: ConfigService,
   oldEmail: string,
   newEmail: string,
