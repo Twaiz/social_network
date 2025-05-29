@@ -145,10 +145,9 @@ describe('App - User (e2e)', () => {
 
     expect(userAfter.email).toBe(userBefore.changeEmailNew);
 
-    //TODO - заменить проверку из на null на undefined. у нас изменились типы
-    expect(userAfter.changeEmailToken).toBeNull();
-    expect(userAfter.changeEmailNew).toBeNull();
-    expect(userAfter.changeEmailExpires).toBeNull();
+    expect(userAfter.changeEmailToken).toBeUndefined();
+    expect(userAfter.changeEmailNew).toBeUndefined();
+    expect(userAfter.changeEmailExpires).toBeUndefined();
 
     //TODO - сделать так, чтобы email возращался до прежнего
   });
