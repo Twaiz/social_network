@@ -7,3 +7,5 @@ export const USER_ALREADY_REGISTERED_WITH_EMAIL =
 
 export const APP_INIT_FAILED =
   '❌ Не удалось инициализировать приложение: bootstrap вернул null/undefined';
+
+export const PASSWORDHASH_IS_NOT_FOUND = '❌ PasswordHash не найден';
