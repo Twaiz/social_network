@@ -9,6 +9,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -23,6 +24,7 @@ import {
   ConfirmEmailCredentialsDto,
   RegisterCredentialsDto,
   LoginCredentialsDto,
+  VerifyPasswordCredentialsDto,
 } from '../dto';
 
 import { AuthService } from '../model/auth.service';
@@ -39,6 +41,8 @@ import {
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_PASSWORD_INVALID,
+  verifyPassword,
+  PASSWORDHASH_IS_NOT_FOUND,
 } from '@shared';
 
 @Controller('auth')
@@ -46,6 +50,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     @InjectModel('User') private readonly userModel: Model<IUser>,
+    private readonly jwtService: JwtService,
   ) {}
 
   //* Register *//
@@ -142,6 +147,33 @@ export class AuthController {
     await this.authService.confirmEmail(token);
 
     return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
+  }
+
+  //* Verify Password *\\
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @Post('verify-password')
+  async verifyPassword(
+    @Req() req: AuthenticatedRequest,
+    @Body() verifyPasswordCredentials: VerifyPasswordCredentialsDto,
+  ): Promise<{ verificationPasswordToken: string }> {
+    const user = req.user;
+    const { password } = verifyPasswordCredentials;
+
+    if (!user.passwordHash) {
+      throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
+    }
+
+    verifyPassword(user.passwordHash, password, USER_PASSWORD_INVALID);
+
+    const verificationPasswordToken = this.jwtService.sign(
+      { sub: user._id.toString(), type: 'verificationPassword' },
+      { expiresIn: '10m' },
+    );
+
+    return {
+      verificationPasswordToken,
+    };
   }
 
   //* Test Route for Check isEmailConfirm *//
