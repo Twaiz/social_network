@@ -17,7 +17,6 @@ import {
   NewUserInfoCredentialsDto,
   findUserByEmail,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
-  // sendEmail,
 } from '@shared';
 
 import {
@@ -26,12 +25,11 @@ import {
   IDENTICAL_PASSWORD,
 } from './constant';
 
-// import { emailChange } from './lib';
-
 // import {
-//   sendEmailConfirmNewEmail,
-//   sendEmailChangePassword,
-//   sendEmailConfirmNewPassword,
+//   changeEmail,
+//   confirmNewEmail,
+//   changePassword,
+//   confirmNewPassword,
 // } from './lib';
 
 @Injectable()
@@ -95,7 +93,7 @@ export class UserService {
     }
     // const fullName = `${userByChangeEmail.firstName} ${userByChangeEmail.secondName}`;
 
-    // await emailChange(
+    // await changeEmail(
     //   this.configService,
     //   changeEmailToken,
     //   currentEmail,
@@ -133,7 +131,7 @@ export class UserService {
       { new: true },
     );
 
-    // await sendEmailConfirmNewEmail(
+    // await confirmNewEmail(
     //   this.configService,
     //   oldEmail,
     //   newEmail,
@@ -171,7 +169,7 @@ export class UserService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    // await sendEmailChangePassword(
+    // await changePassword(
     //   this.configService,
     //   email,
     //   fullName,
@@ -204,7 +202,7 @@ export class UserService {
       { new: true },
     );
 
-    // await sendEmailConfirmNewPassword(
+    // await confirmNewPassword(
     //   this.configService,
     //   userByChangePassword.email,
     //   fullName,
