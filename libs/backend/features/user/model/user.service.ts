@@ -42,9 +42,9 @@ export class UserService {
 
   async updateUserInfo(
     user: IUser,
-    newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
+    newUserInfoCredentials: NewUserInfoCredentialsDto,
   ): Promise<IUser> {
-    const { login, firstName, secondName } = newUserInfoCredentialsDto;
+    const { login, firstName, secondName } = newUserInfoCredentials;
 
     if (login && login !== user.login) {
       const loginTaken = await this.userModel.findOne({ login });

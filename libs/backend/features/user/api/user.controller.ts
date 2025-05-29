@@ -40,9 +40,9 @@ export class UserController {
   @Post('updateUserInfo')
   async updateUserInfo(
     @Req() req: AuthenticatedRequest,
-    @Body() newUserInfoCredentialsDto: NewUserInfoCredentialsDto,
+    @Body() newUserInfoCredentials: NewUserInfoCredentialsDto,
   ): Promise<IUser> {
-    if (!newUserInfoCredentialsDto) {
+    if (!newUserInfoCredentials) {
       throw new BadRequestException(EMPTY_DTO);
     }
 
@@ -54,14 +54,14 @@ export class UserController {
     ];
 
     for (const field of fieldsToCheck) {
-      if (newUserInfoCredentialsDto[field] === user[field]) {
+      if (newUserInfoCredentials[field] === user[field]) {
         throw new BadRequestException(
           `⚠️ Новый ${field} не может совпадать с текущим`,
         );
       }
     }
 
-    return this.userService.updateUserInfo(user, newUserInfoCredentialsDto);
+    return this.userService.updateUserInfo(user, newUserInfoCredentials);
   }
 
   @HttpCode(201)
@@ -69,9 +69,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard, EmailConfirmGuard)
   async changeEmail(
     @Req() req: AuthenticatedRequest,
-    @Body() changeEmailCredentialsDto: ChangeEmailCredentialsDto,
+    @Body() changeEmailCredentials: ChangeEmailCredentialsDto,
   ): Promise<{ message: string }> {
-    const { newEmail } = changeEmailCredentialsDto;
+    const { newEmail } = changeEmailCredentials;
     const user = req.user;
 
     if (newEmail === user.email) {
@@ -87,9 +87,9 @@ export class UserController {
   @Post('confirm-changed-email')
   async confirmChangedEmail(
     @Body()
-    confirmChangedEmailCredentialsDto: ConfirmChangedEmailCredentialsDto,
+    confirmChangedEmailCredentials: ConfirmChangedEmailCredentialsDto,
   ): Promise<{ message: string }> {
-    const { changeEmailToken } = confirmChangedEmailCredentialsDto;
+    const { changeEmailToken } = confirmChangedEmailCredentials;
 
     await this.userService.confirmChangedEmail(changeEmailToken);
 
@@ -101,10 +101,10 @@ export class UserController {
   @Post('change-password')
   async changePassword(
     @Req() req: AuthenticatedRequest,
-    @Body() changePasswordCredentialsDto: ChangePasswordCredentialsDto,
+    @Body() changePasswordCredentials: ChangePasswordCredentialsDto,
   ): Promise<{ message: string }> {
     const user = req.user;
-    const { newPassword } = changePasswordCredentialsDto;
+    const { newPassword } = changePasswordCredentials;
 
     await this.userService.changePassword(user, newPassword);
 
@@ -114,9 +114,9 @@ export class UserController {
   @HttpCode(200)
   @Post('confirm-new-password')
   async confirmNewPassword(
-    @Body() confirmNewPasswordCredentialsDto: ConfirmNewPasswordCredentialsDto,
+    @Body() confirmNewPasswordCredentials: ConfirmNewPasswordCredentialsDto,
   ): Promise<{ message: string }> {
-    const { changePasswordToken } = confirmNewPasswordCredentialsDto;
+    const { changePasswordToken } = confirmNewPasswordCredentials;
 
     await this.userService.confirmNewPassword(changePasswordToken);
 
