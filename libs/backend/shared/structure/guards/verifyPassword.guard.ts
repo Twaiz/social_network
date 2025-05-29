@@ -8,7 +8,7 @@ import {
   NONE_VERIFICATION_PASSWORD,
   PAYLOAD_TYPE_VERIFICATION_PASSWORD_TOKEN_INVALID,
   VERIFICATION_PASSWORD_INVALID,
-} from './constant/verifyPassword.constants';
+} from './constant';
 
 export class VerifyPasswordGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
