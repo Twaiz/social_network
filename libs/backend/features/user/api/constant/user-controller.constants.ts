@@ -6,3 +6,5 @@ export const CHANGE_EMAIL_SUCCESS =
 export const CHANGE_PASSWORD_PROCESS =
   '🧐 Проверьте электронную почту, чтобы подтвердить смену пароля.';
 export const CHANGE_PASSWORD_SUCESS = '✅ Пароль был успешно обновлён';
+
+export const IDENTICAL_EMAIL = '❌ Новый email не может совпадать с текущим';
