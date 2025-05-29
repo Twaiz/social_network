@@ -26,6 +26,8 @@ import {
   IDENTICAL_PASSWORD,
 } from './constant';
 
+// import { emailChange } from './lib';
+
 // import {
 //   sendEmailConfirmNewEmail,
 //   sendEmailChangePassword,
@@ -91,23 +93,14 @@ export class UserService {
     if (!userByChangeEmail) {
       throw new NotFoundException(USER_NOT_FOUND);
     }
+    // const fullName = `${userByChangeEmail.firstName} ${userByChangeEmail.secondName}`;
 
-    //TODO - вынести в отдельную функцию, как в confirmChangedEmail
-    //   const confirmationUrl = `https://social-network.com/confirm-changed-email?token=${changeEmailToken}`;
-    //   const htmlContent = `
-    //   <p>Здравствуйте, ${user.firstName}${user.secondName}!</p>
-    //   <p>Вы запросили смену email на <strong>${newEmail}</strong>.</p>
-    //   <p>Если вы действительно хотите изменить свой адрес, пожалуйста, подтвердите действие, перейдя по следующей ссылке:</p>
-    //   <p><a href="${confirmationUrl}">${confirmationUrl}</a></p>
-    //   <p>Ссылка действительна в течение 24 часов.</p>
-    //   <p><strong>Если вы не запрашивали изменение, просто проигнорируйте это письмо!</strong></p>
-    // `;
-
-    // await sendEmail(
+    // await emailChange(
     //   this.configService,
-    //   'Подтверждение смены email',
-    //   htmlContent,
+    //   changeEmailToken,
     //   currentEmail,
+    //   newEmail,
+    //   fullName,
     // );
   }
 
