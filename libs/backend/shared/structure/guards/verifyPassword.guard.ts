@@ -23,7 +23,7 @@ export class VerifyPasswordGuard implements CanActivate {
 
     try {
       const payload = this.jwtService.verify(verifyPasswordToken);
-      if (payload.type !== 'verification') {
+      if (payload.type !== 'verificationPassword') {
         throw new UnauthorizedException(
           PAYLOAD_TYPE_VERIFICATION_PASSWORD_TOKEN_INVALID,
         );
@@ -31,7 +31,7 @@ export class VerifyPasswordGuard implements CanActivate {
 
       req.verifiedUserId = payload.sub;
 
-      return payload;
+      return true;
     } catch (_error) {
       throw new UnauthorizedException(VERIFICATION_PASSWORD_INVALID);
     }
