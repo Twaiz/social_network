@@ -14,6 +14,7 @@ import {
   CHANGE_PASSWORD_PROCESS,
   CHANGE_PASSWORD_SUCESS,
   EMPTY_DTO,
+  IDENTICAL_EMAIL,
 } from './constant/user-controller.constants';
 
 import {
@@ -46,6 +47,19 @@ export class UserController {
     }
 
     const user = req.user;
+    const fieldsToCheck: (keyof NewUserInfoCredentialsDto)[] = [
+      'login',
+      'firstName',
+      'secondName',
+    ];
+
+    for (const field of fieldsToCheck) {
+      if (newUserInfoCredentialsDto[field] === user[field]) {
+        throw new BadRequestException(
+          `⚠️ Новый ${field} не может совпадать с текущим`,
+        );
+      }
+    }
 
     return this.userService.updateUserInfo(user, newUserInfoCredentialsDto);
   }
@@ -59,6 +73,10 @@ export class UserController {
   ): Promise<{ message: string }> {
     const { newEmail } = changeEmailCredentialsDto;
     const user = req.user;
+
+    if (newEmail === user.email) {
+      throw new BadRequestException(IDENTICAL_EMAIL);
+    }
 
     await this.userService.changeEmail(user, newEmail);
 
