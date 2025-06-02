@@ -26,7 +26,11 @@ import {
 } from '@shared';
 import { UserModule } from '@features/user';
 
-import { CHANGE_EMAIL_TOKEN_NOT_FOUND } from './constant';
+import {
+  CHANGE_EMAIL_EXPIRES_NOT_FOUND,
+  CHANGE_PASSWORD_EXPIRES_NOT_FOUND,
+} from './constant';
+
 //? ---Внутренние зависимости--- ?\\
 
 //? Тестовые данные ?\\
@@ -63,7 +67,7 @@ describe('App - User (e2e)', () => {
 
     const serverApp = await bootstrap<App>(UserModule, port);
     if (!serverApp) {
-      Logger.error(APP_INIT_FAILED);
+      Logger.error(APP_INIT_FAILED, 'User-E2E - beforeAll');
       process.exit(1);
     }
 
@@ -130,7 +134,10 @@ describe('App - User (e2e)', () => {
       '+changeEmailToken',
     );
     if (!userAfter.changeEmailExpires) {
-      Logger.error('Ошибка при изменении почты');
+      Logger.error(
+        CHANGE_EMAIL_EXPIRES_NOT_FOUND,
+        'E2E ChangeEmail - changeEmailExpires',
+      );
       process.exit(1);
     }
 
@@ -146,19 +153,14 @@ describe('App - User (e2e)', () => {
 
   //? 3-ий Запрос - Confirm New Email ?\\
   it('user/confirm-new-email -- success', async () => {
-    const userBefore = await userModel
-      .findOne({ _id: user._id })
-      .select('+changeEmailToken')
-      .lean();
-    if (!userBefore) {
-      Logger.error(USER_NOT_FOUND);
-      process.exit(1);
-    }
-
-    if (!userBefore.changeEmailToken) {
-      Logger.error(CHANGE_EMAIL_TOKEN_NOT_FOUND);
-      process.exit(1);
-    }
+    const userBefore = await findUser(
+      userModel,
+      EFieldByFindUser.ID,
+      user._id,
+      USER_NOT_FOUND,
+      'E2E ConfirmNewEmail - findByEmail',
+      '+changeEmailToken',
+    );
 
     const res = await request(app.getHttpServer())
       .post('/api/user/confirm-new-email')
@@ -169,15 +171,14 @@ describe('App - User (e2e)', () => {
 
     expect(res.body).toHaveProperty('message');
 
-    const userAfter = await userModel
-      .findOne({ _id: user._id })
-      .select('+changeEmailToken')
-      .lean();
-
-    if (!userAfter) {
-      Logger.error(USER_NOT_FOUND);
-      process.exit(1);
-    }
+    const userAfter = await findUser(
+      userModel,
+      EFieldByFindUser.ID,
+      user._id,
+      USER_NOT_FOUND,
+      'E2E ConfirmNewEmail - findById',
+      '+changeEmailToken',
+    );
 
     expect(userAfter.email).toBe(userBefore.changeEmailNew);
 
@@ -187,18 +188,8 @@ describe('App - User (e2e)', () => {
   });
   //? ---3-ий Запрос - Confirm New Email--- ?\\
 
-  //TODO - переделать все моменты, где есть userModel. заменить на поиск через общую функцию findUser
   //? 4-ый Запрос - Change Password ?\\
   it('user/change-password -- success', async () => {
-    const userBefore = await userModel
-      .findById(user._id)
-      .select('+changePasswordToken +changePasswordNew')
-      .lean();
-    if (!userBefore) {
-      Logger.error(USER_NOT_FOUND);
-      process.exit(1);
-    }
-
     const res = await request(app.getHttpServer())
       .post('/api/user/change-password')
       .set('Authorization', `Bearer ${token}`)
@@ -212,12 +203,15 @@ describe('App - User (e2e)', () => {
       EFieldByFindUser.ID,
       user._id,
       USER_NOT_FOUND,
-      'E2E ChangePassword',
+      'E2E ChangePassword - findById',
       '+changePasswordToken +changePasswordNew',
     );
 
     if (!userAfter.changePasswordExpires) {
-      Logger.error('Ошибка при изменении пароля');
+      Logger.error(
+        CHANGE_PASSWORD_EXPIRES_NOT_FOUND,
+        'E2E ChangePassword - changePasswordExpires',
+      );
       process.exit(1);
     }
 
@@ -233,14 +227,14 @@ describe('App - User (e2e)', () => {
 
   //? 5-ый Запрос - Confirm New Password ?\\
   it('user/confirm-new-password -- success', async () => {
-    const userBefore = await userModel
-      .findById(user._id)
-      .select('+changePasswordToken +changePasswordNew')
-      .lean();
-    if (!userBefore) {
-      Logger.error(USER_NOT_FOUND);
-      process.exit(1);
-    }
+    const userBefore = await findUser(
+      userModel,
+      EFieldByFindUser.ID,
+      user._id,
+      USER_NOT_FOUND,
+      'E2E ConfirmNewPassword - findById',
+      '+changePasswordToken +changePasswordNew',
+    );
 
     const res = await request(app.getHttpServer())
       .post('/api/user/confirm-new-password')
@@ -259,10 +253,6 @@ describe('App - User (e2e)', () => {
       'E2E ConfirmNewPassword - findById',
       '+passwordHash +changePasswordToken +changePasswordNew',
     );
-    if (!userAfter) {
-      Logger.error(USER_NOT_FOUND);
-      process.exit(1);
-    }
 
     expect(userAfter.passwordHash).toBe(userBefore.changePasswordNew);
 
