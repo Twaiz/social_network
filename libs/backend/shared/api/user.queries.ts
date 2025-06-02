@@ -1,13 +1,7 @@
 import { BadRequestException, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import { IUser } from '../structure';
-
-enum EFieldByFindUser {
-  EMAIL = 'email',
-  LOGIN = 'login',
-  ID = 'id',
-}
+import { EFieldByFindUser, IUser } from '../structure';
 
 export const findUser = async (
   model: Model<IUser>,
