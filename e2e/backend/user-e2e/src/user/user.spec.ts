@@ -109,7 +109,6 @@ describe('App - User (e2e)', () => {
   });
   //? ---1-ый Запрос - Update User Info--- ?\\
 
-  //TODO - когда у нас происходить смена email то после смена пароля не модет выполниться. Есть предположение, что это из-за проверок токена типа на валидность. Надо это как-то обойти для e2e тестов. Вот, из-за этого у нас в Postman тесты на смену пароля проходили, а в e2e нет. Проблема найдена, теперь надо её решить!
   //? 2-ый Запрос - Change Email ?\\
   it('user/change-email', async () => {
     const res = await request(app.getHttpServer())
@@ -188,6 +187,7 @@ describe('App - User (e2e)', () => {
   });
   //? ---3-ий Запрос - Confirm New Email--- ?\\
 
+  //TODO - переделать все моменты, где есть userModel. заменить на поиск через общую функцию findUser
   //? 4-ый Запрос - Change Password ?\\
   it('user/change-password -- success', async () => {
     const userBefore = await userModel
