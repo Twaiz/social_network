@@ -43,6 +43,7 @@ import {
   verifyPassword,
   PASSWORDHASH_IS_NOT_FOUND,
   USER_NOT_FOUND,
+  EFieldByFindUser,
 } from '@shared';
 
 @Controller('auth')
@@ -62,15 +63,19 @@ export class AuthController {
     const { email, login } = registerCredentialsDto;
 
     //TODO - вынести код проверок в AuthService
-    const userByEmail = await findUser.byEmail(
+    const userByEmail = await findUser(
       this.userModel,
+      EFieldByFindUser.EMAIL,
       email,
       USER_NOT_FOUND,
+      'Register - findByEmail',
     );
-    const userByLogin = await findUser.byLogin(
+    const userByLogin = await findUser(
       this.userModel,
+      EFieldByFindUser.LOGIN,
       login,
       USER_NOT_FOUND,
+      'Register - findByLogin',
     );
 
     const emailExists = !!userByEmail;
@@ -111,9 +116,21 @@ export class AuthController {
     }
 
     if (email) {
-      user = await findUser.byEmail(this.userModel, email, USER_NOT_FOUND);
+      user = await findUser(
+        this.userModel,
+        EFieldByFindUser.EMAIL,
+        email,
+        USER_NOT_FOUND,
+        'Login - findByEmail',
+      );
     } else if (login) {
-      user = await findUser.byLogin(this.userModel, login, USER_NOT_FOUND);
+      user = await findUser(
+        this.userModel,
+        EFieldByFindUser.LOGIN,
+        login,
+        USER_NOT_FOUND,
+        'Login - findByLogin',
+      );
     }
 
     if (!user) {

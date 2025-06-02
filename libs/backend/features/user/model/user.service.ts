@@ -17,6 +17,7 @@ import {
   NewUserInfoCredentialsDto,
   findUser,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
+  EFieldByFindUser,
 } from '@shared';
 
 import {
@@ -73,10 +74,12 @@ export class UserService {
     // const currentEmail = user.email;
 
     //TODO - сделать во всех методах одинаковые названия констант. У нас в одном методе это называеться "так", в другом по иному. Сделать идентичность
-    const userWithSuchEmail = await findUser.byEmail(
+    const userWithSuchEmail = await findUser(
       this.userModel,
+      EFieldByFindUser.EMAIL,
       newEmail,
       USER_NOT_FOUND,
+      'ChangeEmail - findByEmail',
     );
     if (userWithSuchEmail) {
       throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_EMAIL);
