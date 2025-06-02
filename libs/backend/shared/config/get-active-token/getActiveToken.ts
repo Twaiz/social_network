@@ -1,13 +1,22 @@
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { BadRequestException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 
-import { findUserByLogin } from '../../api';
+import { findUser } from '../../api';
 import { GetEnv } from '../../kernel';
 import { getJwtToken, verifyPassword } from '../../lib';
-import { IUser } from '../../structure';
-import { USER_NOT_FOUND, USER_PASSWORD_INVALID } from '../constants';
+import { EFieldByFindUser, IUser } from '../../structure';
+import {
+  PASSWORDHASH_IS_NOT_FOUND,
+  USER_NOT_FOUND,
+  USER_PASSWORD_INVALID,
+} from '../constants';
+
+const LoginCredentials = {
+  login: 'admin',
+  password: 'admin123',
+};
 
 export const getActiveToken = async (
   jwtService: JwtService,
@@ -17,16 +26,28 @@ export const getActiveToken = async (
   token: string;
   user: IUser;
 }> => {
+  const context = 'GetActiveToken';
+
   const jwtSecret = GetEnv.getJwtSecret(configService);
   const jwtExpiresIn = GetEnv.getJwtExpiresIn(configService);
 
-  const user = await findUserByLogin(userModel, 'admin');
-  if (!user) {
-    Logger.error(USER_NOT_FOUND);
-    process.exit(1);
+  const user = await findUser(
+    userModel,
+    EFieldByFindUser.LOGIN,
+    LoginCredentials.login,
+    USER_NOT_FOUND,
+    `${context} - findByLogin`,
+  );
+  if (!user.passwordHash) {
+    Logger.error(PASSWORDHASH_IS_NOT_FOUND, `${context} - PasswordHash`);
+    throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
   }
 
-  verifyPassword(user.passwordHash, 'admin123', USER_PASSWORD_INVALID);
+  verifyPassword(
+    user.passwordHash,
+    LoginCredentials.password,
+    USER_PASSWORD_INVALID,
+  );
 
   const token = await getJwtToken(jwtService, {
     user,
