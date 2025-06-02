@@ -1,33 +1,28 @@
 import { BadRequestException, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-const findUser = {
-  async byEmail<T>(
-    model: Model<T>,
-    email: string,
-    errorMessage: string,
-    select?: string,
-  ): Promise<T> {
-    const user = await model.findOne({ email }).select(select || '');
-    if (!user) {
-      Logger.error(errorMessage, 'UserQueries - findUserByEmail');
-      throw new BadRequestException(errorMessage);
-    }
-    return user;
-  },
-  async byLogin<T>(
-    model: Model<T>,
-    login: string,
-    errorMessage: string,
-    select?: string,
-  ): Promise<T> {
-    const user = await model.findOne({ login }).select(select || '');
-    if (!user) {
-      Logger.error(errorMessage, 'UserQueries - findUserByLogin');
-      throw new BadRequestException(errorMessage);
-    }
-    return user;
-  },
-};
+import { IUser } from '../structure';
 
-export { findUser };
+enum EFieldByFindUser {
+  EMAIL = 'email',
+  LOGIN = 'login',
+  ID = 'id',
+}
+
+export const findUser = async (
+  model: Model<IUser>,
+  field: EFieldByFindUser,
+  searchValue: string,
+  errorMessage: string,
+  context: string,
+  select?: string,
+): Promise<IUser> => {
+  const user = await model
+    .findOne({ [field]: searchValue })
+    .select(select || '');
+  if (!user) {
+    Logger.error(errorMessage, `FindUser - ${context}`);
+    throw new BadRequestException(errorMessage);
+  }
+  return user;
+};
