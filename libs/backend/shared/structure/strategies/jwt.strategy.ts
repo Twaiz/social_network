@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { USER_NOT_FOUND } from '../../config';
 import { IUser } from '../types';
 import { GetEnv } from '../../kernel';
-import { findUserByEmail, findUserByLogin } from '../../api';
+import { findUser } from '../../api';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -28,8 +28,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: { email: string }): Promise<IUser> {
     const [userByEmail, userByLogin] = await Promise.all([
-      findUserByEmail(this.userModel, payload.email),
-      findUserByLogin(this.userModel, payload.email),
+      findUser.byEmail(this.userModel, payload.email, USER_NOT_FOUND),
+      findUser.byLogin(this.userModel, payload.email, USER_NOT_FOUND),
     ]);
 
     const user = userByEmail || userByLogin;

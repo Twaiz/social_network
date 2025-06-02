@@ -4,12 +4,7 @@ import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
-import {
-  IUser,
-  USER_NOT_FOUND,
-  findUserByEmail,
-  verifyTwoFactorCode,
-} from '@shared';
+import { IUser, USER_NOT_FOUND, findUser, verifyTwoFactorCode } from '@shared';
 
 @Injectable()
 export class TwoFaService {
@@ -38,9 +33,10 @@ export class TwoFaService {
   }
 
   async enableTwoFactor(user: IUser, code: string): Promise<void> {
-    const userWithTwoFactorSecret = await findUserByEmail(
+    const userWithTwoFactorSecret = await findUser.byEmail(
       this.userModel,
       user.email,
+      USER_NOT_FOUND,
       '+twoFactorSecret',
     );
     if (!userWithTwoFactorSecret) {

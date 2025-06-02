@@ -30,8 +30,7 @@ import {
 import { AuthService } from '../model/auth.service';
 
 import {
-  findUserByEmail,
-  findUserByLogin,
+  findUser,
   IUser,
   JwtAuthGuard,
   type AuthenticatedRequest,
@@ -43,6 +42,7 @@ import {
   USER_PASSWORD_INVALID,
   verifyPassword,
   PASSWORDHASH_IS_NOT_FOUND,
+  USER_NOT_FOUND,
 } from '@shared';
 
 @Controller('auth')
@@ -62,8 +62,16 @@ export class AuthController {
     const { email, login } = registerCredentialsDto;
 
     //TODO - вынести код проверок в AuthService
-    const userByEmail = await findUserByEmail(this.userModel, email);
-    const userByLogin = await findUserByLogin(this.userModel, login);
+    const userByEmail = await findUser.byEmail(
+      this.userModel,
+      email,
+      USER_NOT_FOUND,
+    );
+    const userByLogin = await findUser.byLogin(
+      this.userModel,
+      login,
+      USER_NOT_FOUND,
+    );
 
     const emailExists = !!userByEmail;
     const loginExists = !!userByLogin;
@@ -103,9 +111,9 @@ export class AuthController {
     }
 
     if (email) {
-      user = await findUserByEmail(this.userModel, email);
+      user = await findUser.byEmail(this.userModel, email, USER_NOT_FOUND);
     } else if (login) {
-      user = await findUserByLogin(this.userModel, login);
+      user = await findUser.byLogin(this.userModel, login, USER_NOT_FOUND);
     }
 
     if (!user) {
