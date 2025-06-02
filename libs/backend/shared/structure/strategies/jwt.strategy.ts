@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,7 +6,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
 import { USER_NOT_FOUND } from '../../config';
-import { IUser } from '../types';
+import { EFieldByFindUser, IUser } from '../types';
 import { GetEnv } from '../../kernel';
 import { findUser } from '../../api';
 
@@ -26,18 +26,25 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { email: string }): Promise<IUser> {
+  async validate(payload: { email: string; login: string }): Promise<IUser> {
     const [userByEmail, userByLogin] = await Promise.all([
-      findUser.byEmail(this.userModel, payload.email, USER_NOT_FOUND),
-      findUser.byLogin(this.userModel, payload.email, USER_NOT_FOUND),
+      findUser(
+        this.userModel,
+        EFieldByFindUser.EMAIL,
+        payload.email,
+        USER_NOT_FOUND,
+        'JwtStrategy - findByEmail',
+      ),
+      findUser(
+        this.userModel,
+        EFieldByFindUser.LOGIN,
+        payload.login,
+        USER_NOT_FOUND,
+        'JwtStrategy - findByLogin',
+      ),
     ]);
 
     const user = userByEmail || userByLogin;
-
-    if (!user) {
-      Logger.log(USER_NOT_FOUND);
-      throw new NotFoundException(USER_NOT_FOUND);
-    }
 
     return user;
   }
