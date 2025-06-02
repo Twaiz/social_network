@@ -7,7 +7,7 @@ const findUser = {
     email: string,
     errorMessage: string,
     select?: string,
-  ): Promise<null | T> {
+  ): Promise<T> {
     const user = await model.findOne({ email }).select(select || '');
     if (!user) {
       Logger.error(errorMessage, 'UserQueries - findUserByEmail');
@@ -20,7 +20,7 @@ const findUser = {
     login: string,
     errorMessage: string,
     select?: string,
-  ): Promise<null | T> {
+  ): Promise<T> {
     const user = await model.findOne({ login }).select(select || '');
     if (!user) {
       Logger.error(errorMessage, 'UserQueries - findUserByLogin');
