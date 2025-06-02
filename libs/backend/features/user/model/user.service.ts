@@ -72,6 +72,7 @@ export class UserService {
   async changeEmail(user: IUser, newEmail: string): Promise<void> {
     // const currentEmail = user.email;
 
+    //TODO - сделать во всех методах одинаковые названия констант. У нас в одном методе это называеться "так", в другом по иному. Сделать идентичность
     const userWithSuchEmail = await findUserByEmail(this.userModel, newEmail);
     if (userWithSuchEmail) {
       throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_EMAIL);
