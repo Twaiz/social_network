@@ -188,8 +188,6 @@ export class AuthService {
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
     }
-
-    //TODO - добавить сообщения на почту об успешном подтверждение и прочем, как в changeEmail
   }
 
   //* Generate Email Token *//
