@@ -12,7 +12,11 @@ import { Model } from 'mongoose';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
-import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
+import {
+  CONFIRM_EMAIL_TOKEN_INVALID,
+  NOT_FOUND_2FA_CODE,
+  USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
+} from './constant';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 // import { sendEmailConfirmation } from './lib';
 
@@ -25,6 +29,10 @@ import {
   getJwtToken,
   verifyPassword,
   PASSWORDHASH_IS_NOT_FOUND,
+  findUser,
+  EFieldByFindUser,
+  USER_ALREADY_REGISTERED_WITH_EMAIL,
+  USER_ALREADY_REGISTERED_WITH_LOGIN,
 } from '@shared';
 
 @Injectable()
@@ -41,6 +49,39 @@ export class AuthService {
   ): Promise<RegisterResponse> {
     const { email, login, password, firstName, secondName } =
       registerCredentialsDto;
+
+    const userByEmail = await findUser(
+      this.userModel,
+      EFieldByFindUser.EMAIL,
+      email,
+      USER_NOT_FOUND,
+      'Register - findByEmail',
+    );
+    const userByLogin = await findUser(
+      this.userModel,
+      EFieldByFindUser.LOGIN,
+      login,
+      USER_NOT_FOUND,
+      'Register - findByLogin',
+    );
+
+    const emailExists = !!userByEmail;
+    const loginExists = !!userByLogin;
+
+    if (emailExists && loginExists) {
+      throw new BadRequestException(
+        USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
+      );
+    }
+
+    //TODO - константы которые ниже, они у нас лежат в global.constants, но используются только тут. надо пересмотреть и если что перенести их в auth-service.constants
+    if (emailExists || loginExists) {
+      throw new BadRequestException(
+        emailExists
+          ? USER_ALREADY_REGISTERED_WITH_EMAIL
+          : USER_ALREADY_REGISTERED_WITH_LOGIN,
+      );
+    }
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
