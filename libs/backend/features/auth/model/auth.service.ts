@@ -17,7 +17,7 @@ import {
   NOT_FOUND_2FA_CODE,
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
 } from './constant';
-import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
+import { LoginCredentialsDto, RegisterCredentialsDto } from '../dto';
 // import { sendEmailConfirmation } from './lib';
 
 //! Вопрос. У меня сейчас в shared, да и во всех других папках лежат barrel-файлы. Они делают re-export файлов, папок. Вопрос - у нас происходит масовый ре-экспорт, из-за которого в итоге мы всё экспортируем из ГЛАВНОЙ папки - shared, features, entities etc. Может быть не надо такое делать?  !\\
@@ -34,6 +34,7 @@ import {
   EFieldByFindUser,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
+  USER_PASSWORD_INVALID,
 } from '@shared';
 
 @Injectable()
@@ -112,17 +113,44 @@ export class AuthService {
   }
 
   //* Login *//
-  async login(LoginServiceDto: LoginServiceDto): Promise<string> {
-    const { user, password, twoFactorCode, errorMessage } = LoginServiceDto;
+  async login(loginCredentialsDto: LoginCredentialsDto): Promise<string> {
+    const { email, login, password, twoFactorCode } = loginCredentialsDto;
+
+    let user: IUser | null = null;
+
+    const jwtSecret = GetEnv.getJwtSecret(this.configService);
+    const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
+
+    const emailOrLogin = email ? 'email' : 'login';
+    const INVALID_LOGIN_CREDENTIALS = `${USER_PASSWORD_INVALID} или ${emailOrLogin}. Попробуйте ещё раз.`;
+
+    if (email) {
+      user = await findUser(
+        this.userModel,
+        EFieldByFindUser.EMAIL,
+        email,
+        USER_NOT_FOUND,
+        'Login - findByEmail',
+      );
+    } else if (login) {
+      user = await findUser(
+        this.userModel,
+        EFieldByFindUser.LOGIN,
+        login,
+        USER_NOT_FOUND,
+        'Login - findByLogin',
+      );
+    }
+
+    if (!user) {
+      throw new NotFoundException(INVALID_LOGIN_CREDENTIALS);
+    }
     if (!user.passwordHash) {
       Logger.error(PASSWORDHASH_IS_NOT_FOUND);
       throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
     }
 
-    const jwtSecret = GetEnv.getJwtSecret(this.configService);
-    const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
-
-    verifyPassword(user.passwordHash, password, errorMessage);
+    verifyPassword(user.passwordHash, password, INVALID_LOGIN_CREDENTIALS);
 
     if (user.isTwoFactorEnabled) {
       if (!twoFactorCode) {
