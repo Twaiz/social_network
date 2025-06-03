@@ -4,14 +4,11 @@ import {
   Controller,
   Get,
   HttpCode,
-  NotFoundException,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 
 import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
@@ -29,8 +26,6 @@ import {
 import { AuthService } from '../model/auth.service';
 
 import {
-  findUser,
-  IUser,
   JwtAuthGuard,
   type AuthenticatedRequest,
   RegisterResponse,
@@ -39,15 +34,12 @@ import {
   USER_PASSWORD_INVALID,
   verifyPassword,
   PASSWORDHASH_IS_NOT_FOUND,
-  USER_NOT_FOUND,
-  EFieldByFindUser,
 } from '@shared';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    @InjectModel('User') private readonly userModel: Model<IUser>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -66,45 +58,13 @@ export class AuthController {
   async login(
     @Body() loginCredentialsDto: LoginCredentialsDto,
   ): Promise<LoginResponse> {
-    const { email, login, password, twoFactorCode } = loginCredentialsDto;
-    const emailOrLogin = email ? 'email' : 'login';
-    const INVALID_LOGIN_CREDENTIALS = `${USER_PASSWORD_INVALID} или ${emailOrLogin}. Попробуйте ещё раз.`;
+    const { email, login } = loginCredentialsDto;
 
-    let user: IUser | null = null;
-
-    //TODO - вынести код проверок в AuthService
     if (email && login) {
       throw new BadRequestException(BOTH_EMAIL_AND_LOGIN_ERROR);
     }
 
-    if (email) {
-      user = await findUser(
-        this.userModel,
-        EFieldByFindUser.EMAIL,
-        email,
-        USER_NOT_FOUND,
-        'Login - findByEmail',
-      );
-    } else if (login) {
-      user = await findUser(
-        this.userModel,
-        EFieldByFindUser.LOGIN,
-        login,
-        USER_NOT_FOUND,
-        'Login - findByLogin',
-      );
-    }
-
-    if (!user) {
-      throw new NotFoundException(INVALID_LOGIN_CREDENTIALS);
-    }
-
-    const token = await this.authService.login({
-      user,
-      password,
-      twoFactorCode,
-      errorMessage: INVALID_LOGIN_CREDENTIALS,
-    });
+    const token = await this.authService.login(loginCredentialsDto);
 
     return { token };
   }
