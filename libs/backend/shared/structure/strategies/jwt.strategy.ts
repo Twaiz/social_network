@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectModel } from '@nestjs/mongoose';
@@ -9,10 +9,10 @@ import { USER_NOT_FOUND } from '../../config';
 import { EFieldByFindUser, IUser } from '../types';
 import { GetEnv } from '../../kernel';
 import { findUser } from '../../api';
+import { PASSWORD_IS_UPDATED } from './constant';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  //TODO - добавить нормальную проверку на валидность токена. У нас на данный момент токен работает даже тогда, когда обновился пароль. Блять, надо это сделать, это безопасноть нашего пользователя.
   constructor(
     configService: ConfigService,
     @InjectModel('User') private readonly userModel: Model<IUser>,
@@ -26,7 +26,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { email: string; login: string }): Promise<IUser> {
+  async validate(payload: {
+    email: string;
+    login: string;
+    iat: number;
+  }): Promise<IUser> {
     const [userByEmail, userByLogin] = await Promise.all([
       findUser(
         this.userModel,
@@ -45,6 +49,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     ]);
 
     const user = userByEmail || userByLogin;
+
+    if (user.passwordChangedAt) {
+      const passwordChangedTimestamp = new Date(
+        user.passwordChangedAt,
+      ).getTime();
+      const tokenIssuedAt = payload.iat * 1000;
+
+      if (tokenIssuedAt < passwordChangedTimestamp) {
+        throw new UnauthorizedException(PASSWORD_IS_UPDATED);
+      }
+    }
 
     return user;
   }
