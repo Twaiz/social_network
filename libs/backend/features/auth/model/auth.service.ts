@@ -12,11 +12,7 @@ import { Model } from 'mongoose';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
-import {
-  CONFIRM_EMAIL_TOKEN_INVALID,
-  NOT_FOUND_2FA_CODE,
-  PASSWORDHASH_IS_NOT_FOUND,
-} from './constant';
+import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 // import { sendEmailConfirmation } from './lib';
 
@@ -28,6 +24,7 @@ import {
   verifyTwoFactorCode,
   getJwtToken,
   verifyPassword,
+  PASSWORDHASH_IS_NOT_FOUND,
 } from '@shared';
 
 @Injectable()
