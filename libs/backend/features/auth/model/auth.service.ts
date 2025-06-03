@@ -12,14 +12,6 @@ import { Model } from 'mongoose';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
 
-import {
-  CONFIRM_EMAIL_TOKEN_INVALID,
-  NOT_FOUND_2FA_CODE,
-  USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
-} from './constant';
-import { LoginCredentialsDto, RegisterCredentialsDto } from '../dto';
-// import { sendEmailConfirmation } from './lib';
-
 //! Вопрос. У меня сейчас в shared, да и во всех других папках лежат barrel-файлы. Они делают re-export файлов, папок. Вопрос - у нас происходит масовый ре-экспорт, из-за которого в итоге мы всё экспортируем из ГЛАВНОЙ папки - shared, features, entities etc. Может быть не надо такое делать?  !\\
 import {
   IUser,
@@ -36,6 +28,14 @@ import {
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   USER_PASSWORD_INVALID,
 } from '@shared';
+
+import {
+  CONFIRM_EMAIL_TOKEN_INVALID,
+  NOT_FOUND_2FA_CODE,
+  USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
+} from './constant';
+import { LoginCredentialsDto, RegisterCredentialsDto } from '../dto';
+import { confirmEmail } from './lib';
 
 @Injectable()
 export class AuthService {
@@ -192,6 +192,9 @@ export class AuthService {
 
   //* Generate Email Token *//
   async generateEmailToken(user: IUser): Promise<void> {
+    const { email, firstName, secondName } = user;
+    const fullName = `${firstName} ${secondName}`;
+
     const emailConfirmToken = randomBytes(32).toString('hex');
     const emailExpiresToken = addHours(new Date(), 24);
 
@@ -206,7 +209,6 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    //TODO - переделать метод sendEmailConfirmation. сделать как в других кастомных методах отправки писем
-    // sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
+    confirmEmail(this.configService, email, emailConfirmToken, fullName);
   }
 }
