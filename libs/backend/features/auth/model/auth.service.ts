@@ -75,7 +75,6 @@ export class AuthService {
       );
     }
 
-    //TODO - константы которые ниже, они у нас лежат в global.constants, но используются только тут. надо пересмотреть и если что перенести их в auth-service.constants
     if (emailExists || loginExists) {
       throw new BadRequestException(
         emailExists
@@ -113,7 +112,6 @@ export class AuthService {
   }
 
   //* Login *//
-  //TODO - service не должен принимать dto, он должен принимать аргументы
   async login(LoginServiceDto: LoginServiceDto): Promise<string> {
     const { user, password, twoFactorCode, errorMessage } = LoginServiceDto;
     if (!user.passwordHash) {
