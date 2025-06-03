@@ -211,6 +211,4 @@ export class AuthService {
     //TODO - переделать метод sendEmailConfirmation. сделать как в других кастомных методах отправки писем
     // sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
   }
-
-  //TODO - почему ещё нету метода forgetPassword. Мы уже делаем часть userCredentials, но ещё нормально не закончили auth часть. Решить этот вопрос.
 }
