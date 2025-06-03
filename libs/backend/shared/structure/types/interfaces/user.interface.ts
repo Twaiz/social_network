@@ -28,4 +28,6 @@ export interface IUser {
   changePasswordToken?: string;
   changePasswordNew?: string;
   changePasswordExpires?: Date;
+
+  passwordChangedAt?: Date;
 }

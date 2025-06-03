@@ -126,6 +126,11 @@ export const UserSchema = new Schema<IUser>(
       default: undefined,
       select: false,
     },
+
+    passwordChangedAt: {
+      type: Date,
+      default: undefined,
+    },
   },
   {
     timestamps: true,
