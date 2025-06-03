@@ -35,7 +35,7 @@ import {
   USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
 } from './constant';
 import { LoginCredentialsDto, RegisterCredentialsDto } from '../dto';
-import { confirmEmail } from './lib';
+// import { confirmEmail } from './lib';
 
 @Injectable()
 export class AuthService {
@@ -192,8 +192,8 @@ export class AuthService {
 
   //* Generate Email Token *//
   async generateEmailToken(user: IUser): Promise<void> {
-    const { email, firstName, secondName } = user;
-    const fullName = `${firstName} ${secondName}`;
+    // const { email, firstName, secondName } = user;
+    // const fullName = `${firstName} ${secondName}`;
 
     const emailConfirmToken = randomBytes(32).toString('hex');
     const emailExpiresToken = addHours(new Date(), 24);
@@ -209,6 +209,6 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    confirmEmail(this.configService, email, emailConfirmToken, fullName);
+    // confirmEmail(this.configService, email, emailConfirmToken, fullName);
   }
 }
