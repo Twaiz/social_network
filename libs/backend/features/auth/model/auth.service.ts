@@ -20,6 +20,7 @@ import {
 import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
 // import { sendEmailConfirmation } from './lib';
 
+//! Вопрос. У меня сейчас в shared, да и во всех других папках лежат barrel-файлы. Они делают re-export файлов, папок. Вопрос - у нас происходит масовый ре-экспорт, из-за которого в итоге мы всё экспортируем из ГЛАВНОЙ папки - shared, features, entities etc. Может быть не надо такое делать?  !\\
 import {
   IUser,
   RegisterResponse,
