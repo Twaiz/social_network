@@ -73,7 +73,6 @@ export class UserService {
   async changeEmail(user: IUser, newEmail: string): Promise<void> {
     // const currentEmail = user.email;
 
-    //TODO - сделать во всех методах одинаковые названия констант. У нас в одном методе это называеться "так", в другом по иному. Сделать идентичность
     const userWithSuchEmail = await findUser(
       this.userModel,
       EFieldByFindUser.EMAIL,
@@ -216,6 +215,4 @@ export class UserService {
     //   fullName,
     // );
   }
-
-  //TODO - добавить методы для Admin-а. CUD - Create, Update, Delete
 }
