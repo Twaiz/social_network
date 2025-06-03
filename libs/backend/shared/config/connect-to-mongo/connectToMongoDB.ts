@@ -11,11 +11,11 @@ export const connectToMongoDB = async (
   const mongoConfig = await getMongoConfig(configService);
 
   if (!mongoConfig) {
-    Logger.error(DB_CONNECTION_FAILED, 'MongoDB');
+    Logger.error(DB_CONNECTION_FAILED, 'MongoDB - connectToMongoDB');
     process.exit(1);
   }
 
-  Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB');
+  Logger.log(DB_CONNECTION_SUCCESS, 'MongoDB - - connectToMongoDB');
   return mongoConfig;
 };
 
