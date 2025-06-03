@@ -205,6 +205,8 @@ export class UserService {
         changePasswordExpires: undefined,
         changePasswordNew: undefined,
         changePasswordToken: undefined,
+
+        passwordChangedAt: new Date(),
       },
       { new: true },
     );
