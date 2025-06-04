@@ -37,6 +37,7 @@ export const getActiveToken = async (
     LoginCredentials.login,
     USER_NOT_FOUND,
     `${context} - findByLogin`,
+    '+passwordHash',
   );
   if (!user.passwordHash) {
     Logger.error(PASSWORDHASH_IS_NOT_FOUND, `${context} - PasswordHash`);
