@@ -114,6 +114,7 @@ export class AuthService {
   //* Login *//
   async login(loginCredentialsDto: LoginCredentialsDto): Promise<string> {
     const { email, login, password, twoFactorCode } = loginCredentialsDto;
+    const selectPasswordHash = '+passwordHash';
 
     let user: IUser | null = null;
 
@@ -124,21 +125,13 @@ export class AuthService {
     const INVALID_LOGIN_CREDENTIALS = `${USER_PASSWORD_INVALID} или ${emailOrLogin}. Попробуйте ещё раз.`;
 
     if (email) {
-      user = await findUser(
-        this.userModel,
-        EFieldByFindUser.EMAIL,
-        email,
-        USER_NOT_FOUND,
-        'Login - findByEmail',
-      );
+      user = await this.userModel
+        .findOne({ email: email })
+        .select(selectPasswordHash);
     } else if (login) {
-      user = await findUser(
-        this.userModel,
-        EFieldByFindUser.LOGIN,
-        login,
-        USER_NOT_FOUND,
-        'Login - findByLogin',
-      );
+      user = await this.userModel
+        .findOne({ login: login })
+        .select(selectPasswordHash);
     }
 
     if (!user) {
