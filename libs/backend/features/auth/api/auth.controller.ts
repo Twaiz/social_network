@@ -8,7 +8,6 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 
 import {
   BOTH_EMAIL_AND_LOGIN_ERROR,
@@ -30,19 +29,11 @@ import {
   RegisterResponse,
   LoginResponse,
   EmailConfirmGuard,
-  USER_PASSWORD_INVALID,
-  verifyPassword,
-  PASSWORDHASH_IS_NOT_FOUND,
-  VerifyPasswordCredentialsDto,
-  VerifyPasswordResponse,
 } from '@shared';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   //* Register *//
   @HttpCode(201)
@@ -95,33 +86,6 @@ export class AuthController {
     await this.authService.confirmEmail(token);
 
     return { message: CONFIRM_EMAIL_TOKEN_SUCCESS };
-  }
-
-  //* Verify Password *\\
-  @HttpCode(200)
-  @UseGuards(JwtAuthGuard)
-  @Post('verify-password')
-  async verifyPassword(
-    @Req() req: AuthenticatedRequest,
-    @Body() verifyPasswordCredentials: VerifyPasswordCredentialsDto,
-  ): Promise<VerifyPasswordResponse> {
-    const user = req.user;
-    const { password } = verifyPasswordCredentials;
-
-    if (!user.passwordHash) {
-      throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
-    }
-
-    verifyPassword(user.passwordHash, password, USER_PASSWORD_INVALID);
-
-    const verificationPasswordToken = this.jwtService.sign(
-      { sub: user._id.toString(), type: 'verificationPassword' },
-      { expiresIn: '10m' },
-    );
-
-    return {
-      verificationPasswordToken,
-    };
   }
 
   //* Test Route for Check isEmailConfirm *//
