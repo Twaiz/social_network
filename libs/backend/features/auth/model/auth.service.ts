@@ -146,22 +146,21 @@ export class AuthService {
   //* Email Confirmation *//
   async confirmEmail(token: string): Promise<void> {
     const userByConfirmEmail = await this.userModel
-      .findOneAndUpdate(
-        {
-          emailConfirmToken: token,
-          emailExpiresToken: { $gt: new Date() },
-        },
-        {
-          isEmailConfirm: true,
-          emailConfirmToken: undefined,
-          emailExpiresToken: undefined,
-        },
-      )
+      .findOne({
+        emailConfirmToken: token,
+        emailExpiresToken: { $gt: new Date() },
+      })
       .select('+emailConfirmToken');
 
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
     }
+
+    userByConfirmEmail.isEmailConfirm = true;
+    userByConfirmEmail.emailConfirmToken = undefined;
+    userByConfirmEmail.emailExpiresToken = undefined;
+
+    await userByConfirmEmail.save();
   }
 
   //* Generate Email Token *//
@@ -183,6 +182,7 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
+    //TODO - переназвать на generateEmailToken
     // confirmEmail(this.configService, email, emailConfirmToken, fullName);
   }
 }
