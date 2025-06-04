@@ -1,4 +1,4 @@
-import { BadRequestException, Logger } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 import { EFieldByFindUser, IUser } from '../structure';
@@ -16,7 +16,7 @@ export const findUser = async (
     .select(select || '');
   if (!user) {
     Logger.error(errorMessage, `FindUser - ${context}`);
-    throw new BadRequestException(errorMessage);
+    throw new NotFoundException(errorMessage);
   }
   return user;
 };
