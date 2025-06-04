@@ -1,11 +1,7 @@
 import { BadRequestException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import {
-  IUser,
-  VerifyPasswordCredentialsDto,
-  VerifyPasswordResponse,
-} from '../../../structure';
+import { IUser, VerifyPasswordCredentialsDto } from '../../../structure';
 import {
   PASSWORDHASH_IS_NOT_FOUND,
   USER_PASSWORD_INVALID,
@@ -16,7 +12,7 @@ export const generateVerifyPasswordToken = async (
   jwtService: JwtService,
   user: IUser,
   verifyPasswordCredentials: VerifyPasswordCredentialsDto,
-): Promise<VerifyPasswordResponse> => {
+): Promise<string> => {
   const { password } = verifyPasswordCredentials;
 
   if (!user.passwordHash) {
@@ -31,7 +27,5 @@ export const generateVerifyPasswordToken = async (
     { expiresIn: '10m' },
   );
 
-  return {
-    verificationPasswordToken,
-  };
+  return verificationPasswordToken;
 };
