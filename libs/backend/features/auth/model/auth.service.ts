@@ -21,8 +21,6 @@ import {
   getJwtToken,
   verifyPassword,
   PASSWORDHASH_IS_NOT_FOUND,
-  findUser,
-  EFieldByFindUser,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   USER_PASSWORD_INVALID,
@@ -51,20 +49,8 @@ export class AuthService {
     const { email, login, password, firstName, secondName } =
       registerCredentialsDto;
 
-    const userByEmail = await findUser(
-      this.userModel,
-      EFieldByFindUser.EMAIL,
-      email,
-      USER_NOT_FOUND,
-      'Register - findByEmail',
-    );
-    const userByLogin = await findUser(
-      this.userModel,
-      EFieldByFindUser.LOGIN,
-      login,
-      USER_NOT_FOUND,
-      'Register - findByLogin',
-    );
+    const userByEmail = await this.userModel.findOne({ email });
+    const userByLogin = await this.userModel.findOne({ login });
 
     const emailExists = !!userByEmail;
     const loginExists = !!userByLogin;
@@ -125,13 +111,9 @@ export class AuthService {
     const INVALID_LOGIN_CREDENTIALS = `${USER_PASSWORD_INVALID} или ${emailOrLogin}. Попробуйте ещё раз.`;
 
     if (email) {
-      user = await this.userModel
-        .findOne({ email: email })
-        .select(selectPasswordHash);
+      user = await this.userModel.findOne({ email }).select(selectPasswordHash);
     } else if (login) {
-      user = await this.userModel
-        .findOne({ login: login })
-        .select(selectPasswordHash);
+      user = await this.userModel.findOne({ login }).select(selectPasswordHash);
     }
 
     if (!user) {
