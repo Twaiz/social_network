@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 
 import { EFieldByFindUser, IUser } from '../structure';
 
+//TODO - удалить findUser и использовать во всех дургих методах поиск вручную, а не через кастомные функции как эта
 export const findUser = async (
   model: Model<IUser>,
   field: EFieldByFindUser,
