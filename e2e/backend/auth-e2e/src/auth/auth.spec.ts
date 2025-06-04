@@ -142,8 +142,8 @@ describe('App - Auth (e2e)', () => {
       process.exit(1);
     }
 
-    expect(userAfterConfirmEmail.emailConfirmToken).toBeFalsy();
-    expect(userAfterConfirmEmail.emailExpiresToken).toBeFalsy();
+    expect(userAfterConfirmEmail.emailConfirmToken).toBeUndefined();
+    expect(userAfterConfirmEmail.emailExpiresToken).toBeUndefined();
   });
 
   it('auth/check-isEmailConfirm -- success', async () => {
