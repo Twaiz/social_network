@@ -23,6 +23,8 @@ import {
   IUser,
   NewUserInfoCredentialsDto,
   USER_NOT_FOUND,
+  VerifyPasswordCredentialsDto,
+  VerifyPasswordResponse,
 } from '@shared';
 import { UserModule } from '@features/user';
 
@@ -44,7 +46,11 @@ const ChangeEmailCredentials: ChangeEmailCredentialsDto = {
 };
 
 const ChangePasswordCredentials: ChangePasswordCredentialsDto = {
-  newPassword: 'admin321',
+  newPassword: 'admin123',
+};
+
+const VerifyPasswordCredentials: VerifyPasswordCredentialsDto = {
+  password: 'admin321',
 };
 //? ---Тестовые данные--- ?\\
 
@@ -53,6 +59,7 @@ describe('App - User (e2e)', () => {
   //? Объявление переменных ?\\
   let app: INestApplication<App>;
   let token: string;
+  let verificationPasswordToken: string;
   let user: IUser;
 
   let jwtService: JwtService;
@@ -82,6 +89,14 @@ describe('App - User (e2e)', () => {
       configService,
       userModel,
     );
+    const res = await request(app.getHttpServer())
+      .post('/api/auth/verify-password')
+      .set('Authorization', `Bearer ${fullLogin.token}`)
+      .send(VerifyPasswordCredentials)
+      .expect(200);
+    const data: VerifyPasswordResponse = res.body;
+
+    verificationPasswordToken = data.verificationPasswordToken;
     token = fullLogin.token;
     user = fullLogin.user;
   });
@@ -92,6 +107,7 @@ describe('App - User (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/api/user/updateUserInfo')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-verification-password-token', verificationPasswordToken)
       .send(NewUserInfoCredentials)
       .expect(200);
 
@@ -118,6 +134,7 @@ describe('App - User (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/api/user/change-email')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-verification-password-token', verificationPasswordToken)
       .send(ChangeEmailCredentials)
       .expect(201);
 
@@ -193,6 +210,7 @@ describe('App - User (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/api/user/change-password')
       .set('Authorization', `Bearer ${token}`)
+      .set('x-verification-password-token', verificationPasswordToken)
       .send(ChangePasswordCredentials)
       .expect(201);
 
