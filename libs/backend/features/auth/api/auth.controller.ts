@@ -20,7 +20,6 @@ import {
   ConfirmEmailCredentialsDto,
   RegisterCredentialsDto,
   LoginCredentialsDto,
-  VerifyPasswordCredentialsDto,
 } from '../dto';
 
 import { AuthService } from '../model/auth.service';
@@ -34,6 +33,8 @@ import {
   USER_PASSWORD_INVALID,
   verifyPassword,
   PASSWORDHASH_IS_NOT_FOUND,
+  VerifyPasswordCredentialsDto,
+  VerifyPasswordResponse,
 } from '@shared';
 
 @Controller('auth')
@@ -103,7 +104,7 @@ export class AuthController {
   async verifyPassword(
     @Req() req: AuthenticatedRequest,
     @Body() verifyPasswordCredentials: VerifyPasswordCredentialsDto,
-  ): Promise<{ verificationPasswordToken: string }> {
+  ): Promise<VerifyPasswordResponse> {
     const user = req.user;
     const { password } = verifyPasswordCredentials;
 
