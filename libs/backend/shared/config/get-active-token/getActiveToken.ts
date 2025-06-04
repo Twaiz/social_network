@@ -15,7 +15,7 @@ import {
 
 const LoginCredentials = {
   login: 'admin',
-  password: 'admin123',
+  password: 'admin321',
 };
 
 export const getActiveToken = async (
