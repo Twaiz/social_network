@@ -18,13 +18,13 @@ import {
   ConfirmNewPasswordCredentialsDto,
   EFieldByFindUser,
   findUser,
+  generateVerifyPasswordToken,
   getActiveToken,
   GetEnv,
   IUser,
   NewUserInfoCredentialsDto,
   USER_NOT_FOUND,
   VerifyPasswordCredentialsDto,
-  VerifyPasswordResponse,
 } from '@shared';
 import { UserModule } from '@features/user';
 
@@ -89,14 +89,13 @@ describe('App - User (e2e)', () => {
       configService,
       userModel,
     );
-    const res = await request(app.getHttpServer())
-      .post('/api/auth/verify-password')
-      .set('Authorization', `Bearer ${fullLogin.token}`)
-      .send(VerifyPasswordCredentials)
-      .expect(200);
-    const data: VerifyPasswordResponse = res.body;
 
-    verificationPasswordToken = data.verificationPasswordToken;
+    verificationPasswordToken = await generateVerifyPasswordToken(
+      jwtService,
+      fullLogin.user,
+      VerifyPasswordCredentials,
+    );
+
     token = fullLogin.token;
     user = fullLogin.user;
   });
