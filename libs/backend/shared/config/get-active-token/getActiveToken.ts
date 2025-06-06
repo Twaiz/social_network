@@ -13,8 +13,8 @@ import {
 } from '../constants';
 
 const LoginCredentials = {
-  login: 'admin',
-  password: 'admin321',
+  login: 'newadmin',
+  password: 'admin123',
 };
 
 export const getActiveToken = async (
