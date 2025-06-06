@@ -1,0 +1,20 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "types": ["node"],
+    "rootDir": ".",
+    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
+    "target": "es2021"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
+  "references": [
+    {
+      "path": "../../../libs/backend/features/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../libs/backend/shared/tsconfig.lib.json"
+    }
+  ]
+}

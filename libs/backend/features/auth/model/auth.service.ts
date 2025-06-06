@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -8,12 +9,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'node:crypto';
 import { Model } from 'mongoose';
-import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
+import { genSaltSync, hashSync } from 'bcryptjs';
 import { addHours } from 'date-fns';
-
-import { CONFIRM_EMAIL_TOKEN_INVALID, NOT_FOUND_2FA_CODE } from './constant';
-import { LoginServiceDto, RegisterCredentialsDto } from '../dto';
-import { sendEmailConfirmation } from './lib';
 
 import {
   IUser,
@@ -21,20 +18,21 @@ import {
   USER_NOT_FOUND,
   GetEnv,
   verifyTwoFactorCode,
+  getJwtToken,
+  verifyPassword,
+  PASSWORDHASH_IS_NOT_FOUND,
+  USER_ALREADY_REGISTERED_WITH_EMAIL,
+  USER_ALREADY_REGISTERED_WITH_LOGIN,
+  USER_PASSWORD_INVALID,
 } from '@shared';
 
-interface IJwtPayload {
-  _id: string;
-  email: string;
-  login: string;
-  role: string;
-}
-
-interface JwtCreationParams {
-  user: IUser;
-  jwtSecret: string;
-  jwtExpiresIn: string;
-}
+import {
+  CONFIRM_EMAIL_TOKEN_INVALID,
+  NOT_FOUND_2FA_CODE,
+  USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
+} from './constant';
+import { LoginCredentialsDto, RegisterCredentialsDto } from '../dto';
+// import { confirmEmail } from './lib';
 
 @Injectable()
 export class AuthService {
@@ -50,6 +48,26 @@ export class AuthService {
   ): Promise<RegisterResponse> {
     const { email, login, password, firstName, secondName } =
       registerCredentialsDto;
+
+    const userByEmail = await this.userModel.findOne({ email });
+    const userByLogin = await this.userModel.findOne({ login });
+
+    const emailExists = !!userByEmail;
+    const loginExists = !!userByLogin;
+
+    if (emailExists && loginExists) {
+      throw new BadRequestException(
+        USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
+      );
+    }
+
+    if (emailExists || loginExists) {
+      throw new BadRequestException(
+        emailExists
+          ? USER_ALREADY_REGISTERED_WITH_EMAIL
+          : USER_ALREADY_REGISTERED_WITH_LOGIN,
+      );
+    }
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
@@ -67,7 +85,7 @@ export class AuthService {
 
     const user = await newUser.save();
 
-    const token = await this.getJwtToken({
+    const token = await getJwtToken(this.jwtService, {
       user,
       jwtSecret,
       jwtExpiresIn,
@@ -80,16 +98,33 @@ export class AuthService {
   }
 
   //* Login *//
-  async login(LoginServiceDto: LoginServiceDto): Promise<string> {
-    const { user, password, twoFactorCode, errorMessage } = LoginServiceDto;
+  async login(loginCredentialsDto: LoginCredentialsDto): Promise<string> {
+    const { email, login, password, twoFactorCode } = loginCredentialsDto;
+    const selectPasswordHash = '+passwordHash';
+
+    let user: IUser | null = null;
 
     const jwtSecret = GetEnv.getJwtSecret(this.configService);
     const jwtExpiresIn = GetEnv.getJwtExpiresIn(this.configService);
 
-    const isPasswordValid = compareSync(password, user.passwordHash);
-    if (!isPasswordValid) {
-      throw new BadRequestException(errorMessage);
+    const emailOrLogin = email ? 'email' : 'login';
+    const INVALID_LOGIN_CREDENTIALS = `${USER_PASSWORD_INVALID} или ${emailOrLogin}. Попробуйте ещё раз.`;
+
+    if (email) {
+      user = await this.userModel.findOne({ email }).select(selectPasswordHash);
+    } else if (login) {
+      user = await this.userModel.findOne({ login }).select(selectPasswordHash);
     }
+
+    if (!user) {
+      throw new NotFoundException(INVALID_LOGIN_CREDENTIALS);
+    }
+    if (!user.passwordHash) {
+      Logger.error(PASSWORDHASH_IS_NOT_FOUND);
+      throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
+    }
+
+    verifyPassword(user.passwordHash, password, INVALID_LOGIN_CREDENTIALS);
 
     if (user.isTwoFactorEnabled) {
       if (!twoFactorCode) {
@@ -99,7 +134,7 @@ export class AuthService {
       verifyTwoFactorCode(user, twoFactorCode);
     }
 
-    const token = await this.getJwtToken({
+    const token = await getJwtToken(this.jwtService, {
       user,
       jwtSecret,
       jwtExpiresIn,
@@ -111,26 +146,28 @@ export class AuthService {
   //* Email Confirmation *//
   async confirmEmail(token: string): Promise<void> {
     const userByConfirmEmail = await this.userModel
-      .findOneAndUpdate(
-        {
-          emailConfirmToken: token,
-          emailExpiresToken: { $gt: new Date() },
-        },
-        {
-          isEmailConfirm: true,
-          emailConfirmToken: null,
-          emailExpiresToken: null,
-        },
-      )
+      .findOne({
+        emailConfirmToken: token,
+        emailExpiresToken: { $gt: new Date() },
+      })
       .select('+emailConfirmToken');
 
     if (!userByConfirmEmail) {
       throw new BadRequestException(CONFIRM_EMAIL_TOKEN_INVALID);
     }
+
+    userByConfirmEmail.isEmailConfirm = true;
+    userByConfirmEmail.emailConfirmToken = undefined;
+    userByConfirmEmail.emailExpiresToken = undefined;
+
+    await userByConfirmEmail.save();
   }
 
   //* Generate Email Token *//
   async generateEmailToken(user: IUser): Promise<void> {
+    // const { email, firstName, secondName } = user;
+    // const fullName = `${firstName} ${secondName}`;
+
     const emailConfirmToken = randomBytes(32).toString('hex');
     const emailExpiresToken = addHours(new Date(), 24);
 
@@ -145,25 +182,7 @@ export class AuthService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
 
-    sendEmailConfirmation(this.configService, emailConfirmToken, user.email);
-  }
-
-  //* Get Jwt Token *//
-  async getJwtToken(jwtCreationParams: JwtCreationParams): Promise<string> {
-    const { user, jwtSecret, jwtExpiresIn } = jwtCreationParams;
-
-    const payload: IJwtPayload = {
-      _id: user._id,
-      email: user.email,
-      login: user.login,
-      role: user.role,
-    };
-
-    const token = await this.jwtService.signAsync(payload, {
-      secret: jwtSecret,
-      expiresIn: jwtExpiresIn,
-    });
-
-    return token;
+    //TODO - переназвать на generateEmailToken
+    // confirmEmail(this.configService, email, emailConfirmToken, fullName);
   }
 }

@@ -17,7 +17,7 @@ export const GetEnv = {
   getJwtSecret(configService: ConfigService): string {
     const jwtSecret: EnvString = configService.get('JWT_SECRET');
     if (!jwtSecret) {
-      Logger.error(JWT_SECRET_ERROR, 'GetEnv');
+      Logger.error(JWT_SECRET_ERROR, 'GetEnv - getJwtSecret');
       process.exit(1);
     }
     return jwtSecret;
@@ -26,7 +26,7 @@ export const GetEnv = {
   getJwtExpiresIn(configService: ConfigService): string {
     const expiresIn: EnvString = configService.get('JWT_EXPIRES_IN');
     if (!expiresIn) {
-      Logger.error(JWT_EXPIRES_IN_ERROR, 'GetEnv');
+      Logger.error(JWT_EXPIRES_IN_ERROR, 'GetEnv - getJwtExpiresIn');
       process.exit(1);
     }
     return expiresIn;
@@ -35,7 +35,7 @@ export const GetEnv = {
   getMongodbPassword(configService: ConfigService): string {
     const mongodbPassword: EnvString = configService.get('MONGODB_PASSWORD');
     if (!mongodbPassword) {
-      Logger.error(MONGODB_PASSWORD_ERROR, 'GetEnv');
+      Logger.error(MONGODB_PASSWORD_ERROR, 'GetEnv - getMongodbPassword');
       process.exit(1);
     }
     return mongodbPassword;
@@ -44,7 +44,7 @@ export const GetEnv = {
   getMongodbLogin(configService: ConfigService): string {
     const mongodbLogin: EnvString = configService.get('MONGODB_LOGIN');
     if (!mongodbLogin) {
-      Logger.error(MONGODB_LOGIN_ERROR, 'GetEnv');
+      Logger.error(MONGODB_LOGIN_ERROR, 'GetEnv - getMongodbLogin');
       process.exit(1);
     }
     return mongodbLogin;
@@ -52,7 +52,7 @@ export const GetEnv = {
 
   getServerPort(customPort: string | undefined): string {
     if (!customPort) {
-      Logger.error(SERVER_PORT_ERROR);
+      Logger.error(SERVER_PORT_ERROR, 'GetEnv - getServerPort');
       process.exit(1);
     }
     return customPort;
@@ -61,7 +61,7 @@ export const GetEnv = {
   getServerHost(): string {
     const host = process.env.SERVER_HOST;
     if (!host) {
-      Logger.error(SERVER_HOST_ERROR);
+      Logger.error(SERVER_HOST_ERROR, 'GetEnv - getServerHost');
       process.exit(1);
     }
     return host;
@@ -69,7 +69,10 @@ export const GetEnv = {
   getServerGlobalPrefix(): string {
     const globalPrefix = process.env.SERVER_GLOBAL_PREFIX;
     if (!globalPrefix) {
-      Logger.error(SERVER_GLOBAL_PREFIX_ERROR);
+      Logger.error(
+        SERVER_GLOBAL_PREFIX_ERROR,
+        'GetEnv - getServerGlobalPrefix',
+      );
       process.exit(1);
     }
     return globalPrefix;

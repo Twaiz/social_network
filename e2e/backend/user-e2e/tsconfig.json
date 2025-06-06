@@ -1,0 +1,18 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out-tsc/@social-network/user-e2e",
+    "esModuleInterop": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": false
+  },
+  "include": ["jest.config.ts", "src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../../libs/backend/features"
+    },
+    {
+      "path": "../../../libs/backend/shared"
+    }
+  ]
+}

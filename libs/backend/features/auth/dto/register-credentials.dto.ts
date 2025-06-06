@@ -1,5 +1,10 @@
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import { LOGIN_MAX_LENGTH_ERROR, LOGIN_MIN_LENGTH_ERROR } from './constant';
+import {
+  LOGIN_MAX_LENGTH_ERROR,
+  LOGIN_MIN_LENGTH_ERROR,
+  PASSWORD_MIN_LENGTH_ERROR,
+  PASSWORD_MAX_LENGTH_ERROR,
+} from './constant';
 
 export class RegisterCredentialsDto {
   @IsString()
@@ -12,6 +17,8 @@ export class RegisterCredentialsDto {
   login!: string;
 
   @IsString()
+  @MinLength(6, { message: PASSWORD_MIN_LENGTH_ERROR })
+  @MaxLength(32, { message: PASSWORD_MAX_LENGTH_ERROR })
   password!: string;
 
   @IsString()

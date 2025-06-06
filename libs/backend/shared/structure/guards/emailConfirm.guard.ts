@@ -8,7 +8,7 @@ import {
 
 import { AuthenticatedRequest } from '../types';
 import { USER_NOT_FOUND } from '../../config';
-import { EMAIL_NOT_CONFIRMED_ERROR } from './constant/emailConfirm.constants';
+import { EMAIL_NOT_CONFIRMED_ERROR } from './constant';
 
 @Injectable()
 export class EmailConfirmGuard implements CanActivate {

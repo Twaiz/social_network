@@ -5,7 +5,7 @@ export interface IUser {
 
   email: string;
   login: string;
-  passwordHash: string;
+  passwordHash?: string;
 
   role: EUserRole;
 
@@ -16,8 +16,18 @@ export interface IUser {
   isTwoFactorEnabled: boolean;
   isEmailConfirm: boolean;
 
-  twoFactorSecret: string;
+  twoFactorSecret?: string;
 
-  emailConfirmToken: string | null;
-  emailExpiresToken: Date | null;
+  emailConfirmToken?: string;
+  emailExpiresToken?: Date;
+
+  changeEmailToken?: string;
+  changeEmailNew?: string;
+  changeEmailExpires?: Date;
+
+  changePasswordToken?: string;
+  changePasswordNew?: string;
+  changePasswordExpires?: Date;
+
+  passwordChangedAt?: Date;
 }

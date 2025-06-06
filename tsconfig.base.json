@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@features/*": ["./libs/backend/features/*"],
       "@entities/*": ["./libs/backend/entities/*"],
+      "@features/*": ["./libs/backend/features/*"],
       "@shared": ["./libs/backend/shared"]
     },
     "composite": true,

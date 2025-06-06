@@ -4,36 +4,26 @@ import {
   Controller,
   Get,
   HttpCode,
-  NotFoundException,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 
 import {
-  USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
-  USER_ALREADY_REGISTERED_WITH_EMAIL,
-  USER_ALREADY_REGISTERED_WITH_LOGIN,
   BOTH_EMAIL_AND_LOGIN_ERROR,
   CONFIRM_EMAIL_TOKEN_GENERATE,
   CONFIRM_EMAIL_TOKEN_SUCCESS,
 } from './constant';
-import { USER_INVALID_PASSWORD } from '../auth.constants';
 
 import {
   ConfirmEmailCredentialsDto,
-  LoginCredentialsDto,
   RegisterCredentialsDto,
+  LoginCredentialsDto,
 } from '../dto';
 
 import { AuthService } from '../model/auth.service';
 
 import {
-  findUserByEmail,
-  findUserByLogin,
-  IUser,
   JwtAuthGuard,
   type AuthenticatedRequest,
   RegisterResponse,
@@ -43,10 +33,7 @@ import {
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    @InjectModel('User') private readonly userModel: Model<IUser>,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   //* Register *//
   @HttpCode(201)
@@ -54,28 +41,6 @@ export class AuthController {
   async register(
     @Body() registerCredentialsDto: RegisterCredentialsDto,
   ): Promise<RegisterResponse> {
-    const { email, login } = registerCredentialsDto;
-
-    const userByEmail = await findUserByEmail(this.userModel, email);
-    const userByLogin = await findUserByLogin(this.userModel, login);
-
-    const emailExists = !!userByEmail;
-    const loginExists = !!userByLogin;
-
-    if (emailExists && loginExists) {
-      throw new BadRequestException(
-        USER_ALREADY_REGISTERED_WITH_EMAIL_AND_LOGIN,
-      );
-    }
-
-    if (emailExists || loginExists) {
-      throw new BadRequestException(
-        emailExists
-          ? USER_ALREADY_REGISTERED_WITH_EMAIL
-          : USER_ALREADY_REGISTERED_WITH_LOGIN,
-      );
-    }
-
     return await this.authService.createUser(registerCredentialsDto);
   }
 
@@ -85,32 +50,13 @@ export class AuthController {
   async login(
     @Body() loginCredentialsDto: LoginCredentialsDto,
   ): Promise<LoginResponse> {
-    const { email, login, password, twoFactorCode } = loginCredentialsDto;
-    const emailOrLogin = email ? 'email' : 'login';
-    const INVALID_LOGIN_CREDENTIALS = `${USER_INVALID_PASSWORD} или ${emailOrLogin}. Попробуйте ещё раз.`;
-
-    let user: IUser | null = null;
+    const { email, login } = loginCredentialsDto;
 
     if (email && login) {
       throw new BadRequestException(BOTH_EMAIL_AND_LOGIN_ERROR);
     }
 
-    if (email) {
-      user = await findUserByEmail(this.userModel, email);
-    } else if (login) {
-      user = await findUserByLogin(this.userModel, login);
-    }
-
-    if (!user) {
-      throw new NotFoundException(INVALID_LOGIN_CREDENTIALS);
-    }
-
-    const token = await this.authService.login({
-      user,
-      password,
-      twoFactorCode,
-      errorMessage: INVALID_LOGIN_CREDENTIALS,
-    });
+    const token = await this.authService.login(loginCredentialsDto);
 
     return { token };
   }

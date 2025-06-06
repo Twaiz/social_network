@@ -42,6 +42,7 @@ export async function bootstrap<T>(
 
     Logger.log(
       `${SERVER_CONNECTION_SUCCESS}: http://${host}:${port}/${globalPrefix}`,
+      'Bootstrap',
     );
 
     return app;
