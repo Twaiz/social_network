@@ -35,20 +35,20 @@ import {
 
 //? Тестовые данные ?\\
 const NewUserInfoCredentials: NewUserInfoCredentialsDto = {
-  firstName: 'Oleg',
-  secondName: 'Olegovich',
+  firstName: 'Olega',
+  secondName: 'Olegovicha',
 };
 
 const ChangeEmailCredentials: ChangeEmailCredentialsDto = {
-  newEmail: 'newAdmin@gmail.com',
+  newEmail: 'newAdmina@gmail.com',
 };
 
 const ChangePasswordCredentials: ChangePasswordCredentialsDto = {
-  newPassword: 'admin123',
+  newPassword: '1205Qaz!',
 };
 
 const VerifyPasswordCredentials: VerifyPasswordCredentialsDto = {
-  password: 'admin321',
+  password: 'admin123',
 };
 //? ---Тестовые данные--- ?\\
 
@@ -156,7 +156,9 @@ describe('App - User (e2e)', () => {
     }
 
     expect(userAfter.changeEmailToken).toBe(userAfter.changeEmailToken);
-    expect(userAfter.changeEmailNew).toBe(ChangeEmailCredentials.newEmail);
+    expect(userAfter.changeEmailNew).toBe(
+      ChangeEmailCredentials.newEmail.toLowerCase(),
+    );
 
     const now = new Date();
     const expiresDate = new Date(userAfter.changeEmailExpires);
@@ -243,7 +245,7 @@ describe('App - User (e2e)', () => {
   it('user/confirm-new-password -- success', async () => {
     const userBefore = await userModel
       .findOne({ _id: user._id })
-      .select('+changePasswordToken +changePasswordNew');
+      .select('+passwordHash +changePasswordToken +changePasswordNew');
 
     if (!userBefore) {
       Logger.error(USER_NOT_FOUND, 'E2E ConfirmNewPassword - userBefore');
@@ -268,7 +270,7 @@ describe('App - User (e2e)', () => {
       process.exit(1);
     }
 
-    expect(userAfter.passwordHash).toBe(userBefore.changePasswordNew);
+    expect(userAfter.passwordHash).toEqual(userBefore.changePasswordNew);
 
     expect(userAfter.changePasswordExpires).toBeUndefined();
     expect(userAfter.changePasswordToken).toBeUndefined();
