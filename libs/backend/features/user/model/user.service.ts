@@ -194,7 +194,7 @@ export class UserService {
         changePasswordToken,
         changePasswordExpires: { $gt: new Date() },
       })
-      .select('+changePasswordNew');
+      .select('+changePasswordNew +passwordHash');
     if (!userByChangePassword) {
       throw new BadRequestException(CONFIRM_CHANGE_TOKEN_INVALID);
     }
@@ -220,6 +220,8 @@ export class UserService {
     userByConfirmNewPassword.changePasswordToken = undefined;
 
     userByConfirmNewPassword.passwordChangedAt = new Date();
+
+    userByConfirmNewPassword.save();
 
     // await confirmNewPassword(
     //   this.configService,
