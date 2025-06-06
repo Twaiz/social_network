@@ -126,17 +126,21 @@ export class UserService {
       throw new NotFoundException(CHANGE_EMAIL_TOKEN_NOT_FOUND);
     }
 
-    await this.userModel.findOneAndUpdate(
-      { _id: userByChangeEmail._id },
-      {
-        email: newEmail,
+    const userByConfirmNewEmail = await this.userModel.findOne({
+      _id: userByChangeEmail._id,
+    });
+    if (!userByConfirmNewEmail) {
+      Logger.error(USER_NOT_FOUND, 'ConfirmNewEmail - userByConfirmNewEmail');
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
 
-        changeEmailToken: undefined,
-        changeEmailExpires: undefined,
-        changeEmailNew: undefined,
-      },
-      { new: true },
-    );
+    userByConfirmNewEmail.email = newEmail;
+
+    userByConfirmNewEmail.changeEmailToken = undefined;
+    userByConfirmNewEmail.changeEmailExpires = undefined;
+    userByConfirmNewEmail.changeEmailNew = undefined;
+
+    await userByConfirmNewEmail.save();
 
     // await confirmNewEmail(
     //   this.configService,
@@ -197,19 +201,25 @@ export class UserService {
 
     // const fullName = `${userByChangePassword.firstName} ${userByChangePassword.secondName}`;
 
-    await this.userModel.findOneAndUpdate(
-      { _id: userByChangePassword.id },
-      {
-        passwordHash: userByChangePassword.changePasswordNew,
+    const userByConfirmNewPassword = await this.userModel.findOne({
+      _id: userByChangePassword._id,
+    });
+    if (!userByConfirmNewPassword) {
+      Logger.error(
+        USER_NOT_FOUND,
+        'ConfirmNewPassword - userByConfirmNewPassword',
+      );
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
 
-        changePasswordExpires: undefined,
-        changePasswordNew: undefined,
-        changePasswordToken: undefined,
+    userByConfirmNewPassword.passwordHash =
+      userByChangePassword.changePasswordNew;
 
-        passwordChangedAt: new Date(),
-      },
-      { new: true },
-    );
+    userByConfirmNewPassword.changePasswordExpires = undefined;
+    userByConfirmNewPassword.changePasswordNew = undefined;
+    userByConfirmNewPassword.changePasswordToken = undefined;
+
+    userByConfirmNewPassword.passwordChangedAt = new Date();
 
     // await confirmNewPassword(
     //   this.configService,
