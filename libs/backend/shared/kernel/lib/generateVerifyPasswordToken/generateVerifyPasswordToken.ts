@@ -23,7 +23,7 @@ export const generateVerifyPasswordToken = async (
   verifyPassword(user.passwordHash, password, USER_PASSWORD_INVALID);
 
   const verificationPasswordToken = jwtService.sign(
-    { sub: user._id.toString(), type: 'verificationPassword' },
+    { sub: user._id, type: 'verificationPassword' },
     { expiresIn: '10m' },
   );
 
