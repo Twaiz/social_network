@@ -1,6 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
+  Injectable,
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -11,6 +12,7 @@ import {
   VERIFICATION_PASSWORD_INVALID,
 } from './constant';
 
+@Injectable()
 export class VerifyPasswordGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
@@ -40,8 +42,9 @@ export class VerifyPasswordGuard implements CanActivate {
       req.verifiedUserId = payload.sub;
 
       return true;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_error) {
+    } catch (error) {
+      if (error instanceof Error) Logger.error(error.message, loggerContext);
+
       Logger.error(VERIFICATION_PASSWORD_INVALID, loggerContext);
       throw new UnauthorizedException(VERIFICATION_PASSWORD_INVALID);
     }
