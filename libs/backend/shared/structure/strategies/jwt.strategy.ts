@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,9 +6,8 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Model } from 'mongoose';
 
 import { USER_NOT_FOUND } from '../../config';
-import { EFieldByFindUser, IUser } from '../types';
+import { IUser } from '../types';
 import { GetEnv } from '../../kernel';
-import { findUser } from '../../api';
 import { PASSWORD_IS_UPDATED } from './constant';
 
 @Injectable()
@@ -32,23 +31,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     iat: number;
   }): Promise<IUser> {
     const [userByEmail, userByLogin] = await Promise.all([
-      findUser(
-        this.userModel,
-        EFieldByFindUser.EMAIL,
-        payload.email,
-        USER_NOT_FOUND,
-        'JwtStrategy - findByEmail',
-      ),
-      findUser(
-        this.userModel,
-        EFieldByFindUser.LOGIN,
-        payload.login,
-        USER_NOT_FOUND,
-        'JwtStrategy - findByLogin',
-      ),
+      await this.userModel.findOne({ email: payload.email }),
+      await this.userModel.findOne({ login: payload.login }),
     ]);
 
     const user = userByEmail || userByLogin;
+
+    if (!user) {
+      Logger.error(USER_NOT_FOUND, 'JwtStrategy - validate - user');
+      throw new UnauthorizedException(USER_NOT_FOUND);
+    }
 
     if (user.passwordChangedAt) {
       const passwordChangedTimestamp = new Date(

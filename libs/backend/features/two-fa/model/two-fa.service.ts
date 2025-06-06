@@ -1,16 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 
-import {
-  EFieldByFindUser,
-  IUser,
-  USER_NOT_FOUND,
-  findUser,
-  verifyTwoFactorCode,
-} from '@shared';
+import { IUser, USER_NOT_FOUND, verifyTwoFactorCode } from '@shared';
 
 @Injectable()
 export class TwoFaService {
@@ -38,16 +32,13 @@ export class TwoFaService {
     };
   }
 
-  async enableTwoFactor(user: IUser, code: string): Promise<void> {
-    const userWithTwoFactorSecret = await findUser(
-      this.userModel,
-      EFieldByFindUser.EMAIL,
-      user.email,
-      USER_NOT_FOUND,
-      'EnableTwoFactor - findByEmail',
-      '+twoFactorSecret',
-    );
+  async enableTwoFactor({ email }: IUser, code: string): Promise<void> {
+    const userWithTwoFactorSecret = await this.userModel
+      .findOne({ email })
+      .select('+twoFactorSecret');
+
     if (!userWithTwoFactorSecret) {
+      Logger.error(USER_NOT_FOUND, 'EnableTwoFactor - userWithTwoFactorSecret');
       throw new NotFoundException(USER_NOT_FOUND);
     }
 

@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 // import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,9 +16,7 @@ import {
   USER_ALREADY_REGISTERED_WITH_LOGIN,
   USER_NOT_FOUND,
   NewUserInfoCredentialsDto,
-  findUser,
   USER_ALREADY_REGISTERED_WITH_EMAIL,
-  EFieldByFindUser,
 } from '@shared';
 
 import {
@@ -73,21 +72,20 @@ export class UserService {
   async changeEmail(user: IUser, newEmail: string): Promise<void> {
     // const currentEmail = user.email;
 
-    const userWithSuchEmail = await findUser(
-      this.userModel,
-      EFieldByFindUser.EMAIL,
-      newEmail,
-      USER_NOT_FOUND,
-      'ChangeEmail - findByEmail',
-    );
+    const userWithSuchEmail = await this.userModel.findOne({ email: newEmail });
+
     if (userWithSuchEmail) {
+      Logger.log(
+        USER_ALREADY_REGISTERED_WITH_EMAIL,
+        'ChangeEmail - userWithSuchEmail',
+      );
       throw new BadRequestException(USER_ALREADY_REGISTERED_WITH_EMAIL);
     }
 
     const changeEmailToken = randomBytes(32).toString('hex');
     const changeEmailExpires = addHours(new Date(), 24);
-    const userByChangeEmail = await this.userModel.findByIdAndUpdate(
-      user._id,
+    const userByChangeEmail = await this.userModel.findOneAndUpdate(
+      { _id: user._id },
       {
         changeEmailToken,
         changeEmailNew: newEmail,
@@ -96,8 +94,10 @@ export class UserService {
       { new: true },
     );
     if (!userByChangeEmail) {
+      Logger.error(USER_NOT_FOUND, 'ChangeEmail - userByChangeEmail');
       throw new NotFoundException(USER_NOT_FOUND);
     }
+
     // const fullName = `${userByChangeEmail.firstName} ${userByChangeEmail.secondName}`;
 
     // await changeEmail(

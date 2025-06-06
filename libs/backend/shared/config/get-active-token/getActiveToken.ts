@@ -3,10 +3,9 @@ import { BadRequestException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 
-import { findUser } from '../../api';
 import { GetEnv } from '../../kernel';
 import { getJwtToken, verifyPassword } from '../../lib';
-import { EFieldByFindUser, IUser } from '../../structure';
+import { IUser } from '../../structure';
 import {
   PASSWORDHASH_IS_NOT_FOUND,
   USER_NOT_FOUND,
@@ -31,14 +30,14 @@ export const getActiveToken = async (
   const jwtSecret = GetEnv.getJwtSecret(configService);
   const jwtExpiresIn = GetEnv.getJwtExpiresIn(configService);
 
-  const user = await findUser(
-    userModel,
-    EFieldByFindUser.LOGIN,
-    LoginCredentials.login,
-    USER_NOT_FOUND,
-    `${context} - findByLogin`,
-    '+passwordHash',
-  );
+  const user = await userModel
+    .findOne({ login: LoginCredentials.login })
+    .select('+passwordHash');
+
+  if (!user) {
+    Logger.error(USER_NOT_FOUND, `${context} - findByLogin`);
+    process.exit(1);
+  }
   if (!user.passwordHash) {
     Logger.error(PASSWORDHASH_IS_NOT_FOUND, `${context} - PasswordHash`);
     throw new BadRequestException(PASSWORDHASH_IS_NOT_FOUND);
